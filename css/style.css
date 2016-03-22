@@ -2,3 +2,36 @@ html, body {
 	margin: 0;
 	padding: 0;
 }
+
+.note {
+	border: 1px solid black;
+	padding: 5px;
+	margin: 0 auto;
+	margin-top: 10px;
+	border-radius: 6px;
+}
+
+.note .note-id {
+	font-size: 8px;
+	float: right;
+}
+
+.note .note-title {
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+.note .note-text {
+	
+}
+
+.note .note-tags {
+	padding: 3px;
+    border-radius: 6px;
+    border: 1px solid #CE3131;
+    margin: 2px;
+	color: white;
+	background-color: #CE3131;
+	cursor: pointer;
+	margin-top: 5px;
+}

@@ -8,12 +8,17 @@
 </head>
 <body>
 	<?php include 'includes/db-connect.inc.php'; ?>
-	<?php $array = array('blue', 'white'); echo serialize($array); ?>
 	
 	<button id="get" class="btn btn-primary">
 		Get Notes
 	</button>
-	<div id="demo">
+	<div class="container-fluid" id="">
+		<div class="col-sm-12">
+			<div class="row">
+				<div id="note-list">
+				<div>
+			</div>
+		</div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 	<script src="js/script.js"></script>
