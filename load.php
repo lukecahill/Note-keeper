@@ -1,6 +1,6 @@
 <?php
 
-	include 'includes/db-connect.inc.php';
+	require_once 'includes/db-connect.inc.php';
 
 	$db = ConnectDb();
 	$stmt = $db->prepare("SELECT NoteText, NoteId, NoteTags FROM note");

@@ -8,7 +8,7 @@
 </head>
 <body>
 	<?php 
-		include 'includes/db-connect.inc.php'; 
+		require_once 'includes/db-connect.inc.php'; 
 		$baseUrl = getcwd();
 	?>
 	<div class="container-fluid">

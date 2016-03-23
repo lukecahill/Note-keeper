@@ -46,6 +46,13 @@ html, body {
 	background-color: #AB0E0E;
 }
 
+.new-note-group {
+	padding: 10px;
+	border: 1px solid #eee;
+	border-radius: 6px;
+	margin-top: 10px;
+}
+
 footer {
 	margin-top: 10px;
 }
