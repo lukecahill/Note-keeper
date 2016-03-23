@@ -8,6 +8,7 @@
 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 	$result = '';
+	// $tagList = array();
 		
 	foreach($rows as $item) {
 		
@@ -15,13 +16,15 @@
 		
 		echo '<div class="note">';
 		echo '<span class="note-id" id="' . $item['NoteId'] . '">Note ID: ' . $item['NoteId']. '</span>';
-		echo '<span class="note-text">' . $item['NoteText'] . '</span><br>';
+		echo '<p class="note-text">' . $item['NoteText'] . '</p>';
 		
 		foreach($tags as $tag) {
-			echo '<span class="note-tags">' . $tag . '</span>';
+			echo '<span class="note-tags" data-tag="' . $tag . '">' . $tag . '</span>';
+			// if(!in_array($tag, $tagList)) { $tagList[] = $tag; }
 		}
 		
 		echo '</div>';
+		// echo json_encode(serialize($tagList));
 	}
 
 ?>

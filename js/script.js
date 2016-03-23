@@ -20,5 +20,23 @@
 	.fail(function(error) {
 		console.log('It failed: ', error);
 	});
+	
+	// Hide the form to create new note until clicked
+	$('#new-note-section').hide();
+	
+	$('#new-note-button').on('click', function(){
+		$('#new-note-section').show();
+	});
+	
+	$('#add-note-button').on('click', function() {
+		// add the note
+		var noteText = $('#add-note-text').val();
+		var noteTags = $('#add-note-tags').val();
+		var noteTitle = $('#add-note-title').val();
+		
+		console.log(noteTags, noteText, noteTitle);
+		
+		console.log('Eventually will actually add the note.');
+	});
 
 })();
