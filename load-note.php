@@ -8,7 +8,6 @@
 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 	$result = '';
-	// $tagList = array();
 		
 	foreach($rows as $item) {
 		
@@ -20,11 +19,11 @@
 		
 		foreach($tags as $tag) {
 			echo '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' . $tag . '">' . $tag . '</span>';
-			// if(!in_array($tag, $tagList)) { $tagList[] = $tag; }
 		}
 		
 		echo '</div>';
-		// echo json_encode(serialize($tagList));
 	}
+	
+	// potentially change this to instead return JSON which will then be parsed by the client-side script.js
 
 ?>

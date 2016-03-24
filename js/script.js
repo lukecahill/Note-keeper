@@ -6,7 +6,7 @@
 	
 	function loadNotes() {
 		$.ajax({
-			url: 'load.php',
+			url: 'load-note.php',
 			method: 'POST'
 		})
 		.done(function(data, result) {
