@@ -22,7 +22,7 @@
 			<div id="add-note-tags">
 			</div>
 		</div>
-		<button class="btn btn-success" id="add-note-button">
+		<button class="btn btn-success pull-right" id="add-note-button">
 			<span class="glyphicon glyphicon-plus"></span>
 			Add Note
 		</button>

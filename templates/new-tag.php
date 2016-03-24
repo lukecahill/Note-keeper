@@ -9,7 +9,7 @@
 			</label>
 			<input type="text" id="add-tag-text" class="form-control">
 		</div>
-		<button class="btn btn-success" id="add-tag-button">
+		<button class="btn btn-success pull-right" id="add-tag-button">
 			<span class="glyphicon glyphicon-plus"></span>
 			Add Tag
 		</button>
