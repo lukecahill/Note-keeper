@@ -17,9 +17,12 @@
 		echo '<span class="note-id" id="' . $item['NoteId'] . '">Note ID: ' . $item['NoteId']. '</span>';
 		echo '<p class="note-text">' . $item['NoteText'] . '</p>';
 		
-		foreach($tags as $tag) {
-			echo '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' . $tag . '">' . $tag . '</span>';
+		if(sizeof($tags) > 0) {
+			foreach($tags as $tag) {
+				echo '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' . $tag . '">' . $tag . '</span>';
+			}
 		}
+
 		
 		echo '</div>';
 	}

@@ -14,19 +14,23 @@
 	foreach($rows as $item) {
 		
 		$tags = unserialize($item['NoteTags']);
-		foreach($tags as $tag) {
-			
-			if(!in_array($tag, $tagList)) { 
-				$checkbox[] = 
-				'<div class="checkbox">
-				  <label>
-					<input type="checkbox" name="new-tag" data-tag="' . $tag . '" value="' . $tag . '">
-					' . $tag . '
-				  </label>
-				</div>';
-				$tagList[] = $tag;
+		
+		if(sizeof($tags) > 0) {
+			foreach($tags as $tag) {
+				
+				if(!in_array($tag, $tagList)) { 
+					$checkbox[] = 
+					'<div class="checkbox">
+					  <label>
+						<input type="checkbox" name="new-tag" data-tag="' . $tag . '" value="' . $tag . '">
+						' . $tag . '
+					  </label>
+					</div>';
+					$tagList[] = $tag;
+				}
 			}
 		}
+
 	}
 	
 	foreach($checkbox as $tag) {

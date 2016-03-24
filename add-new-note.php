@@ -6,7 +6,7 @@ if(isset($_POST['noteText'])) {
 	$db = ConnectDb();
 
 	$noteText = $_POST['noteText'];
-	$noteTags = $_POST['noteTags'];
+	$noteTags = isset($_POST['noteTags']) ? $_POST['noteTags'] : '';
 	$noteTitle = $_POST['noteTitle'];
 	
 	// TODO: add the title to the database and then the statements below
