@@ -17,8 +17,6 @@
 				$('#note-list').append(data);
 				$('#note-list').append(data);
 				$('#note-list').append(data);
-				$('#note-list').append(data);
-				$('#note-list').append(data);
 			}
 		})
 		.fail(function(error) {
@@ -32,8 +30,8 @@
 			method: 'POST'
 		})
 		.done(function(data, result) {
-			console.log(data);
 			$('#add-note-tags').append(data);
+			toastr.info('Loading success');
 		})
 		.fail(function(error) {
 			console.log(result);
@@ -42,6 +40,7 @@
 
 	// Hide the form to create new note until clicked
 	$('#new-note-section').hide();
+	$('#new-tag-section').hide();
 	
 	$('#new-note-button').on('click', function(){
 		$('#new-note-section').show();
@@ -73,9 +72,46 @@
 			console.log('There was a failure: ', error);
 		});
 		
-		// console.log(noteTags, noteText, noteTitle);
+		toastr.success('Note has been added successfully!');
+		console.log('Note added.');
+	});
+	
+	$('#note-list').on('click', '.note-tags', function() {
+		// Just realised this bit will be a bit harder than I realised as the clicked tag may have a sibling which is another tag which will then hide the clicked...
+		// Have to check the siblings of each, then hide if there are no spans with the clicked tag data attribute.
+		var tag = $(this).data('tag');
+		var notes = $('.note');
+		var hide = [];
 		
-		console.log('Eventually will actually add the note.');
+		$.each(notes, function(index, value) {
+			$value = $(value);
+			
+			var tags = $value.children('.note-tags');
+			var tagData = [];
+			
+			$.each(tags, function(i, childTag) {
+				$this = $(childTag);
+				var data = $this.data('tag');
+				tagData.push(data);
+			});
+			
+			if(tagData.indexOf(tag) === -1) {
+				hide.push(value);
+			}
+		});
+			
+		$.each(hide, function(index, value) {
+			$(value).hide();
+			// Half there - currently hides both the white/blue tags
+		});
+	});
+	
+	$('#show-all-notes-button').on('click', function() {
+		$('.note').show();
+	});
+	
+	$('#show-new-tag-button').on('click', function() {
+		$('#new-tag-section').show();
 	});
 
 })();

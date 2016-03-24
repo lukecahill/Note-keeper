@@ -19,7 +19,7 @@
 		echo '<p class="note-text">' . $item['NoteText'] . '</p>';
 		
 		foreach($tags as $tag) {
-			echo '<span class="note-tags" data-tag="' . $tag . '">' . $tag . '</span>';
+			echo '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' . $tag . '">' . $tag . '</span>';
 			// if(!in_array($tag, $tagList)) { $tagList[] = $tag; }
 		}
 		

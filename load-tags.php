@@ -9,6 +9,7 @@
 	
 	$result = '';
 	$tagList = array();
+	$checkbox = array();
 		
 	foreach($rows as $item) {
 		
@@ -16,21 +17,22 @@
 		foreach($tags as $tag) {
 			
 			if(!in_array($tag, $tagList)) { 
-				$tagList[] = 
+				$checkbox[] = 
 				'<div class="checkbox">
 				  <label>
-					<input type="checkbox" name="new-tag" class="note-tags" data-tag="' . $tag . '" value="' . $tag . '">
+					<input type="checkbox" name="new-tag" data-tag="' . $tag . '" value="' . $tag . '">
 					' . $tag . '
 				  </label>
 				</div>';
+				$tagList[] = $tag;
 			}
 		}
 	}
 	
-	//echo '<select id="add-note-tag-selector" class="form-control">';
-	foreach($tagList as $tag) {
+	foreach($checkbox as $tag) {
 		echo $tag;
 	}
-	//echo '</select>';
+	
+	// change this to return JSON which can then be decoded server-side and will also populate an option box to pick which tag to show.
 
 ?>

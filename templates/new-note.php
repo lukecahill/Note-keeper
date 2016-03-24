@@ -17,14 +17,14 @@
 		</div>
 		<div class="form-group">
 			<label for="add-note-title">
-				Note Tags (separate with commas)
+				Note Tags
 			</label>
 			<div id="add-note-tags">
 			</div>
 		</div>
 		<button class="btn btn-success" id="add-note-button">
 			<span class="glyphicon glyphicon-plus"></span>
-			Add
+			Add Note
 		</button>
 	</div>
 </div>
