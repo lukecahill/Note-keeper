@@ -21,17 +21,16 @@
 		
 		<div class="col-sm-12 row">
 			<button class="btn btn-success" id="new-note-button">
-				<span class="glyphicon glyphicon-plus"></span>
+				<span class="glyphicon glyphicon-comment"></span>
 				Add New Note
 			</button>
+			
 			<button class="btn btn-success" id="show-new-tag-button">
 				<span class="glyphicon glyphicon-tag"></span>
 				Add New Tag
 			</button>
-		</div>
-		
-		<div class="col-sm-12 row">
-			<button class="btn btn-success" id="show-all-notes-button">
+			
+			<button class="btn btn-default pull-right" id="show-all-notes-button">
 				<span class="glyphicon glyphicon-search"></span>
 				Show All Notes
 			</button>

@@ -12,11 +12,6 @@
 		.done(function(data, result) {
 			if(result === 'success') {
 				$('#note-list').append(data);
-				
-				// few more times just to add some more data
-				$('#note-list').append(data);
-				$('#note-list').append(data);
-				$('#note-list').append(data);
 			}
 		})
 		.fail(function(error) {
@@ -79,9 +74,11 @@
 	$('#note-list').on('click', '.note-tags', function() {
 		// Just realised this bit will be a bit harder than I realised as the clicked tag may have a sibling which is another tag which will then hide the clicked...
 		// Have to check the siblings of each, then hide if there are no spans with the clicked tag data attribute.
+		
 		var tag = $(this).data('tag');
 		var notes = $('.note');
 		var hide = [];
+		$('.note').show();
 		
 		$.each(notes, function(index, value) {
 			$value = $(value);
@@ -104,6 +101,8 @@
 			$(value).hide();
 			// Half there - currently hides both the white/blue tags
 		});
+		
+		toastr.info('Now only showing notes with the tag "' + tag + '"');
 	});
 	
 	$('#show-all-notes-button').on('click', function() {
