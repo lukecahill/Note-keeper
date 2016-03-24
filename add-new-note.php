@@ -1,4 +1,5 @@
 <?php
+
 if(isset($_POST['noteText'])) {
 	
 	require_once 'includes/db-connect.inc.php';

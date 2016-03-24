@@ -71,9 +71,29 @@
 		console.log('Note added.');
 	});
 	
+	$('#add-tag-button').on('click', function() {
+		// TODO: implement this in the PHP file add-new-tag.php, and also actually create the database table - new table or column?
+		var newTag = $('#add-tag-text').val();
+		
+		$.ajax({
+			url: 'add-new-tag.php',
+			method: 'POST',
+			data: { 
+				newTag: newTag
+			}
+		})
+		.done(function(data, result) {
+			console.log(data);
+		})
+		.fail(function(error) {
+			console.log('There was a failure: ', error);
+		});
+		
+		toastr.success('Tag has been added successfully!');
+		console.log('Tag added.');
+	});
+	
 	$('#note-list').on('click', '.note-tags', function() {
-		// Just realised this bit will be a bit harder than I realised as the clicked tag may have a sibling which is another tag which will then hide the clicked...
-		// Have to check the siblings of each, then hide if there are no spans with the clicked tag data attribute.
 		
 		var tag = $(this).data('tag');
 		var notes = $('.note');
@@ -99,7 +119,6 @@
 			
 		$.each(hide, function(index, value) {
 			$(value).hide();
-			// Half there - currently hides both the white/blue tags
 		});
 		
 		toastr.info('Now only showing notes with the tag "' + tag + '"');
