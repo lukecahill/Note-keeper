@@ -15,6 +15,8 @@ if(isset($_POST['noteText'])) {
 
 	$stmt = $db->prepare('INSERT INTO note(NoteText, NoteTags) VALUES(:text, :tags)');
 	$stmt->execute(array(':text' => $noteText, ':tags' => $noteTags));
+	
+	echo $db->lastInsertId();
 
 } else {
 	die('No direct access!');

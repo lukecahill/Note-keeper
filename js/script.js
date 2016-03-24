@@ -25,20 +25,36 @@
 			method: 'POST'
 		})
 		.done(function(data, result) {
-			$('#add-note-tags').append(data);
-			toastr.info('Loading success');
+			if(result == 'success') {
+				$('#add-note-tags').append(data);
+				toastr.info('Loading success');
+			}
 		})
 		.fail(function(error) {
 			console.log(result);
 		});
 	}
+	
+	toastr.options = {
+		"timeOut": "2000",
+		"preventDuplicates": false,
+		"closeButton": true
+	};;
 
 	// Hide the form to create new note until clicked
 	$('#new-note-section').hide();
 	$('#new-tag-section').hide();
 	
 	$('#new-note-button').on('click', function(){
-		$('#new-note-section').show();
+		$('#new-note-section').toggle();
+	});
+	
+	$('#show-new-tag-button').on('click', function() {
+		$('#new-tag-section').toggle();
+	});
+	
+	$('#show-all-notes-button').on('click', function() {
+		$('.note').show();
 	});
 	
 	$('#add-note-button').on('click', function() {
@@ -62,6 +78,13 @@
 		})
 		.done(function(data, result) {
 			console.log(data);
+			var tags = '';
+			
+			$.each(tagArray, function(index, value) {
+				tags += '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' + value + '">' + value + '</span>';
+			});
+			
+			$('#note-list').append('<div class="note"><span class="note-id" id="' + data + '">Note ID: ' + data + '</span><p class="note-text">' + noteText + '</p>' + tags + '</div>');
 		})
 		.fail(function(error) {
 			console.log('There was a failure: ', error);
@@ -122,14 +145,6 @@
 		});
 		
 		toastr.info('Now only showing notes with the tag "' + tag + '"');
-	});
-	
-	$('#show-all-notes-button').on('click', function() {
-		$('.note').show();
-	});
-	
-	$('#show-new-tag-button').on('click', function() {
-		$('#new-tag-section').show();
 	});
 
 })();
