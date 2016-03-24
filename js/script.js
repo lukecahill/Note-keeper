@@ -85,6 +85,10 @@
 			});
 			
 			$('#note-list').append('<div class="note"><span class="note-id" id="' + data + '">Note ID: ' + data + '</span><p class="note-text">' + noteText + '</p>' + tags + '</div>');
+			
+			$('#add-note-title').val('');
+			$('#add-note-text').val('');
+			$('input:checkbox[name=new-tag]').removeAttr('checked');
 		})
 		.fail(function(error) {
 			console.log('There was a failure: ', error);

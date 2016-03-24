@@ -11,13 +11,14 @@
 		
 	foreach($rows as $item) {
 		
+		$tags = '';
 		$tags = unserialize($item['NoteTags']);
 		
 		echo '<div class="note">';
 		echo '<span class="note-id" id="' . $item['NoteId'] . '">Note ID: ' . $item['NoteId']. '</span>';
 		echo '<p class="note-text">' . $item['NoteText'] . '</p>';
 		
-		if(sizeof($tags) > 0) {
+		if(sizeof($tags) > 0 && $tags !== '') {
 			foreach($tags as $tag) {
 				echo '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' . $tag . '">' . $tag . '</span>';
 			}
