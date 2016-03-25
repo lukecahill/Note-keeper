@@ -1,6 +1,6 @@
 <?php
 
-	require_once 'includes/db-connect.inc.php';
+	require_once 'db-connect.inc.php';
 
 	$db = ConnectDb();
 	$stmt = $db->prepare("SELECT NoteTags FROM note");
@@ -15,7 +15,7 @@
 		
 		$tags = unserialize($item['NoteTags']);
 		
-		if(sizeof($tags) > 0) {
+		if(sizeof($tags) > 0 && $tags !== '') {
 			foreach($tags as $tag) {
 				
 				if(!in_array($tag, $tagList)) { 
@@ -26,7 +26,11 @@
 						' . $tag . '
 					  </label>
 					</div>';
-					$tagList[] = $tag;
+					
+					// limit the pre-loaded tags to 5.
+					if(sizeof($tagList) < 5) {
+						$tagList[] = $tag;
+					}
 				}
 			}
 		}
