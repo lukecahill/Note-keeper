@@ -15,30 +15,35 @@
 	<div class="container-fluid">
 		<div class="jumbotron">
 			<h1>
-				Note Keeper.
+				<span class="glyphicon glyphicon-comment">
+				</span>
+					Note Keeper.
 			</h1>
 		</div>
 		
 		<div class="col-sm-12 row">
-			<button class="btn btn-success" id="new-note-button">
-				<span class="glyphicon glyphicon-comment"></span>
-				Add New Note
-			</button>
+			<div class="col-sm-6">
+				<button class="btn btn-success" id="new-note-button">
+					<span class="glyphicon glyphicon-comment"></span>
+					Add New Note
+				</button>
+			</div>
 			
-			<button class="btn btn-success" id="show-new-tag-button">
-				<span class="glyphicon glyphicon-tag"></span>
-				Add New Tag
-			</button>
-			
-			<button class="btn btn-default pull-right" id="show-all-notes-button">
-				<span class="glyphicon glyphicon-search"></span>
-				Show All Notes
-			</button>
+			<div class="col-sm-6 text-right">
+				<button class="btn btn-default" id="refresh-button">
+					<span class="glyphicon glyphicon-refresh"></span>
+					Refresh
+				</button>
+				
+				<button class="btn btn-default" id="show-all-notes-button">
+					<span class="glyphicon glyphicon-search"></span>
+					Show All Notes
+				</button>
+			</div>
 		</div>
 		
 		<?php 
 			include $baseUrl . '/templates/new-note.php';
-			include $baseUrl . '/templates/new-tag.php'; 
 		?>
 		
 		<div class="col-sm-12 row">

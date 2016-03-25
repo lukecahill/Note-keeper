@@ -13,16 +13,29 @@
 			<label for="add-note-title">
 				Note Text
 			</label>
-			<input type="text" id="add-note-text" class="form-control">
+			<input type="text" id="add-note-text" required class="form-control">
+			
+			<p class="validation-error note-text-validation">
+				Invalid - Note must contain text!
+			</p>
 		</div>
 		<div class="form-group">
 			<label for="add-note-title">
-				Note Tags
+				Note Tags - Enter the tag and click 'Add New Tag' to add.
 			</label>
+			
+			<input type="text" id="add-new-tag-text" class="form-control">
+			<button class="btn btn-success top-buffer" id="show-new-tag-button">
+				<span class="glyphicon glyphicon-tag"></span>
+				Add New Tag
+			</button>
 			<div id="add-note-tags">
+				<h5>
+					Previously used (maximum of 5):
+				</h5>
 			</div>
 		</div>
-		<button class="btn btn-success pull-right" id="add-note-button">
+		<button class="btn btn-success" id="add-note-button">
 			<span class="glyphicon glyphicon-plus"></span>
 			Add Note
 		</button>
