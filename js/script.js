@@ -1,12 +1,14 @@
 (function() {
 	
 	// load the available notes and tags.
+	var tagsToAdd = [];
 	loadNotes();
 	loadTags();
 	
 	function loadNotes() {
+		
 		$.ajax({
-			url: 'load-note.php',
+			url: 'includes/load-note.php',
 			method: 'POST'
 		})
 		.done(function(data, result) {
@@ -20,8 +22,9 @@
 	}
 	
 	function loadTags() {
+		
 		$.ajax({
-			url: 'load-tags.php',
+			url: 'includes/load-tags.php',
 			method: 'POST'
 		})
 		.done(function(data, result) {
@@ -31,7 +34,7 @@
 			}
 		})
 		.fail(function(error) {
-			console.log(result);
+			console.log(error);
 		});
 	}
 	
@@ -43,7 +46,7 @@
 
 	// Hide the form to create new note until clicked
 	$('#new-note-section').hide();
-	$('#new-tag-section').hide();
+	$('.note-text-validation').hide();
 	
 	$('#new-note-button').on('click', function(){
 		$('#new-note-section').toggle();
@@ -58,66 +61,63 @@
 	});
 	
 	$('#add-note-button').on('click', function() {
-		// add the note
+		
 		var noteText = $('#add-note-text').val();
 		var noteTitle = $('#add-note-title').val();
 		var tagArray = [];
 		
+		if(noteText.trim() === '') {
+			$('.note-text-validation').show(); 
+			return;
+		}
+		
 		$('input:checkbox[name=new-tag]:checked').each(function() {
 			tagArray.push($(this).val());
 		});
+		var allTags = tagArray.concat(tagsToAdd);
 		
 		$.ajax({
-			url: 'add-new-note.php',
+			url: 'includes/add-new-note.php',
 			method: 'POST',
 			data: { 
 				noteText: noteText, 
-				noteTags: tagArray, 
+				noteTags: allTags, 
 				noteTitle: noteTitle 
 			}
 		})
 		.done(function(data, result) {
-			console.log(data);
 			var tags = '';
 			
-			$.each(tagArray, function(index, value) {
+			$.each(allTags, function(index, value) {
 				tags += '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' + value + '">' + value + '</span>';
 			});
 			
-			$('#note-list').append('<div class="note"><span class="note-id" id="' + data + '">Note ID: ' + data + '</span><p class="note-text">' + noteText + '</p>' + tags + '</div>');
-			
+			$('#note-list').append('<div class="note" data-id="' + data + '"><span class="note-id" id="' + data + '">Note ID: ' + data + '</span><h4 class="note-title">' + noteTitle + '</h4><p class="note-text">' + noteText + '</p>' + tags + '<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span></div></div>');
+				
+			// Reset and confirmation.
 			$('#add-note-title').val('');
 			$('#add-note-text').val('');
 			$('input:checkbox[name=new-tag]').removeAttr('checked');
+			tagsToAdd = [];
+			toastr.success('Note has been added successfully!');
+			$('#new-note-section').hide();
 		})
 		.fail(function(error) {
 			console.log('There was a failure: ', error);
 		});
 		
-		toastr.success('Note has been added successfully!');
-		console.log('Note added.');
 	});
 	
-	$('#add-tag-button').on('click', function() {
-		// TODO: implement this in the PHP file add-new-tag.php, and also actually create the database table - new table or column?
-		var newTag = $('#add-tag-text').val();
+	$('#show-new-tag-button').on('click', function() {
 		
-		$.ajax({
-			url: 'add-new-tag.php',
-			method: 'POST',
-			data: { 
-				newTag: newTag
-			}
-		})
-		.done(function(data, result) {
-			console.log(data);
-		})
-		.fail(function(error) {
-			console.log('There was a failure: ', error);
-		});
+		var newTag = $('#add-new-tag-text').val();
 		
-		toastr.success('Tag has been added successfully!');
-		console.log('Tag added.');
+		if(newTag.trim() !== '') {
+			tagsToAdd.push(newTag);
+			$('#add-note-tags').append('<p>' + newTag + '</p>');
+			$('#add-new-tag-text').val('');
+		}
+
 	});
 	
 	$('#note-list').on('click', '.note-tags', function() {
@@ -149,6 +149,64 @@
 		});
 		
 		toastr.info('Now only showing notes with the tag "' + tag + '"');
+	});
+	
+	$('#note-list').on('click', '.remove-note', function() {
+		$this = $(this);
+		var deleteId = $this.closest('.note').data('id');
+		
+ 		$.ajax({
+			method: 'POST',
+			url: 'includes/delete-note.php',
+			data: {
+				deleteNote: deleteId
+			}
+		})
+		.done(function(data, result) {
+			$this.closest('.note').remove();
+			toastr.success('Note has been deleted!');
+		})
+		.fail(function(error) {
+			console.log('An error has occurred: ', error);
+		}); 
+		
+	});
+	
+	$('#note-list').on('click', '.edit-note', function() {
+		// edit the note in the database.
+		// also edit the note which is in the DOM 
+		// would probably be best to have this done in a modal.
+		// TODO : above - skeleton code is below.		
+		$this = $(this);
+		var newText = '';
+		var noteId = $this.closest('.note').data('id');
+		
+		$.ajax({
+			method: 'POST',
+			url: 'includes/',
+			data: {
+				noteText: newText,
+				noteId: noteId
+			}
+		})
+		.done(function(data, result) {
+			console.log(data, result)
+			// update the DOM here.
+			
+			toastr.success('Note successfully updated!');
+		})
+		.fail(function() {
+			console.log('An error has occurred: ', error);
+		});
+		
+	});
+	
+	$('#add-note-text').on('keyup', function() {
+		$('.note-text-validation').hide();
+	});
+	
+	$('#refresh-button').on('click', function() {
+		window.location.reload();
 	});
 
 })();
