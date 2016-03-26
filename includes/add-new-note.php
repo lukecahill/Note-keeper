@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_POST['noteText'])) {
+if(isset($_POST['noteText']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	
 	require_once 'db-connect.inc.php';
 	$db = ConnectDb();

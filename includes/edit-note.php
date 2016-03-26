@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_POST['noteText']) && isset($_POST['noteId'])) {
+if(isset($_POST['noteText']) && isset($_POST['noteId']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	
 	$note = $_POST['noteText'];
 	$noteId = $_POST['noteId'];
@@ -12,6 +12,8 @@ if(isset($_POST['noteText']) && isset($_POST['noteId'])) {
 	$stmt->execute(array( ':text' => $note, ':id' => $noteId));
 	
 	echo $noteId . ' has been updated.';
+} else {
+	echo 'No direct access';
 }
 
 ?>

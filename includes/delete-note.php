@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_POST['deleteNote'])) {
+if(isset($_POST['deleteNote']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	
 	$delete = $_POST['deleteNote'];
 	
@@ -11,6 +11,8 @@ if(isset($_POST['deleteNote'])) {
 	$stmt->execute(array(':noteId' => $delete));
 	
 	echo $delete . ' has been deleted.';
+} else {
+	echo 'No direct access';
 }
 
 ?>
