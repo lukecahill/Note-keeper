@@ -1,7 +1,7 @@
 (function() {
 	
 	// load the available notes and tags.
-	var tagsToAdd = [];
+	// var tagsToAdd = [];
 	loadNotes();
 	loadTags();
 	
@@ -42,8 +42,8 @@
 		var newTag = $('#add-new-tag-text').val();
 		
 		if(newTag.trim() !== '') {
-			tagsToAdd.push(newTag);
-			$('#add-note-tags').append('<p>' + newTag + '</p>');
+			// tagsToAdd.push(newTag);
+			$('#add-note-tags').append('<div class="checkbox"><label><input type="checkbox" checked name="new-tag" data-tag="' + newTag + '" value="' + newTag + '">' + newTag + '</label></div>');
 			$('#add-new-tag-text').val('');
 		}
 	}
@@ -84,7 +84,8 @@
 		$('input:checkbox[name=new-tag]:checked').each(function() {
 			tagArray.push($(this).val());
 		});
-		var allTags = tagArray.concat(tagsToAdd);
+		// var allTags = tagArray.concat(tagsToAdd);
+		var allTags = tagArray;
 		
 		$.ajax({
 			url: 'includes/add-new-note.php',
@@ -199,6 +200,32 @@
 			// update the DOM here.
 			
 			toastr.success('Note successfully updated!');
+		})
+		.fail(function(error) {
+			console.log('An error has occurred: ', error);
+		});
+		
+	});
+	
+	$('#note-list').on('click', '.note-done', function() {
+		// Mark the note as done and remove from the list. Or change color? Place in another area? Choose...
+		// TODO : above - skeleton code is below.		
+		$this = $(this);
+		var newText = '';
+		var noteId = $this.closest('.note').data('id');
+		
+		$.ajax({
+			method: 'POST',
+			url: 'includes/note-done.php',
+			data: {
+				noteId: noteId
+			}
+		})
+		.done(function(data, result) {
+			console.log(data, result)
+			// update the DOM here.
+			$this.closest('.note').remove();
+			toastr.success('Note marked as complete!');
 		})
 		.fail(function(error) {
 			console.log('An error has occurred: ', error);
