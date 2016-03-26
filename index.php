@@ -12,6 +12,7 @@
 		require_once 'includes/db-connect.inc.php'; 
 		$baseUrl = getcwd();
 	?>
+
 	<div class="container-fluid">
 		<div class="jumbotron">
 			<h1>
@@ -22,6 +23,9 @@
 		</div>
 		
 		<div class="col-sm-12 row">
+		
+			<?php include $baseUrl . '/templates/signin.php'; ?>
+		
 			<div class="col-sm-6">
 				<button class="btn btn-success" id="new-note-button">
 					<span class="glyphicon glyphicon-comment"></span>
