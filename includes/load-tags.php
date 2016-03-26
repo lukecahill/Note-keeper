@@ -1,9 +1,14 @@
 <?php
 
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+	
 	require_once 'db-connect.inc.php';
 
 	$db = ConnectDb();
-	$stmt = $db->prepare("SELECT NoteTags FROM note");
+	$stmt = $db->prepare("SELECT NoteTags 
+							FROM note 
+							WHERE NoteComplete = 0"
+						);
 	$stmt->execute();
 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
@@ -42,5 +47,9 @@
 	}
 	
 	// change this to return JSON which can then be decoded server-side and will also populate an option box to pick which tag to show.
+
+} else {
+	echo 'No direct access';
+}
 
 ?>

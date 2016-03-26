@@ -1,9 +1,14 @@
 <?php
 
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
 	require_once 'db-connect.inc.php';
 
 	$db = ConnectDb();
-	$stmt = $db->prepare("SELECT NoteTitle, NoteText, NoteId, NoteTags FROM note");
+	$stmt = $db->prepare("SELECT NoteTitle, NoteText, NoteId, NoteTags 
+							FROM note 
+							WHERE NoteComplete = 0"
+						);
 	$stmt->execute();
 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
@@ -28,11 +33,15 @@
 		echo '<div class="note-glyphicons">
 			<span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span>
 			<span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span>
+			<span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span>
 		</div>';
 		
 		echo '</div>';
 	}
 	
 	// potentially change this to instead return JSON which will then be parsed by the client-side script.js
+} else {
+	echo 'No direct access';
+}
 
 ?>
