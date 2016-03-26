@@ -16,6 +16,10 @@ h1 span.glyphicon-comment {
 	color: #FF0000;
 }
 
+.note-logo {
+	height: 75px;
+}
+
 .note {
 	border: 1px solid #ddd;
 	padding: 8px;
