@@ -38,6 +38,16 @@
 		});
 	}
 	
+	function addTag() {
+		var newTag = $('#add-new-tag-text').val();
+		
+		if(newTag.trim() !== '') {
+			tagsToAdd.push(newTag);
+			$('#add-note-tags').append('<p>' + newTag + '</p>');
+			$('#add-new-tag-text').val('');
+		}
+	}
+	
 	toastr.options = {
 		"timeOut": "2000",
 		"preventDuplicates": false,
@@ -108,17 +118,7 @@
 		
 	});
 	
-	$('#show-new-tag-button').on('click', function() {
-		
-		var newTag = $('#add-new-tag-text').val();
-		
-		if(newTag.trim() !== '') {
-			tagsToAdd.push(newTag);
-			$('#add-note-tags').append('<p>' + newTag + '</p>');
-			$('#add-new-tag-text').val('');
-		}
-
-	});
+	$('#show-new-tag-button').on('click', addTag);
 	
 	$('#note-list').on('click', '.note-tags', function() {
 		
@@ -152,6 +152,11 @@
 	});
 	
 	$('#note-list').on('click', '.remove-note', function() {
+		
+		if(!confirm('Are you sure you wish to remove this note?')) {
+			return;
+		}
+		
 		$this = $(this);
 		var deleteId = $this.closest('.note').data('id');
 		
@@ -195,7 +200,7 @@
 			
 			toastr.success('Note successfully updated!');
 		})
-		.fail(function() {
+		.fail(function(error) {
 			console.log('An error has occurred: ', error);
 		});
 		
@@ -203,6 +208,12 @@
 	
 	$('#add-note-text').on('keyup', function() {
 		$('.note-text-validation').hide();
+	});
+	
+	$('#add-new-tag-text').on('keyup', function(event) {
+		if(event.keyCode == 13) {
+			addTag();
+		}
 	});
 	
 	$('#refresh-button').on('click', function() {
