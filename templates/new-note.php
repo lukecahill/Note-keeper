@@ -23,15 +23,18 @@
 			<label for="add-note-title">
 				Note Tags - Enter the tag and click 'Add New Tag' to add.
 			</label>
-			
-			<input type="text" id="add-new-tag-text" class="form-control">
-			<button class="btn btn-success top-buffer" id="show-new-tag-button">
-				<span class="glyphicon glyphicon-tag"></span>
-				Add New Tag
-			</button>
+			<div class="input-group">
+				<input type="text" id="add-new-tag-text" class="form-control">
+				<span class="input-group-btn">
+					<button class="btn btn-success" id="show-new-tag-button">
+					<span class="glyphicon glyphicon-tag"></span>
+						Add New Tag
+					</button>
+				</span>
+			</div>
 			<div id="add-note-tags">
 				<h5>
-					Previously used (maximum of 5):
+					Check box to add tag to the note.
 				</h5>
 			</div>
 		</div>
