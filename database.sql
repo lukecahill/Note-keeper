@@ -1,0 +1,8 @@
+CREATE DATABASE notes;
+
+CREATE TABLE note (
+    NoteId INT(11) AUTO_INCREMENT PRIMARY KEY,
+    NoteText VARCHAR(255),
+    NoteTags VARCHAR(512),
+	NoteTitle VARCHAR(50)
+);
