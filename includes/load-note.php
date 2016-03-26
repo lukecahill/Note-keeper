@@ -1,15 +1,19 @@
 <?php
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
+if(($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['userId']) && isset($_POST['complete'])) {
 
 	require_once 'db-connect.inc.php';
-
+	$userId = $_POST['userId'];
+	$complete = $_POST['complete'];
 	$db = ConnectDb();
-	$stmt = $db->prepare("SELECT NoteTitle, NoteText, NoteId, NoteTags 
+	
+ 	$stmt = $db->prepare("SELECT NoteTitle, NoteText, NoteId, NoteTags 
 							FROM note 
-							WHERE NoteComplete = 0"
+							WHERE NoteComplete = :complete
+							AND UserId = :userId"
 						);
-	$stmt->execute();
+	
+	$stmt->execute(array(':userId' => $userId, ':complete' => $complete));
 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	
 	$result = '';

@@ -1,19 +1,33 @@
 (function() {
 	
 	// load the available notes and tags.
-	// var tagsToAdd = [];
-	loadNotes();
+	loadNotes(0);
 	loadTags();
+	var showingComplete = false;
+	var $noteList = $('#note-list');
 	
-	function loadNotes() {
+	function loadNotes(complete) {
 		
 		$.ajax({
 			url: 'includes/load-note.php',
-			method: 'POST'
+			method: 'POST',
+			data: {
+				userId: userId,
+				complete: complete
+			}
 		})
 		.done(function(data, result) {
 			if(result === 'success') {
 				$('#note-list').append(data);
+				
+				if(complete === 1) {
+					// change the button text. Remove the show all notes.
+					$('show-all-notes-button').hide();
+					$('#complete-notes-button').html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');
+				} else {
+					$('show-all-notes-button').show();
+					$('#complete-notes-button').html('<span class="glyphicon glyphicon-asterisk"></span>	Show Completed Notes');				
+				}
 			}
 		})
 		.fail(function(error) {
@@ -42,7 +56,6 @@
 		var newTag = $('#add-new-tag-text').val();
 		
 		if(newTag.trim() !== '') {
-			// tagsToAdd.push(newTag);
 			$('#add-note-tags').append('<div class="checkbox"><label><input type="checkbox" checked name="new-tag" data-tag="' + newTag + '" value="' + newTag + '">' + newTag + '</label></div>');
 			$('#add-new-tag-text').val('');
 		}
@@ -52,7 +65,7 @@
 		"timeOut": "2000",
 		"preventDuplicates": false,
 		"closeButton": true
-	};;
+	};
 
 	// Hide the form to create new note until clicked
 	$('#new-note-section').hide();
@@ -84,22 +97,20 @@
 		$('input:checkbox[name=new-tag]:checked').each(function() {
 			tagArray.push($(this).val());
 		});
-		// var allTags = tagArray.concat(tagsToAdd);
-		var allTags = tagArray;
 		
 		$.ajax({
 			url: 'includes/add-new-note.php',
 			method: 'POST',
 			data: { 
 				noteText: noteText, 
-				noteTags: allTags, 
+				noteTags: tagArray, 
 				noteTitle: noteTitle 
 			}
 		})
 		.done(function(data, result) {
 			var tags = '';
 			
-			$.each(allTags, function(index, value) {
+			$.each(tagArray, function(index, value) {
 				tags += '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' + value + '">' + value + '</span>';
 			});
 			
@@ -209,7 +220,7 @@
 	
 	$('#note-list').on('click', '.note-done', function() {
 		// Mark the note as done and remove from the list. Or change color? Place in another area? Choose...
-		// TODO : above - skeleton code is below.		
+		// TODO : above	
 		$this = $(this);
 		var newText = '';
 		var noteId = $this.closest('.note').data('id');
@@ -231,6 +242,20 @@
 			console.log('An error has occurred: ', error);
 		});
 		
+	});
+	
+	$('#complete-notes-button').on('click', function() {
+		if(showingComplete) {
+			$noteList.empty();
+			$('#complete-notes-button').html('<span class="glyphicon glyphicon-asterisk"></span>	Show Completed Notes');
+			showingComplete = false;
+			loadNotes(0);
+		} else {
+			$noteList.empty();
+			$('#complete-notes-button').html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');
+			showingComplete = true;
+			loadNotes(1);
+		}
 	});
 	
 	$('#add-note-text').on('keyup', function() {
