@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_POST['noteText']) && isset($_POST['noteId']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
+if(isset($_POST['noteText']) && isset($_POST['noteId']) && $_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 	
 	$note = $_POST['noteText'];
 	$noteId = $_POST['noteId'];

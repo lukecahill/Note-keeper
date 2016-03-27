@@ -1,6 +1,6 @@
 <?php
 
-if(isset($_POST['deleteNote']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
+if(isset($_POST['deleteNote']) && $_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 	
 	$delete = $_POST['deleteNote'];
 	

@@ -1,6 +1,6 @@
 <?php
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
+if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 	
 	require_once 'db-connect.inc.php';
 
@@ -33,7 +33,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 					</div>';
 					
 					// limit the pre-loaded tags to 5.
-					if(sizeof($tagList) < 5) {
+					if(5 >= count($tagList)) {
 						$tagList[] = $tag;
 					}
 				}
