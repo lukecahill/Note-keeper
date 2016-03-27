@@ -1,3 +1,11 @@
+<?php
+
+session_start();
+if(!isset($_SESSION['user'])) {
+	die(header('Location: login.php'));
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +20,6 @@
 <div class="container-fluid">
 	<div class="jumbotron">
 		<h1>
-			<!-- <span class="glyphicon glyphicon-comment"> -->
 			<img src="images/note.png" class="note-logo"></img>
 			</span>
 				Note Keeper.
