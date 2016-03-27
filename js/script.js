@@ -5,6 +5,8 @@
 	loadTags();
 	var showingComplete = false;
 	var $noteList = $('#note-list');
+	var $completedNoteButton = $('#complete-notes-button');
+	var $showAllNotesButton = $('#show-all-notes-button');
 	
 	function loadNotes(complete) {
 		
@@ -18,15 +20,20 @@
 		})
 		.done(function(data, result) {
 			if(result === 'success') {
-				$('#note-list').append(data);
-				
-				if(complete === 1) {
-					// change the button text. Remove the show all notes.
-					$('show-all-notes-button').hide();
-					$('#complete-notes-button').html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');
+
+				if(data !== 'none') {
+					$noteList.append(data);
 				} else {
-					$('show-all-notes-button').show();
-					$('#complete-notes-button').html('<span class="glyphicon glyphicon-asterisk"></span>	Show Completed Notes');				
+					$noteList.append('It appears that you have not yet created any notes. Create your first one.');
+				}
+				
+				if(complete !== 1) {
+					$showAllNotesButton.show();
+					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Completed Notes');		
+				} else {
+					// change the button text. Remove the show all notes.
+					$showAllNotesButton.hide();
+					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');		
 				}
 			}
 		})
@@ -79,7 +86,7 @@
 		$('#new-tag-section').toggle();
 	});
 	
-	$('#show-all-notes-button').on('click', function() {
+	$showAllNotesButton.on('click', function() {
 		$('.note').show();
 	});
 	
@@ -104,17 +111,17 @@
 			data: { 
 				noteText: noteText, 
 				noteTags: tagArray, 
-				noteTitle: noteTitle 
+				noteTitle: noteTitle,
+				userId: userId
 			}
 		})
 		.done(function(data, result) {
 			var tags = '';
-			
 			$.each(tagArray, function(index, value) {
 				tags += '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' + value + '">' + value + '</span>';
 			});
 			
-			$('#note-list').append('<div class="note" data-id="' + data + '"><span class="note-id" id="' + data + '">Note ID: ' + data + '</span><h4 class="note-title">' + noteTitle + '</h4><p class="note-text">' + noteText + '</p>' + tags + '<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span></div></div>');
+			$noteList.append('<div class="note" data-id="' + data + '"><span class="note-id" id="' + data + '">Note ID: ' + data + '</span><h4 class="note-title">' + noteTitle + '</h4><p class="note-text">' + noteText + '</p>' + tags + '<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>');
 				
 			// Reset and confirmation.
 			$('#add-note-title').val('');
@@ -132,7 +139,7 @@
 	
 	$('#show-new-tag-button').on('click', addTag);
 	
-	$('#note-list').on('click', '.note-tags', function() {
+	$noteList.on('click', '.note-tags', function() {
 		
 		var tag = $(this).data('tag');
 		var notes = $('.note');
@@ -163,7 +170,7 @@
 		toastr.info('Now only showing notes with the tag "' + tag + '"');
 	});
 	
-	$('#note-list').on('click', '.remove-note', function() {
+	$noteList.on('click', '.remove-note', function() {
 		
 		if(!confirm('Are you sure you wish to remove this note?')) {
 			return;
@@ -189,7 +196,7 @@
 		
 	});
 	
-	$('#note-list').on('click', '.edit-note', function() {
+	$noteList.on('click', '.edit-note', function() {
 		// edit the note in the database.
 		// also edit the note which is in the DOM 
 		// would probably be best to have this done in a modal.
@@ -207,7 +214,7 @@
 			}
 		})
 		.done(function(data, result) {
-			console.log(data, result)
+			console.log(data, result);
 			// update the DOM here.
 			
 			toastr.success('Note successfully updated!');
@@ -218,9 +225,8 @@
 		
 	});
 	
-	$('#note-list').on('click', '.note-done', function() {
-		// Mark the note as done and remove from the list. Or change color? Place in another area? Choose...
-		// TODO : above	
+	$noteList.on('click', '.note-done', function() {
+		
 		$this = $(this);
 		var newText = '';
 		var noteId = $this.closest('.note').data('id');
@@ -234,7 +240,6 @@
 		})
 		.done(function(data, result) {
 			console.log(data, result)
-			// update the DOM here.
 			$this.closest('.note').remove();
 			toastr.success('Note marked as complete!');
 		})
@@ -244,15 +249,15 @@
 		
 	});
 	
-	$('#complete-notes-button').on('click', function() {
+	$completedNoteButton.on('click', function() {
 		if(showingComplete) {
 			$noteList.empty();
-			$('#complete-notes-button').html('<span class="glyphicon glyphicon-asterisk"></span>	Show Completed Notes');
+			$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Completed Notes');
 			showingComplete = false;
 			loadNotes(0);
 		} else {
 			$noteList.empty();
-			$('#complete-notes-button').html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');
+			$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');
 			showingComplete = true;
 			loadNotes(1);
 		}
