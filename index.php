@@ -1,13 +1,8 @@
-<?php 
-	require_once 'includes/db-connect.inc.php'; 
-	$baseUrl = $_SERVER['DOCUMENT_ROOT'] . '/notes';
-?>
-
 <?php include 'templates/header.php'; ?>
 	
 <div class="col-sm-12 row">
 
-	<?php include $baseUrl . '/templates/signin.php'; ?>
+	<?php include 'templates/signin.php'; ?>
 
 	<div class="col-sm-6">
 		<button class="btn btn-success" id="new-note-button">
@@ -35,7 +30,7 @@
 </div>
 
 <?php 
-	include $baseUrl . '/templates/new-note.php';
+	include 'templates/new-note.php';
 ?>
 
 <div class="col-sm-12 row">
@@ -45,9 +40,9 @@
 	</div>
 </div>
 
-<?php echo '<script>var userId = 1;</script>'; // use this to echo the session user ID for the JS to use?> 
+<?php echo '<script>var userId = ' . $_SESSION['userId'] . '</script>'; // use this to echo the session user ID for the JS to use ?> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="js/script.js"></script>
 
-<?php include $baseUrl . '/templates/footer.html'; ?>
+<?php include 'templates/footer.html'; ?>
