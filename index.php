@@ -16,7 +16,7 @@
 		</button>
 	</div>
 	
-	<div class="col-sm-6 text-right">
+	<div class="col-sm-6 text-right mobile-text-left">
 		<button class="btn btn-default" id="refresh-button">
 			<span class="glyphicon glyphicon-refresh"></span>
 			Refresh

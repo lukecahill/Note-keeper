@@ -124,7 +124,7 @@ span.login-link, span.register-link {
 		width: 90%;
 	}
 	
-	div.col-sm-6.text-right {
+	div.mobile-text-left {
 		text-align: initial;
 		margin-top: 20px;
 	}
