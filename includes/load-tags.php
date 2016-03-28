@@ -24,22 +24,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 
 			foreach($tags as $tag) {
 				
 				if(!in_array($tag, $tagList)) { 
-					$checkbox[] = 
-					'<div class="checkbox">
-					  <label>
-						<input type="checkbox" name="new-tag" data-tag="' . $tag . '" value="' . $tag . '">
-						' . $tag . '
-					  </label>
-					</div>';
+					$tagList[] = $tag;
 					
 					// limit the pre-loaded tags to 5.
 					if(5 >= count($tagList)) {
-						$tagList[] = $tag;
+						$checkbox[] = 
+							'<div class="checkbox">
+							  <label>
+								<input type="checkbox" name="new-tag" data-tag="' . $tag . '" value="' . $tag . '">
+								' . $tag . '
+							  </label>
+							</div>';
 					}
 				}
 			}
 		}
-
 	}
 	
 	foreach($checkbox as $tag) {
