@@ -6,7 +6,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_M
 	require_once 'includes/db-connect.inc.php';
 	$db = ConnectDb();
 	
-	$email = strtolower($_POST['username']);
+	$email = $_POST['username'];
 	$password = $_POST['password'];
 	
 	
@@ -65,7 +65,6 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_M
 	<div class="jumbotron">
 		<h1>
 			<img src="images/note.png" class="note-logo"></img>
-			</span>
 				Note Keeper.
 		</h1>
 	</div>

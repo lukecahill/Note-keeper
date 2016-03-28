@@ -6,14 +6,25 @@ if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METH
 	require_once 'includes/db-connect.inc.php';
 	$db = ConnectDb();
 	
+	// need to check if the email is already being used in the database.
+	// TODO : above and now test below now that the above is done.
 	$email = $_POST['email'];
 	$password = $_POST['password'];	
 	$hash = password_hash($password, PASSWORD_DEFAULT);
 	
-	$stmt = $db->prepare('INSERT INTO note_users (UserEmail, UserPassword) VALUES(:email, :password);');
-	$stmt->execute(array(':email' => $email, ':password' => $hash));
+	$check = $db->prepare('SELECT UserEmail FROM note_users WHERE UserEmail = :email LIMIT 1');
+	$stmt->execute(array(':email' => $email));
 	
-	$success = true;
+	$emailHash = md5($email);
+	
+	if($check->rowCount() == 0) {
+		echo 'That username is already in use';
+	} else {
+		$stmt = $db->prepare('INSERT INTO note_users (UserId, UserEmail, UserPassword) VALUES(:id, :email, :password);');
+		$stmt->execute(array(':id' => $emailHash, ':email' => $email, ':password' => $hash));
+		
+		$success = true;
+	}
 }
 
 ?>
@@ -33,7 +44,6 @@ if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METH
 	<div class="jumbotron">
 		<h1>
 			<img src="images/note.png" class="note-logo"></img>
-			</span>
 				Note Keeper.
 		</h1>
 	</div>
