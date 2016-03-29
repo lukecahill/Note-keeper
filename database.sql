@@ -11,7 +11,8 @@ CREATE TABLE note (
 );
 
 CREATE TABLE note_users (
-    UserId VARCHAR(60) AUTO_INCREMENT PRIMARY KEY,
+    UserId VARCHAR(60) PRIMARY KEY,
     UserEmail VARCHAR(255),
-    UserPassword VARCHAR(512)
+    UserPassword VARCHAR(512),
+	TagColor VARCHAR(6)
 );
