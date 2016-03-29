@@ -40,6 +40,11 @@ if(($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['userId']) && isset($_
 					<span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span>
 					<span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span>
 					</div>';
+			} else {
+				echo '<div class="note-glyphicons">
+					<span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span>
+					<span class="glyphicon glyphicon-asterisk mark-note-active" title="Mark as active"></span>
+					</div>';
 			}
 			
 			echo '</div>';
