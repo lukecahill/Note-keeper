@@ -7,6 +7,7 @@
 	var $noteList = $('#note-list');
 	var $completedNoteButton = $('#complete-notes-button');
 	var $showAllNotesButton = $('#show-all-notes-button');
+	var $newNoteSection = $('#new-note-section');
 	
 	function loadNotes(complete) {
 		
@@ -75,11 +76,11 @@
 	};
 
 	// Hide the form to create new note until clicked
-	$('#new-note-section').hide();
+	$newNoteSection.hide();
 	$('.note-text-validation').hide();
 	
 	$('#new-note-button').on('click', function(){
-		$('#new-note-section').toggle();
+		$newNoteSection.toggle();
 	});
 	
 	$('#show-new-tag-button').on('click', function() {
@@ -129,7 +130,7 @@
 			$('input:checkbox[name=new-tag]').removeAttr('checked');
 			tagsToAdd = [];
 			toastr.success('Note has been added successfully!');
-			$('#new-note-section').hide();
+			$newNoteSection.hide();
 		})
 		.fail(function(error) {
 			console.log('There was a failure: ', error);
@@ -228,14 +229,14 @@
 	$noteList.on('click', '.note-done', function() {
 		
 		$this = $(this);
-		var newText = '';
 		var noteId = $this.closest('.note').data('id');
 		
 		$.ajax({
 			method: 'POST',
 			url: 'includes/note-done.php',
 			data: {
-				noteId: noteId
+				noteId: noteId,
+				complete: 1
 			}
 		})
 		.done(function(data, result) {
@@ -261,6 +262,34 @@
 			showingComplete = true;
 			loadNotes(1);
 		}
+	});
+	
+	$noteList.on('click', '.mark-note-active', function() {
+		
+ 		$this = $(this);
+		var noteId = $this.closest('.note').data('id');
+		console.log(noteId)
+		$.ajax({
+			method: 'POST',
+			url: 'includes/note-done.php',
+			data: {
+				noteId: noteId,
+				complete: 0
+			}
+		})
+		.done(function(data, result) {
+			console.log(data, result)
+			$this.closest('.note').remove();
+			toastr.success('Note marked as active!');
+		})
+		.fail(function(error) {
+			console.log('An error has occurred: ', error);
+		}); 
+		
+	});
+	
+	$('#close-new-note').on('click', function() {
+		$newNoteSection.hide();
 	});
 	
 	$('#add-note-text').on('keyup', function() {
