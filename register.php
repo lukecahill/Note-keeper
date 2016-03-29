@@ -13,17 +13,17 @@ if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METH
 	$hash = password_hash($password, PASSWORD_DEFAULT);
 	
 	$check = $db->prepare('SELECT UserEmail FROM note_users WHERE UserEmail = :email LIMIT 1');
-	$stmt->execute(array(':email' => $email));
+	$check->execute(array(':email' => $email));
 	
 	$emailHash = md5($email);
 	
 	if($check->rowCount() == 0) {
-		echo 'That username is already in use';
-	} else {
 		$stmt = $db->prepare('INSERT INTO note_users (UserId, UserEmail, UserPassword) VALUES(:id, :email, :password);');
 		$stmt->execute(array(':id' => $emailHash, ':email' => $email, ':password' => $hash));
 		
 		$success = true;
+	} else {
+		echo 'That username is already in use';
 	}
 }
 
