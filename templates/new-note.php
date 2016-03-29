@@ -1,5 +1,8 @@
 <div class="col-sm-12" id="new-note-section">
 	<div class="form-group new-note-group">
+		<span class="new-note-close" id="close-new-note">
+			X
+		</span>
 		<h3>
 			Add a new note.
 		</h3>

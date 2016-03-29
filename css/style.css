@@ -115,6 +115,20 @@ span.login-link, span.register-link {
 	cursor: pointer
 }
 
+#close-new-note {
+	float: right;
+	font-weight: bold;
+	color: #FF0000;
+	padding: 4px;
+}
+
+#close-new-note:hover {
+	background-color: #FF0000;
+	color: #FFF;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
 @media (max-width: 800px) {
 	.note {
 		width: 100%;
