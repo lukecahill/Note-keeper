@@ -26,7 +26,7 @@ h1 span.glyphicon-comment {
 	margin: 0 auto;
 	margin-top: 14px;
 	border-radius: 6px;
-	width: 50%;
+	width: 70%;
 	background-color: #eee;
 	min-height: 105px;
 	-webkit-box-shadow: 0px 0px 3px 2px #ddd;
@@ -113,6 +113,10 @@ span.login-link {
 span.login-link, span.register-link {
 	text-decoration: underline;
 	cursor: pointer
+}
+
+.divider {
+	font-weight: bold;
 }
 
 #close-new-note {
