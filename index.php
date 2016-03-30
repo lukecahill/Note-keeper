@@ -4,7 +4,7 @@
 
 	<?php include 'templates/signin.php'; ?>
 
-	<div class="col-sm-6">
+	<div class="col-sm-7">
 		<button class="btn btn-success" id="new-note-button">
 			<span class="glyphicon glyphicon-comment"></span>
 			Add New Note
@@ -16,7 +16,7 @@
 		</button>
 	</div>
 	
-	<div class="col-sm-6 text-right mobile-text-left">
+	<div class="col-sm-5 text-right mobile-text-left">
 		<button class="btn btn-default" id="refresh-button">
 			<span class="glyphicon glyphicon-refresh"></span>
 			Refresh
