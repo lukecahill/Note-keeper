@@ -7,10 +7,11 @@ if(($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['userId']) && isset($_
 	$complete = $_POST['complete'];
 	$db = ConnectDb();
 	
- 	$stmt = $db->prepare("SELECT NoteTitle, NoteText, NoteId, NoteTags 
-							FROM note 
+ 	$stmt = $db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, u.TagColor 
+							FROM note n 
+							INNER JOIN note_users u ON u.UserId = n.UserId
 							WHERE NoteComplete = :complete
-							AND UserId = :userId"
+							AND n.UserId = :userId"
 						);
 	
 	$stmt->execute(array(':userId' => $userId, ':complete' => $complete));
@@ -49,6 +50,9 @@ if(($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['userId']) && isset($_
 			
 			echo '</div>';
 		}
+		
+		echo '<style> .note .note-tags { background-color: #' . $rows[0]['TagColor'] . '; border-color: #' . $rows[0]['TagColor'] . ' } </style>';
+		
 	} else {
 		echo 'none';
 	}
