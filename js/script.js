@@ -60,12 +60,12 @@
 		});
 	}
 	
-	function addTag() {
-		var newTag = $('#add-new-tag-text').val();
+	function addTag(where, input) {
+		var newTag = $(input).val();
 		
 		if(newTag.trim() !== '') {
-			$('#add-note-tags').append('<div class="checkbox"><label><input type="checkbox" checked name="new-tag" data-tag="' + newTag + '" value="' + newTag + '">' + newTag + '</label></div>');
-			$('#add-new-tag-text').val('');
+			$(where).append('<div class="checkbox"><label><input type="checkbox" checked name="new-tag" data-tag="' + newTag + '" value="' + newTag + '">' + newTag + '</label></div>');
+			$(input).val('');
 		}
 	}
 	
@@ -77,15 +77,15 @@
 
 	// Hide the form to create new note until clicked
 	$newNoteSection.hide();
-	$('.note-text-validation').hide();
+	$('.note-text-validation, .edit-note-text-validation').hide();
 	
 	$('#new-note-button').on('click', function(){
 		$newNoteSection.toggle();
 	});
 	
-	$('#show-new-tag-button').on('click', function() {
+/* 	$('#show-new-tag-button').on('click', function() {
 		$('#new-tag-section').toggle();
-	});
+	}); */
 	
 	$showAllNotesButton.on('click', function() {
 		$('.note').show();
@@ -138,7 +138,13 @@
 		
 	});
 	
-	$('#show-new-tag-button').on('click', addTag);
+	$('#show-new-tag-button').on('click', function() {
+		addTag('#add-note-tags', '#add-new-tag-text');
+	});
+	
+	$('#edit-new-tag-button').on('click', function() {
+		addTag('#edit-note-tags', '#edit-new-tag-text');
+	});
 	
 	$noteList.on('click', '.note-tags', function() {
 		
@@ -203,14 +209,35 @@
 		// would probably be best to have this done in a modal.
 		// TODO : above - skeleton code is below.		
 		$this = $(this);
-		var newText = '';
 		var noteId = $this.closest('.note').data('id');
+		var parent = $this.closest('.note');
 		
-		$.ajax({
+		var $parent = $(parent);
+		var title = $parent.find('.note-title')[0].textContent;
+		var text = $parent.find('.note-text')[0].textContent;
+		var tags = $parent.find('.note-tags');
+		
+		var tagArray = [];
+		
+		$.each(tags, function(index, value) {
+			tagArray.push(value.textContent);
+		});
+		
+		$('#note-edit-modal').modal('show');		
+		$('#edit-note-tags').empty();
+		$('#edit-note-title').val(title);
+		$('#edit-note-text').val(text);		
+		$.each(tagArray, function(index, value) {
+			$('#edit-note-tags').append('<div class="checkbox"><label><input type="checkbox" checked name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+		});
+		
+		// TODO : when the modals okay button is clicked take the new data and update the database with it.
+		
+/* 		$.ajax({
 			method: 'POST',
 			url: 'includes/',
 			data: {
-				noteText: newText,
+				noteText: text,
 				noteId: noteId
 			}
 		})
@@ -222,7 +249,7 @@
 		})
 		.fail(function(error) {
 			console.log('An error has occurred: ', error);
-		});
+		}); */
 		
 	});
 	
@@ -288,6 +315,10 @@
 		
 	});
 	
+	$noteList.on('click', '#note-edit-modal', function() {
+		$('#note-edit-modal').show();
+	})
+	
 	$('#close-new-note').on('click', function() {
 		$newNoteSection.hide();
 	});
@@ -296,9 +327,19 @@
 		$('.note-text-validation').hide();
 	});
 	
+	$('#edit-note-text').on('keyup', function() {
+		$('.edit-note-text-validation').hide();
+	});
+	
 	$('#add-new-tag-text').on('keyup', function(event) {
 		if(event.keyCode == 13) {
-			addTag();
+			addTag('#add-note-tags', '#add-new-tag-text');
+		}
+	});
+	
+	$('#edit-new-tag-text').on('keyup', function(event) {
+		if(event.keyCode == 13) {
+			addTag('#edit-note-tags', '#edit-new-tag-text');
 		}
 	});
 	
