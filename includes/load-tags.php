@@ -28,22 +28,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 
 					
 					// limit the pre-loaded tags to 5.
 					if(5 >= count($tagList)) {
-						$checkbox[] = 
-							'<div class="checkbox">
-							  <label>
-								<input type="checkbox" name="new-tag" data-tag="' . $tag . '" value="' . $tag . '">
-								' . $tag . '
-							  </label>
-							</div>';
+						$checkbox[] = $tag;
 					}
 				}
 			}
 		}
 	}
 	
-	foreach($checkbox as $tag) {
-		echo $tag;
-	}
+	$merged = array();
+	array_push($merged, $checkbox);
+	array_push($merged, $tagList);
+	
+	echo json_encode($merged);
 	
 	// change this to return JSON which can then be decoded server-side and will also populate an option box to pick which tag to show.
 
