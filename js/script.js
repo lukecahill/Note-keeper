@@ -51,8 +51,15 @@
 		})
 		.done(function(data, result) {
 			if(result == 'success') {
-				$('#add-note-tags').append(data);
-				toastr.info('Loading success');
+				data = $.parseJSON(data);
+				$.each(data[0], function(index, value) {
+					$('#add-note-tags').append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+				});
+				
+				// change this so that it creates an option box. 
+				$.each(data[1], function(index, value) {
+					$('.new-note-group').after('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+				});
 			}
 		})
 		.fail(function(error) {
@@ -375,7 +382,10 @@
 	});
 	
 	$('#refresh-button').on('click', function() {
-		window.location.reload();
+		$noteList.empty();
+		$('.checkbox').remove();
+		loadNotes(0);
+		loadTags();
 	});
 
 })();
