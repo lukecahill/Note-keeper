@@ -2,7 +2,6 @@
 	
 	// load the available notes and tags.
 	loadNotes(0);
-	loadTags();
 	var showingComplete = false;
 	var $noteList = $('#note-list');
 	var $completedNoteButton = $('#complete-notes-button');
@@ -21,9 +20,17 @@
 		})
 		.done(function(data, result) {
 			if(result === 'success') {
-
-				if(data !== 'none') {
-					$noteList.append(data);
+				data = $.parseJSON(data);
+				console.log(data);
+ 				if(data !== 'none') {
+					$.each(data[0], function(index, value) {
+						$('#add-note-tags').append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+					});
+					$.each(data[1], function(index, value) {
+						$('.new-note-group').after('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+					});
+					$noteList.append(data[2]);
+					$noteList.after(data[3]);
 				} else {
 					$noteList.append('It appears that you have not yet created any notes. Create your first one.');
 				}
@@ -35,35 +42,11 @@
 					// change the button text. Remove the show all notes.
 					$showAllNotesButton.hide();
 					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');		
-				}
+				} 
 			}
 		})
 		.fail(function(error) {
 			console.log('It failed: ', error);
-		});
-	}
-	
-	function loadTags() {
-		
-		$.ajax({
-			url: 'includes/load-tags.php',
-			method: 'POST'
-		})
-		.done(function(data, result) {
-			if(result == 'success') {
-				data = $.parseJSON(data);
-				$.each(data[0], function(index, value) {
-					$('#add-note-tags').append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
-				});
-				
-				// change this so that it creates an option box. 
-				$.each(data[1], function(index, value) {
-					$('.new-note-group').after('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
-				});
-			}
-		})
-		.fail(function(error) {
-			console.log(error);
 		});
 	}
 	
@@ -385,7 +368,6 @@
 		$noteList.empty();
 		$('.checkbox').remove();
 		loadNotes(0);
-		loadTags();
 	});
 
 })();
