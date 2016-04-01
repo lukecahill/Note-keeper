@@ -324,6 +324,19 @@
 		})
 		.done(function(data, result) {
 			// update the DOM here.
+			var note = $('[data-id="' + noteId + '"]');
+			$(note).children('.note-title')[0].textContent = title;
+			$(note).children('.note-text')[0].textContent = text;
+			var newText = $(note).children('.note-text')[0];
+			$(note).children('.note-tags').remove();
+			var tags = '';
+			
+			$.each(tagArray, function(index, value) {
+				tags += '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' + value + '">' + value + '</span>';
+			});
+			
+			$(newText).after(tags);
+			
 			$('#note-edit-modal').modal('hide');	
 			
 			toastr.success('Note successfully updated!');
