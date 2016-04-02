@@ -41,7 +41,7 @@
 </div>
 
 <?php 
-	include 'templates/new-note.php';
+	include 'templates/new-note.html';
 ?>
 
 <div class="col-sm-12 row">
