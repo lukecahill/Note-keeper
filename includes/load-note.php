@@ -80,7 +80,7 @@ if(($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['userId']) && isset($_
 		echo json_encode($merged);
 		
 	} else {
-		echo 'none';
+		echo json_encode('none');
 	}
 	
 	// potentially change this to instead return JSON which will then be parsed by the client-side script.js
