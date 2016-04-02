@@ -1,13 +1,12 @@
 <?php
 
 $success = false;
+$error = '';
 
 if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	require_once 'includes/db-connect.inc.php';
 	$db = ConnectDb();
 	
-	// need to check if the email is already being used in the database.
-	// TODO : above and now test below now that the above is done.
 	$email = $_POST['email'];
 	$password = $_POST['password'];	
 	$hash = password_hash($password, PASSWORD_DEFAULT);
@@ -23,7 +22,7 @@ if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METH
 		
 		$success = true;
 	} else {
-		echo 'That username is already in use';
+		$error = '<span class="validation-error">That email is already in use</span>';
 	}
 }
 
@@ -65,6 +64,7 @@ if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METH
 				Email address
 			</label>
 			<input type="email" name="email" class="form-control" id="user-email" placeholder="Email">
+			<?php if($error !== '') echo $error; ?>
 		</div>
 		<div class="form-group">
 			<label for="user-password">

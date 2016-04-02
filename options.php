@@ -20,12 +20,9 @@
 		</p>
 		
 		<p>
-			<strong>
-				Enter a color for your tags (enter as hexidecimal code e.g. #FF0000):
-			</strong>
 			<div class="form-group">
 				<label for="user-tag-color">
-					Hexadecimal color code
+					Hexadecimal color code - Enter a color for your tags (as hexidecimal code e.g. #FF0000):
 				</label>
 				<input type="text" id="user-tag-color" class="form-control">
 			</div>
@@ -35,7 +32,6 @@
 			</button>
 			
 			<?php include 'templates/password.php'; ?>
-			
 		</p>
 	</div>
 </div>
