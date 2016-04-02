@@ -1,7 +1,8 @@
 <?php
 
+$error = '';
+
 if(isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
-	$error = "";
 	
 	require_once 'includes/db-connect.inc.php';
 	$db = ConnectDb();
@@ -11,42 +12,32 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_M
 	
 	
 	if ($email == "" || $password == "") {
-		$error = "<span class='error'>Not all fields were entered</span>";
-		echo $error;
-		die;
-	}
-	
-	$stmt = $db->prepare('SELECT UserEmail, UserPassword, UserId
-							FROM note_users 
-							WHERE UserEmail = :email 
-							LIMIT 1'
-						);
-	$stmt->execute(array(':email' => $email));
-	$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	
-	if($stmt->rowCount() == 0) {
-		$error = "<span class='error'>Username/Password invalid</span>";
-		echo $error;
-		die;
-	}
-	
- 	$encrypted = $results[0]['UserPassword'];
- 	$userId = $results[0]['UserId'];
-	if(password_verify($password, $encrypted)) {
-		session_start();
-		$_SESSION['user'] = $email;
-		$_SESSION['userId'] = $userId;
-		die(header('Location: index.php'));
+		$error = "<span class='validation-error'>Not all fields were entered</span>";
 	} else {
-		$error = "<span class='error'>Username/Password invalid</span>";
-		echo $error;
-	} 
-	
-} else if(isset($_POST['login-button'])) {
-	echo 'Username/password was not entered!';
+		$stmt = $db->prepare('SELECT UserEmail, UserPassword, UserId
+								FROM note_users 
+								WHERE UserEmail = :email 
+								LIMIT 1'
+							);
+		$stmt->execute(array(':email' => $email));
+		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		if($stmt->rowCount() == 0) {
+			$error = "<span class='validation-error'>Username/Password invalid</span>";
+		} else {
+			$encrypted = $results[0]['UserPassword'];
+			$userId = $results[0]['UserId'];
+			if(password_verify($password, $encrypted)) {
+				session_start();
+				$_SESSION['user'] = $email;
+				$_SESSION['userId'] = $userId;
+				die(header('Location: index.php'));
+			} else {
+				$error = "<span class='validation-error'>Username/Password invalid</span>";
+			}	
+		}		
+	}
 }
-
-// TODO: nicer echo statements - instead append to the page the warnings.
 
 ?>
 
@@ -91,6 +82,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_M
 				Password
 			</label>
 			<input type="password" name="password" class="form-control" id="user-password" placeholder="Password">
+			<?php if($error !== '') echo $error; ?>
 		</div>
 		<button type="submit" name="login-button" class="btn btn-default">
 			Submit
