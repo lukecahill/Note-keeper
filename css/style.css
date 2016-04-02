@@ -119,6 +119,11 @@ span.login-link, span.register-link {
 	font-weight: bold;
 }
 
+.jumbotron {
+	padding-top: 30px;
+	padding-bottom: 30px; 
+}
+
 #close-new-note {
 	float: right;
 	font-weight: bold;
