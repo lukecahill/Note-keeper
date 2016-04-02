@@ -1,5 +1,5 @@
 <?php
-
+$error = '';
 if(isset($_POST['new-password']) && isset($_POST['confirm-password']) && isset($_POST['old-password']) && isset($_SESSION['userId'])) {
 	
 	$old = $_POST['old-password'];
@@ -21,10 +21,12 @@ if(isset($_POST['new-password']) && isset($_POST['confirm-password']) && isset($
 		$stmt = $db->prepare('UPDATE note_users SET UserPassword = :password WHERE UserId = :id');
 		$stmt->execute(array(':password' => $new,':id' => $userId));
 		echo 'Pasword Changed!';
+	} else {
+		$error = '<span class="validation-error">The password you entered was invalid!</span>';
 	}
 	
 } else if(isset($_POST['change-password-button'])) {
-	echo 'No lols';
+	echo 'No direct access';
 }
 
 ?>
@@ -34,21 +36,22 @@ if(isset($_POST['new-password']) && isset($_POST['confirm-password']) && isset($
 		<label for="old-password">
 			Enter old password:
 		</label>
-		<input type="text" id="old-password" name="old-password" class="form-control">
+		<input type="password" id="old-password" name="old-password" class="form-control">
+		<?php if($error !== '') echo $error; ?>
 	</div>
 
 	<div class="form-group">
 		<label for="new-password">
 			Enter new password:
 		</label>
-		<input type="text" id="new-password" name="new-password" class="form-control">
+		<input type="password" id="new-password" name="new-password" class="form-control">
 	</div>
 
 	<div class="form-group">
 		<label for="confirm-password">
 			Confirm new password:
 		</label>
-		<input type="text" id="confirm-password" name="confirm-password" class="form-control">
+		<input type="password" id="confirm-password" name="confirm-password" class="form-control">
 	</div>
 
 	<button class="btn btn-success" id="change-password-button" name="change-password-button" type="submit">
