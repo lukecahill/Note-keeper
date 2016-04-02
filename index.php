@@ -27,6 +27,17 @@
 			Show All Notes
 		</button>
 	</div>
+	
+	<div class="col-sm-12">
+		<label for="tag-chooser">
+			Choose a tag to display all notes with this tag.
+		</label>
+		<select id="tag-chooser" class="form-control">
+			<option disabled selected>
+				-- Choose a tag --
+			</option>
+		</select>
+	</div>
 </div>
 
 <?php 
