@@ -43,10 +43,8 @@
 				}
 				
 				if(complete !== 1) {
-					$showAllNotesButton.show();
 					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Completed Notes');		
 				} else {
-					$showAllNotesButton.hide();
 					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');		
 				} 
 			}
