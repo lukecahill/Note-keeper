@@ -133,6 +133,17 @@ span.login-link, span.register-link {
 	cursor: pointer;
 }
 
+#change-password-form {
+	padding: 10px;
+	border: 1px solid #eee;
+	border-radius: 6px;
+	margin-top: 10px;
+}
+
+label[for=tag-chooser] {
+	margin-top: 10px;
+}
+
 @media (max-width: 800px) {
 	.note {
 		width: 100%;
