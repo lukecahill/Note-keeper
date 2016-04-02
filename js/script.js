@@ -7,6 +7,8 @@
 	var $completedNoteButton = $('#complete-notes-button');
 	var $showAllNotesButton = $('#show-all-notes-button');
 	var $newNoteSection = $('#new-note-section');
+	var $tagChooser = $('#tag-chooser');
+	var $noteTags = $('#add-note-tags');
 	
 	function loadNotes(complete) {
 		
@@ -21,14 +23,19 @@
 		.done(function(data, result) {
 			if(result === 'success') {
 				data = $.parseJSON(data);
-				console.log(data);
  				if(data !== 'none') {
 					$.each(data[0], function(index, value) {
-						$('#add-note-tags').append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+						$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
 					});
-					$.each(data[1], function(index, value) {
-						$('.new-note-group').after('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+					
+					$.each(data[1], function(key, value) {   
+						$tagChooser
+							.append($('<option></option>')
+							.attr('value', value)
+							.attr('data-tag', value)
+							.text(value)); 
 					});
+						
 					$noteList.append(data[2]);
 					$noteList.after(data[3]);
 				} else {
@@ -39,7 +46,6 @@
 					$showAllNotesButton.show();
 					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Completed Notes');		
 				} else {
-					// change the button text. Remove the show all notes.
 					$showAllNotesButton.hide();
 					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');		
 				} 
@@ -63,6 +69,35 @@
 		}
 	}
 	
+	function showTags(tag) {
+		var notes = $('.note');
+		var hide = [];
+		$('.note').show();
+		
+		$.each(notes, function(index, value) {
+			$value = $(value);
+			
+			var tags = $value.children('.note-tags');
+			var tagData = [];
+			
+			$.each(tags, function(i, childTag) {
+				$this = $(childTag);
+				var data = $this.data('tag');
+				tagData.push(data);
+			});
+			
+			if(tagData.indexOf(tag) === -1) {
+				hide.push(value);
+			}
+		});
+			
+		$.each(hide, function(index, value) {
+			$(value).hide();
+		});
+		
+		toastr.info('Now only showing notes with the tag "' + tag + '"');
+	}
+	
 	toastr.options = {
 		"timeOut": "2000",
 		"preventDuplicates": false,
@@ -76,10 +111,6 @@
 	$('#new-note-button').on('click', function(){
 		$newNoteSection.toggle();
 	});
-	
-/* 	$('#show-new-tag-button').on('click', function() {
-		$('#new-tag-section').toggle();
-	}); */
 	
 	$showAllNotesButton.on('click', function() {
 		$('.note').show();
@@ -143,32 +174,7 @@
 	$noteList.on('click', '.note-tags', function() {
 		
 		var tag = $(this).data('tag');
-		var notes = $('.note');
-		var hide = [];
-		$('.note').show();
-		
-		$.each(notes, function(index, value) {
-			$value = $(value);
-			
-			var tags = $value.children('.note-tags');
-			var tagData = [];
-			
-			$.each(tags, function(i, childTag) {
-				$this = $(childTag);
-				var data = $this.data('tag');
-				tagData.push(data);
-			});
-			
-			if(tagData.indexOf(tag) === -1) {
-				hide.push(value);
-			}
-		});
-			
-		$.each(hide, function(index, value) {
-			$(value).hide();
-		});
-		
-		toastr.info('Now only showing notes with the tag "' + tag + '"');
+		showTags(tag);
 	});
 	
 	$noteList.on('click', '.remove-note', function() {
@@ -198,10 +204,6 @@
 	});
 	
 	$noteList.on('click', '.edit-note', function() {
-		// edit the note in the database.
-		// also edit the note which is in the DOM 
-		// would probably be best to have this done in a modal.
-		// TODO : above - skeleton code is below.		
 		$this = $(this);
 		var noteId = $this.closest('.note').data('id');
 		$('#save-note-button').data('id', noteId);
@@ -226,7 +228,6 @@
 			$('#edit-note-tags').append('<div class="checkbox"><label><input type="checkbox" checked name="edit-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
 		});
 		
-		// TODO : when the modals okay button is clicked take the new data and update the database with it.
 	});
 	
 	$noteList.on('click', '.note-done', function() {
@@ -243,7 +244,6 @@
 			}
 		})
 		.done(function(data, result) {
-			console.log(data, result)
 			$this.closest('.note').remove();
 			toastr.success('Note marked as complete!');
 		})
@@ -334,6 +334,10 @@
 		.fail(function(error) {
 			console.log('An error has occurred: ', error);
 		});
+	});
+	
+	$('#tag-chooser').on('change', function() {
+		showTags(this.value);
 	});
 	
 	$noteList.on('click', '#note-edit-modal', function() {
