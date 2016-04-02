@@ -20,9 +20,9 @@
 		</p>
 		
 		<p>
-			<b>
+			<strong>
 				Enter a color for your tags (enter as hexidecimal code e.g. #FF0000):
-			</b>
+			</strong>
 			<div class="form-group">
 				<label for="user-tag-color">
 					Hexadecimal color code
@@ -33,6 +33,9 @@
 				<span class="glyphicon glyphicon-plus"></span>
 				Change Color
 			</button>
+			
+			<?php include 'templates/password.php'; ?>
+			
 		</p>
 	</div>
 </div>
