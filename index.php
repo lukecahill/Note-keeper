@@ -36,6 +36,9 @@
 			<option disabled selected>
 				-- Choose a tag --
 			</option>
+			<option value="showall">
+				-- Show all --
+			</option>
 		</select>
 	</div>
 </div>

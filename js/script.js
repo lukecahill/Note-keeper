@@ -337,7 +337,13 @@
 	});
 	
 	$('#tag-chooser').on('change', function() {
-		showTags(this.value);
+		var value = this.value;
+		if(value !== 'showall') {
+			showTags(this.value);
+		} else {
+			$('.note').show();
+			toastr.info('Showing all notes');
+		}
 	});
 	
 	$noteList.on('click', '#note-edit-modal', function() {
