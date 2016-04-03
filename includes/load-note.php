@@ -1,29 +1,91 @@
 <?php
 
-if(($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['userId']) && isset($_POST['complete']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+if(($_SERVER['REQUEST_METHOD'] == 'POST') && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+	$note = new Note($_POST['action']);
+	
+	if($note->action === 'loadnote') {
+		$note->loadNote();
+	} else if($note->action === 'searchnote') {
+		$note->searchNote();
+	} else {
+		echo json_encode('Action not found');
+	}
+	
+} else {
+	echo json_encode('No direct access');
+}
 
-	require_once 'db-connect.inc.php';
-	$userId = $_POST['userId'];
-	$complete = $_POST['complete'];
-	$db = ConnectDb();
+class Note {
+	public $userId = 0;
+	public $complete = 0;
+	public $action = '';
+	public $search = '';
+	public $db = null;
 	
- 	$stmt = $db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, u.TagColor 
-							FROM note n 
-							INNER JOIN note_users u ON u.UserId = n.UserId
-							WHERE NoteComplete = :complete
-							AND n.UserId = :userId"
-						);
+	function __construct($action) {
+		$this->action = $action;
+		require_once 'db-connect.inc.php';
+		$this->db = ConnectDb();
+	}
 	
-	$stmt->execute(array(':userId' => $userId, ':complete' => $complete));
-	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$count = $stmt->rowCount();
+	function loadNote() {
+		if(!isset($_POST['userId']) || !isset($_POST['complete'])) {
+			return;
+		}
+		
+		$this->userId = $_POST['userId'];
+		$this->complete = $_POST['complete'];
+		
+		$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, u.TagColor 
+								FROM note n 
+								INNER JOIN note_users u ON u.UserId = n.UserId
+								WHERE NoteComplete = :complete
+								AND n.UserId = :userId"
+							);
+		
+		$stmt->execute(array(':userId' => $this->userId, ':complete' => $this->complete));
+		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$count = $stmt->rowCount();
 
-	$tagList = array();
-	$checkbox = array();
-	$merged = array();
-	$notes = array();
+		$this->returnNote($rows, $count);
+	}
 	
-	if($count > 0) {
+	function searchNote() {
+		if(!isset($_POST['userId']) || !isset($_POST['complete']) || !isset($_POST['search'])) {
+			return;
+		}
+		
+		$this->userId = $_POST['userId'];
+		$this->complete = $_POST['complete'];
+		$this->search = $_POST['search'];
+		
+		$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, u.TagColor 
+								FROM note n 
+								INNER JOIN note_users u ON u.UserId = n.UserId
+								WHERE NoteComplete = :complete
+								AND n.UserId = :userId
+								AND n.NoteText LIKE :search
+								OR n.NoteTitle LIKE :searchtitle"
+							);
+		
+		$stmt->execute(array(':userId' => $this->userId, ':complete' => $this->complete, ':search' => $this->search, ':searchtitle' => $this->search));
+		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$count = $stmt->rowCount();
+
+		$this->returnNote($rows, $count);
+	}
+	
+	function returnNote($rows, $count) {
+		$tagList = array();
+		$checkbox = array();
+		$merged = array();
+		$notes = array();
+		
+		if($count < 0) {
+			echo json_encode('none');
+			return;
+		}
+		
 		foreach($rows as $item) {
 			
 			$note = '';
@@ -54,7 +116,7 @@ if(($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['userId']) && isset($_
 				}
 			}
 			
-			if($complete == 0) {
+			if($this->complete == 0) {
 				$note .= '<div class="note-glyphicons">
 					<span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span>
 					<span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span>
@@ -71,21 +133,14 @@ if(($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['userId']) && isset($_
 			$notes[] = $note;
 		}
 		
-		$style = '<style> .note .note-tags { background-color: #' . $rows[0]['TagColor'] . '; border-color: #' . $rows[0]['TagColor'] . ' } </style>';
+		//$style = '<style> .note .note-tags { background-color: #' . $rows[0]['TagColor'] . '; border-color: #' . $rows[0]['TagColor'] . ' } </style>';
 		
 		array_push($merged, $checkbox);
 		array_push($merged, $tagList);
 		array_push($merged, $notes);
-		array_push($merged, $style);
+		//array_push($merged, $style);
 		echo json_encode($merged);
-		
-	} else {
-		echo json_encode('none');
 	}
-	
-	// potentially change this to instead return JSON which will then be parsed by the client-side script.js
-} else {
-	echo 'No direct access';
 }
 
 ?>
