@@ -1,7 +1,6 @@
 (function() {
 	
 	// load the available notes and tags.
-	loadNotes(0);
 	var showingComplete = false;
 	var $noteList = $('#note-list');
 	var $completedNoteButton = $('#complete-notes-button');
@@ -10,24 +9,36 @@
 	var $tagChooser = $('#tag-chooser');
 	var $noteTags = $('#add-note-tags');
 	
-	function loadNotes(complete) {
+	var initialLoad = { 
+			userId : userId,
+			complete: 0,
+			action: 'loadnote'
+		};
+	loadNotes(initialLoad);
+	
+	function loadNotes(toSend) {
 		
 		$.ajax({
 			url: 'includes/load-note.php',
 			method: 'POST',
-			data: {
-				userId: userId,
-				complete: complete
-			}
+			data: toSend
 		})
 		.done(function(data, result) {
 			if(result === 'success') {
+				
+				if(toSend.action === 'searchnote') {
+					$noteList.empty();
+				}
+				
 				data = $.parseJSON(data);
  				if(data !== 'none') {
 					$.each(data[0], function(index, value) {
 						$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
 					});
 					
+					$tagChooser.empty();
+					$tagChooser.append($('<option></option>').attr('disabled', true).attr('selected', true).text('-- Choose a tag --')); 
+					$tagChooser.append($('<option></option>').attr('value', 'showall').text('-- Show all --')); 
 					$.each(data[1], function(key, value) {   
 						$tagChooser
 							.append($('<option></option>')
@@ -42,7 +53,7 @@
 					$noteList.append('It appears that you have not yet created any notes. Create your first one.');
 				}
 				
-				if(complete !== 1) {
+				if(toSend.complete !== 1) {
 					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Completed Notes');		
 				} else {
 					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');		
@@ -52,6 +63,17 @@
 		.fail(function(error) {
 			console.log('It failed: ', error);
 		});
+	}
+	
+	function searchNotes(search) {
+		var data = {
+			userId: userId,
+			complete: 0,
+			action: 'searchnote',
+			search: search
+		}
+		
+		loadNotes(data);
 	}
 	
 	function addTag(where, input, edit) {
@@ -104,7 +126,7 @@
 
 	// Hide the form to create new note until clicked
 	$newNoteSection.hide();
-	$('.note-text-validation, .edit-note-text-validation').hide();
+	$('.note-text-validation, .edit-note-text-validation, #seach-input').hide();
 	
 	$('#new-note-button').on('click', function(){
 		$newNoteSection.toggle();
@@ -252,16 +274,22 @@
 	});
 	
 	$completedNoteButton.on('click', function() {
+		var data = {
+			userId : userId,
+			complete: 0,
+			action: 'loadnote'
+		}
+		
 		if(showingComplete) {
 			$noteList.empty();
-			$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Completed Notes');
 			showingComplete = false;
-			loadNotes(0);
+			data.complete = 0;
+			loadNotes(data);
 		} else {
 			$noteList.empty();
-			$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');
 			showingComplete = true;
-			loadNotes(1);
+			data.complete = 1;
+			loadNotes(data);
 		}
 	});
 	
@@ -342,6 +370,17 @@
 			$('.note').show();
 			toastr.info('Showing all notes');
 		}
+	});
+	
+	$('#search-note-button').on('click', function() {
+		var text = $('#search-note-text').val();
+		searchNotes(text);
+	});
+	
+	$('#show-search-button').on('click', function() {
+		$('#seach-input').toggle();
+		$tagChooser.toggle();
+		$('label[for=tag-chooser').toggle();
 	});
 	
 	$noteList.on('click', '#note-edit-modal', function() {
