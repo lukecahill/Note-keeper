@@ -23,8 +23,12 @@
 		</button>
 		
 		<button class="btn btn-default" id="show-all-notes-button">
-			<span class="glyphicon glyphicon-search"></span>
+			<span class="glyphicon glyphicon-inbox"></span>
 			Show All Notes
+		</button>
+		
+		<button class="btn btn-default" id="show-search-button">
+			<span class="glyphicon glyphicon-search"></span>
 		</button>
 	</div>
 	
@@ -45,6 +49,7 @@
 
 <?php 
 	include 'templates/new-note.html';
+	include 'templates/search.html';
 ?>
 
 <div class="col-sm-12 row">
