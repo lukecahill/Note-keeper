@@ -152,13 +152,14 @@
 		});
 		
 		$.ajax({
-			url: 'includes/add-new-note.php',
+			url: 'includes/note.php',
 			method: 'POST',
 			data: { 
 				noteText: noteText, 
 				noteTags: tagArray, 
 				noteTitle: noteTitle,
-				userId: userId
+				userId: userId,
+				action: 'addnote'
 			}
 		})
 		.done(function(data, result) {
@@ -208,9 +209,10 @@
 		
  		$.ajax({
 			method: 'POST',
-			url: 'includes/delete-note.php',
+			url: 'includes/note.php',
 			data: {
-				deleteNote: deleteId
+				deleteNote: deleteId,
+				action: 'deletenote'
 			}
 		})
 		.done(function(data, result) {
@@ -330,12 +332,13 @@
 		
  		$.ajax({
 			method: 'POST',
-			url: 'includes/edit-note.php',
+			url: 'includes/note.php',
 			data: {
 				noteText: text,
 				noteId: noteId,
 				noteTitle: title,
-				noteTags: tagArray
+				noteTags: tagArray,
+				action: 'editnote'
 			}
 		})
 		.done(function(data, result) {
