@@ -25,7 +25,7 @@ class Note {
 	function __construct($action) {
 		$this->action = $action;
 		require_once 'db-connect.inc.php';
-		$this->db = ConnectDb();
+		$this->db = Database::ConnectDb();
 	}
 	
 	function loadNote() {
@@ -64,11 +64,10 @@ class Note {
 								INNER JOIN note_users u ON u.UserId = n.UserId
 								WHERE NoteComplete = :complete
 								AND n.UserId = :userId
-								AND n.NoteText LIKE :search
 								OR n.NoteTitle LIKE :searchtitle"
 							);
 		
-		$stmt->execute(array(':userId' => $this->userId, ':complete' => $this->complete, ':search' => $this->search, ':searchtitle' => $this->search));
+		$stmt->execute(array(':userId' => $this->userId, ':complete' => $this->complete, ':searchtitle' => $this->search));
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$count = $stmt->rowCount();
 
@@ -132,13 +131,12 @@ class Note {
 			$note .= '</div>';
 			$notes[] = $note;
 		}
-		
-		//$style = '<style> .note .note-tags { background-color: #' . $rows[0]['TagColor'] . '; border-color: #' . $rows[0]['TagColor'] . ' } </style>';
+		if($this->action !== 'searchnote') $style = '<style> .note .note-tags { background-color: #' . $rows[0]['TagColor'] . '; border-color: #' . $rows[0]['TagColor'] . ' } </style>';
 		
 		array_push($merged, $checkbox);
 		array_push($merged, $tagList);
 		array_push($merged, $notes);
-		//array_push($merged, $style);
+		if($this->action !== 'searchnote') array_push($merged, $style);
 		echo json_encode($merged);
 	}
 }
