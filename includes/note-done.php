@@ -5,7 +5,7 @@ if(($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['noteId']) && $_SERVER
 	$noteId = $_POST['noteId'];
 	$complete = $_POST['complete'];
 	require_once 'db-connect.inc.php';
-	$db = ConnectDb();
+	$db = Database::ConnectDb();
 	
 	if($complete == 1) {
 		$stmt = $db->prepare('UPDATE note SET NoteComplete = 1 WHERE NoteId = :id');

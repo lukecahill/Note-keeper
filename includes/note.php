@@ -25,7 +25,7 @@ class NoteEdit {
 
 	function __construct() {
 		require_once 'db-connect.inc.php';
-		$this->db = ConnectDb();
+		$this->db = Database::ConnectDb();
 	}
 
 	function addNote($id, $text, $tags, $title) {
