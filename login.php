@@ -5,7 +5,7 @@ $error = '';
 if(isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	
 	require_once 'includes/db-connect.inc.php';
-	$db = ConnectDb();
+	$db = Database::ConnectDb();
 	
 	$email = $_POST['username'];
 	$password = $_POST['password'];
