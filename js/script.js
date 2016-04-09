@@ -21,7 +21,8 @@
 		$.ajax({
 			url: 'includes/load-note.php',
 			method: 'POST',
-			data: toSend
+			data: toSend,
+			action: 'loadnote'
 		})
 		.done(function(data, result) {
 			if(result === 'success') {
@@ -29,7 +30,7 @@
 				if(toSend.action === 'searchnote') {
 					$noteList.empty();
 				}
-				
+				console.log(data)
 				data = $.parseJSON(data);
  				if(data !== 'none') {
 					$.each(data[0], function(index, value) {
@@ -417,7 +418,7 @@
 	$('#refresh-button').on('click', function() {
 		$noteList.empty();
 		$('.checkbox').remove();
-		loadNotes(0);
+		loadNotes(initialLoad);
 	});
 
 })();
