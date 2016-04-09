@@ -8,7 +8,7 @@ if(isset($_POST['new-password']) && isset($_POST['confirm-password']) && isset($
 	$userId = $_SESSION['userId'];
 	
 	require_once 'includes/db-connect.inc.php';
-	$db = ConnectDb();
+	$db = Database::ConnectDb();
 	
 	$stmt = $db->prepare('SELECT UserPassword FROM note_users WHERE UserId = :id');
 	$stmt->execute(array(':id' => $userId));
