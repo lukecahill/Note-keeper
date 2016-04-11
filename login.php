@@ -1,41 +1,61 @@
 <?php
 
-$error = '';
+class Login {
+	public $db = null;
+	public $email = '';
+	public $password = '';
+	public $error = '';
 
-if(isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
-	
-	require_once 'includes/db-connect.inc.php';
-	$db = Database::ConnectDb();
-	
-	$email = $_POST['username'];
-	$password = $_POST['password'];
-	
-	
-	if ($email == "" || $password == "") {
-		$error = "<span class='validation-error'>Not all fields were entered</span>";
-	} else {
-		$stmt = $db->prepare('SELECT UserEmail, UserPassword, UserId
+	function __construct($email, $password) {
+		require_once 'includes/db-connect.inc.php';
+		$this->db = Database::ConnectDb();
+		$this->email = $email;
+		$this->password = $password;
+	}
+
+	function checkValid() {
+		if($this->email == '' || $this->password == '') {
+			$this->error = "<span class='validation-error'>Not all fields were entered</span>";
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function verify() {
+		$stmt = $this->db->prepare('SELECT UserEmail, UserPassword, UserId
 								FROM note_users 
 								WHERE UserEmail = :email 
 								LIMIT 1'
 							);
-		$stmt->execute(array(':email' => $email));
+		$stmt->execute(array(':email' => $this->email));
 		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		
-		if($stmt->rowCount() == 0) {
-			$error = "<span class='validation-error'>Username/Password invalid</span>";
+
+		if(count($results) == 0) {
+			$this->error = "<span class='validation-error'>Username/Password invalid</span>";
 		} else {
 			$encrypted = $results[0]['UserPassword'];
 			$userId = $results[0]['UserId'];
-			if(password_verify($password, $encrypted)) {
+			if(password_verify($this->password, $encrypted)) {
 				session_start();
-				$_SESSION['user'] = $email;
+				$_SESSION['user'] = $this->email;
 				$_SESSION['userId'] = $userId;
 				die(header('Location: index.php'));
 			} else {
-				$error = "<span class='validation-error'>Username/Password invalid</span>";
+				$this->error = "<span class='validation-error'>Username/Password invalid</span>";
 			}	
-		}		
+		}
+	}
+}
+
+if(isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
+	
+	$email = $_POST['username'];
+	$password = $_POST['password'];
+	$login = new Login($email, $password);
+	
+	if($login->checkValid()) {
+		$results = $login->verify();
 	}
 }
 
@@ -82,7 +102,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_M
 				Password
 			</label>
 			<input type="password" name="password" class="form-control" id="user-password" placeholder="Password">
-			<?php if($error !== '') echo $error; ?>
+			<?php if(class_exists('login')) { if($login->error !== '') echo $login->error; } ?>
 		</div>
 		<button type="submit" name="login-button" class="btn btn-default">
 			Submit
