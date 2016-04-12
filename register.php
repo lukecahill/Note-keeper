@@ -1,29 +1,62 @@
 <?php
 
-$success = false;
-$error = '';
+class Register {
+	public $email = '';
+	public $emailHash = '';
+	public $password = '';
+	public $passwordHash = '';
+	public $error = '';
+	public $db = null;
+
+	function __construct($email, $password) {
+		require_once 'includes/db-connect.inc.php';
+		$this->db = Database::ConnectDb();
+		$this->email = $email;
+		$this->password = $password;
+	}
+
+	function hashEmail() {
+		$this->emailHash = md5($email);
+		return $this->emailHash;
+	}
+
+	function hashPassword() {
+		$this->hashPassword = password_hash($password, PASSWORD_DEFAULT);
+		return $this->hashPassword;
+	}
+
+	function checkExists() {
+		$check = $this->db->prepare('SELECT UserEmail FROM note_users WHERE UserEmail = :email LIMIT 1');
+		$check->execute(array(':email' => $this->email));
+		if($check->rowCount() == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function addUser() {
+		$stmt = $this->db->prepare('INSERT INTO note_users (UserId, UserEmail, UserPassword) VALUES(:id, :email, :password);');
+		$stmt->execute(array(':id' => $this->emailHash, ':email' => $this->email, ':password' => $this->passwordHash));
+	}
+}
 
 if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
-	require_once 'includes/db-connect.inc.php';
-	$db = Database::ConnectDb();
-	
 	$email = $_POST['email'];
 	$password = $_POST['password'];	
-	$hash = password_hash($password, PASSWORD_DEFAULT);
-	
-	$check = $db->prepare('SELECT UserEmail FROM note_users WHERE UserEmail = :email LIMIT 1');
-	$check->execute(array(':email' => $email));
-	
-	$emailHash = md5($email);
-	
-	if($check->rowCount() == 0) {
-		$stmt = $db->prepare('INSERT INTO note_users (UserId, UserEmail, UserPassword) VALUES(:id, :email, :password);');
-		$stmt->execute(array(':id' => $emailHash, ':email' => $email, ':password' => $hash));
-		
+	$error = '';
+	$success = false;
+
+	$register = new Register($email, $password);
+	if($register->checkExists()) {
+		$register->addUser();
 		$success = true;
 	} else {
 		$error = '<span class="validation-error">That email is already in use</span>';
 	}
+} else {
+	$success = false; 
+	$error = '';
 }
 
 ?>
