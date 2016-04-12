@@ -102,7 +102,7 @@ if(isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_M
 				Password
 			</label>
 			<input type="password" name="password" class="form-control" id="user-password" placeholder="Password">
-			<?php if(class_exists('login')) { if($login->error !== '') echo $login->error; } ?>
+			<?php if(isset($login)) { if($login->error !== '') echo $login->error; } ?>
 		</div>
 		<button type="submit" name="login-button" class="btn btn-default">
 			Submit
