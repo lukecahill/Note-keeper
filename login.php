@@ -1,16 +1,12 @@
 <?php
 
-class Login {
-	public $db = null;
-	public $email = '';
-	public $password = '';
-	public $error = '';
+require_once 'authentication.php';
+
+class Login extends Authentication {
+	private $error = '';
 
 	function __construct($email, $password) {
-		require_once 'includes/db-connect.inc.php';
-		$this->db = Database::ConnectDb();
-		$this->email = $email;
-		$this->password = $password;
+		parent::__construct($email, $password);
 	}
 
 	function checkValid() {

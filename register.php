@@ -1,18 +1,14 @@
 <?php
 
-class Register {
-	public $email = '';
-	public $emailHash = '';
-	public $password = '';
-	public $passwordHash = '';
-	public $error = '';
-	public $db = null;
+require_once 'authentication.php';
+
+class Register extends Authentication {
+	private $emailHash = '';
+	private $passwordHash = '';
+	private $error = '';
 
 	function __construct($email, $password) {
-		require_once 'includes/db-connect.inc.php';
-		$this->db = Database::ConnectDb();
-		$this->email = $email;
-		$this->password = $password;
+		parent::__construct($email, $password);
 	}
 
 	function hashEmail() {
