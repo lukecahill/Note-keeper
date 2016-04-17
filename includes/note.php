@@ -1,6 +1,8 @@
 <?php
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+	
+	require_once 'note-base.php';
 	$action = $_POST['action'];
 	$note = new NoteEdit();
 
@@ -20,12 +22,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 
 	die('No direct access!');
 }
 
-class NoteEdit {
-	public $db = null;
+class NoteEdit extends Note {
 
 	function __construct() {
-		require_once 'db-connect.inc.php';
-		$this->db = Database::ConnectDb();
+		parent::__construct();
 	}
 
 	function addNote($id, $text, $tags, $title) {
