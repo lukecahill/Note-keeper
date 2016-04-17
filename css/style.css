@@ -150,16 +150,18 @@ label[for=tag-chooser] {
 }
 
 @media (max-width: 800px) {
+	div.mobile-text-left {
+		text-align: initial;
+		margin-top: 20px;
+	}
+}
+
+@media (max-width: 900px) {
 	.note {
 		width: 100%;
 	}
 	
 	.container-fluid {
 		width: 90%;
-	}
-	
-	div.mobile-text-left {
-		text-align: initial;
-		margin-top: 20px;
 	}
 }
