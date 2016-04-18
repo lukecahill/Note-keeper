@@ -60,7 +60,7 @@ class LoadNote extends Note {
 	}
 	
 	function returnNote($rows, $count) {
-		$tagList, $checkbox, $merged, $notes = array();
+		$tagList = $checkbox = $merged = $notes = array();
 		
 		if($count < 0) {
 			echo json_encode('none');
