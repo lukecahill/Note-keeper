@@ -1,34 +1,19 @@
 <?php
 
-if(($_SERVER['REQUEST_METHOD'] == 'POST') && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
-	$note = new Note($_POST['action']);
-	
-	if($note->action === 'loadnote') {
-		$note->loadNote();
-	} else if($note->action === 'searchnote') {
-		$note->searchNote();
-	} else {
-		echo json_encode('Action not found');
-	}
-	
-} else {
-	echo json_encode('No direct access');
-}
+require_once 'note-base.php';
 
-class Note {
+class LoadNote extends Note {
 	public $userId = 0;
 	public $complete = 0;
-	public $action = '';
 	public $search = '';
-	public $db = null;
+	public $action = '';
 	
 	function __construct($action) {
+		parent::__construct();
 		$this->action = $action;
-		require_once 'db-connect.inc.php';
-		$this->db = Database::ConnectDb();
 	}
 	
-	function loadNote() {
+	function getNotes() {
 		if(!isset($_POST['userId']) || !isset($_POST['complete'])) {
 			return;
 		}
@@ -75,10 +60,7 @@ class Note {
 	}
 	
 	function returnNote($rows, $count) {
-		$tagList = array();
-		$checkbox = array();
-		$merged = array();
-		$notes = array();
+		$tagList, $checkbox, $merged, $notes = array();
 		
 		if($count < 0) {
 			echo json_encode('none');
@@ -139,6 +121,23 @@ class Note {
 		if($this->action !== 'searchnote') array_push($merged, $style);
 		echo json_encode($merged);
 	}
+}
+
+if(($_SERVER['REQUEST_METHOD'] == 'POST') && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+	$note = new LoadNote($_POST['action']);
+	
+	if($note->action === 'loadnote') {
+		$note->getNotes();
+	} else if($note->action === 'searchnote') {
+		$note->searchNote();
+	} else {
+		echo json_encode('Action not found');
+	}
+
+	$note = null;
+	
+} else {
+	echo json_encode('No direct access');
 }
 
 ?>
