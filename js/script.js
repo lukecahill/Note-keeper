@@ -30,7 +30,6 @@
 				if(toSend.action === 'searchnote') {
 					$noteList.empty();
 				}
-				console.log(data)
 				data = $.parseJSON(data);
  				if(data !== 'none') {
 					$.each(data[0], function(index, value) {
@@ -72,7 +71,7 @@
 			complete: 0,
 			action: 'searchnote',
 			search: search
-		}
+		};
 		
 		loadNotes(data);
 	}
@@ -281,7 +280,7 @@
 			userId : userId,
 			complete: 0,
 			action: 'loadnote'
-		}
+		};
 		
 		if(showingComplete) {
 			$noteList.empty();
@@ -300,7 +299,6 @@
 		
  		$this = $(this);
 		var noteId = $this.closest('.note').data('id');
-		console.log(noteId)
 		$.ajax({
 			method: 'POST',
 			url: 'includes/note-done.php',
@@ -310,7 +308,6 @@
 			}
 		})
 		.done(function(data, result) {
-			console.log(data, result)
 			$this.closest('.note').remove();
 			toastr.success('Note marked as active!');
 		})
@@ -389,7 +386,7 @@
 	
 	$noteList.on('click', '#note-edit-modal', function() {
 		$('#note-edit-modal').show();
-	})
+	});
 	
 	$('#close-new-note').on('click', function() {
 		$newNoteSection.hide();
