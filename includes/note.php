@@ -1,26 +1,6 @@
-<?php
+<?php	
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
-	
-	require_once 'note-base.php';
-	$action = $_POST['action'];
-	$note = new NoteEdit();
-
-	if(isset($_POST['noteText']) && ($action === 'addnote')) {
-		$tags = isset($_POST['noteTags']) ? $_POST['noteTags'] : '';
-		$note->addNote($_POST['userId'], $_POST['noteText'], $tags, $_POST['noteTitle']);
-	} else if(isset($_POST['deleteNote']) && ($action === 'deletenote')) {
-		$note->deleteNote($_POST['deleteNote']);
-	} else if(($action === 'editnote') && isset($_POST['noteText']) && isset($_POST['noteId'])) {
-		$tags = isset($_POST['noteTags']) ? $_POST['noteTags'] : '';
-		$note->editNote($_POST['noteId'], $_POST['noteText'], $_POST['noteTitle'], $tags);
-	}
-
-	$note = null;
-
-} else {
-	die('No direct access!');
-}
+require_once 'note-base.php';
 
 class NoteEdit extends Note {
 
@@ -51,6 +31,27 @@ class NoteEdit extends Note {
 		
 		echo $id . ' has been updated.';
 	}
+}
+
+if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+	
+	$action = $_POST['action'];
+	$note = new NoteEdit();
+
+	if(isset($_POST['noteText']) && ($action === 'addnote')) {
+		$tags = isset($_POST['noteTags']) ? $_POST['noteTags'] : '';
+		$note->addNote($_POST['userId'], $_POST['noteText'], $tags, $_POST['noteTitle']);
+	} else if(isset($_POST['deleteNote']) && ($action === 'deletenote')) {
+		$note->deleteNote($_POST['deleteNote']);
+	} else if(($action === 'editnote') && isset($_POST['noteText']) && isset($_POST['noteId'])) {
+		$tags = isset($_POST['noteTags']) ? $_POST['noteTags'] : '';
+		$note->editNote($_POST['noteId'], $_POST['noteText'], $_POST['noteTitle'], $tags);
+	}
+
+	$note = null;
+
+} else {
+	die('No direct access!');
 }
 
 ?>
