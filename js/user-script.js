@@ -18,7 +18,7 @@
 		.fail(function(error) {
 			// fail
 			console.log('An error occurred', error);
-		})
+		});
 	}
 	
 	$('#tag-color-button').on('click', function() {
@@ -44,7 +44,7 @@
 		.fail(function(error) {
 			// fail
 			console.log('An error occurred', error);
-		})
+		});
 	});
 	
 	$('#change-password-form').on('submit', function(e) {
