@@ -43,16 +43,18 @@ class LoadNote extends Note {
 		$this->userId = $_POST['userId'];
 		$this->complete = $_POST['complete'];
 		$this->search = $_POST['search'];
+
+		$this->search = '%' . $this->search . '%';
 		
 		$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, u.TagColor 
 								FROM note n 
 								INNER JOIN note_users u ON u.UserId = n.UserId
 								WHERE NoteComplete = :complete
 								AND n.UserId = :userId
-								OR n.NoteTitle LIKE :searchtitle"
+								AND n.NoteTitle LIKE :searchtitle"
 							);
 		
-		$stmt->execute(array(':userId' => $this->userId, ':complete' => $this->complete, ':searchtitle' => $this->search));
+		$stmt->execute(array(':complete' => $this->complete, ':userId' => $this->userId, ':searchtitle' => $this->search));
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$count = $stmt->rowCount();
 
