@@ -22,11 +22,7 @@
 	}
 	
 	$('#tag-color-button').on('click', function() {
-		var color = $('#user-tag-color').val();
-		
-		if(color.indexOf('#') === 0) {
-			color = color.substring(1, color.length);
-		}
+		var color = $('#select-tag-color').val();
 		
 		$.ajax({
 			method: 'POST',
