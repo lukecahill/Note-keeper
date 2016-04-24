@@ -79,7 +79,8 @@ class LoadNote extends Note {
 			
 			if(sizeof($tags) > 0 && $tags !== '') {
 				foreach($tags as $tag) {
-					$note .= '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' . $tag . '">' . $tag . '</span>';
+					$color = $item['TagColor'];
+					$note .= '<span class="note-tags note-tags note-tags-' . $color . '" title="Click to show all notes with this tag." data-tag="' . $tag . '">' . $tag . '</span>';
 				}
 			}
 			
