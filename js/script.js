@@ -378,6 +378,13 @@
 		searchNotes(text);
 	});
 	
+	$('#search-note-text').on('keyup', function(event) {
+		if(event.keyCode == 13) {
+			var text = $('#search-note-text').val();
+			searchNotes(text);
+		}
+	});
+	
 	$('#show-search-button').on('click', function() {
 		$('#seach-input').toggle();
 		$tagChooser.toggle();
