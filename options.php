@@ -19,26 +19,23 @@
 			<?php echo $_SESSION['user']; ?>
 		</p>
 		
-		<p>
+		<div class="options-tag-color">
 			<div class="form-group">
-				<label for="user-tag-color">
-					Hexadecimal color code - Enter a color for your tags (as hexidecimal code e.g. #FF0000):
-				</label>
-				<input type="text" id="user-tag-color" class="form-control">
+				<?php include 'templates/color-select.html'; ?>
 			</div>
 			<button class="btn btn-success" id="tag-color-button">
 				<span class="glyphicon glyphicon-plus"></span>
 				Change Color
 			</button>
+		</div>
 			
-			<?php include 'templates/password.php'; ?>
-		</p>
+		<?php include 'templates/password.php'; ?>
 	</div>
 </div>
 
 <?php echo '<script>var userId = "' . $_SESSION['userId'] . '"; </script>'; // use this to echo the session user ID for the JS to use ?> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script src="js/user-script.min.js"></script>
+<script src="js/user-script.js"></script>
 
 <?php include 'templates/footer.html'; ?>
