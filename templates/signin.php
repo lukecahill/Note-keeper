@@ -1,4 +1,4 @@
-<div class="col-sm-12 text-right">
+<div class="col-sm-12 text-right site-menu">
 
 <?php if(isset($_SESSION['user'])) { ?>
 	<?php 
