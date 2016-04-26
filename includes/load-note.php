@@ -71,18 +71,12 @@ class LoadNote extends Note {
 		
 		foreach($rows as $item) {
 			
-			$note = '';
 			$tags = unserialize($item['NoteTags']);
-			
-			$note .= '<div class="note" data-id="' . $item['NoteId'] . '"> 
-					<span class="note-id" id="' . $item['NoteId'] . '">Note ID: ' . $item['NoteId']. '</span>
-					<h4 class="note-title">' . $item['NoteTitle'] . '</h4>
-					<p class="note-text">' . $item['NoteText'] . '</p>';
-			
+			$tagArray = array();
+
 			if(sizeof($tags) > 0 && $tags !== '') {
 				foreach($tags as $tag) {
-					$color = $item['TagColor'];
-					$note .= '<span class="note-tags note-tags note-tags-' . $color . '" title="Click to show all notes with this tag." data-tag="' . $tag . '">' . $tag . '</span>';
+					$tagArray[] = $tag;
 				}
 			}
 			
@@ -99,23 +93,11 @@ class LoadNote extends Note {
 					}
 				}
 			}
-			
-			if($this->complete == 0) {
-				$note .= '<div class="note-glyphicons">
-					<span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span>
-					<span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span>
-					<span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span>
-					</div>';
-			} else {
-				$note .= '<div class="note-glyphicons">
-					<span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span>
-					<span class="glyphicon glyphicon-asterisk mark-note-active" title="Mark as active"></span>
-					</div>';
-			}
-			
-			$note .= '</div>';
-			$notes[] = $note;
+			$noteArray = array('complete' => $this->complete, 'color' => $item['TagColor'], 'id' => $item['NoteId'], 'title' => $item['NoteTitle'], 'text' => $item['NoteText'], $tagArray);
+			$notes[] = $noteArray;
 		}
+
+
 		if($this->action !== 'searchnote') $style = '<style> .note .note-tags { background-color: #' . $rows[0]['TagColor'] . '; border-color: #' . $rows[0]['TagColor'] . ' } </style>';
 		
 		array_push($merged, $checkbox);
