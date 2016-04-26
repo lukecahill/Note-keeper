@@ -10,10 +10,10 @@
 	var $noteTags = $('#add-note-tags');
 	
 	var initialLoad = { 
-			userId : userId,
-			complete: 0,
-			action: 'loadnote'
-		};
+		userId : userId,
+		complete: 0,
+		action: 'loadnote'
+	};
 	loadNotes(initialLoad);
 	
 	function loadNotes(toSend) {
@@ -46,8 +46,9 @@
 							.attr('data-tag', value)
 							.text(value)); 
 					});
-						
-					$noteList.append(data[2]);
+
+					buildNote(data[2]);
+					
 					$noteList.after(data[3]);
 				} else {
 					$noteList.append('It appears that you have not yet created any notes. Create your first one.');
@@ -116,6 +117,26 @@
 		});
 		
 		toastr.info('Now only showing notes with the tag "' + tag + '"');
+	}
+
+	function buildNote(data) {
+		$.each(data, function(index, value) {
+			var note = '<div class="note" data-id="' + value.id + '"><span class="note-id" id="' + value.id + '">Note ID: ' + value.id + '</span>';
+			note += '<h4 class="note-title">' + value.title + '</h4><p class="note-text">' + value.text + '</p>';
+			$.each(data[0][0], function(i, v) {	// the tags will always be in the first index 
+				note += '<span class="note-tags note-tags note-tags-' + value.color + '" title="Click to show all notes with this tag." data-tag="' + v + '">' + v + '</span>';
+			});
+
+			if(value.complete === '0') {
+				note += '<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span>';
+				note += '<span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div>';
+			} else {
+				note +='<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span>';
+				note += '<span class="glyphicon glyphicon-asterisk mark-note-active" title="Mark as active"></span></div>';
+			}
+
+			$noteList.append(note);
+		});
 	}
 	
 	toastr.options = {
