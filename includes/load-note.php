@@ -63,6 +63,7 @@ class LoadNote extends Note {
 	
 	function returnNote($rows, $count) {
 		$tagList = $checkbox = $merged = $notes = array();
+		$color = '';
 		
 		if($count < 0) {
 			echo json_encode('none');
@@ -95,11 +96,12 @@ class LoadNote extends Note {
 			}
 			$noteArray = array('complete' => $this->complete, 'color' => $item['TagColor'], 'id' => $item['NoteId'], 'title' => $item['NoteTitle'], 'text' => $item['NoteText'], $tagArray);
 			$notes[] = $noteArray;
+			$color = $item['TagColor'];
 		}
 
 
-		if($this->action !== 'searchnote') $style = '<style> .note .note-tags { background-color: #' . $rows[0]['TagColor'] . '; border-color: #' . $rows[0]['TagColor'] . ' } </style>';
-		
+		if($this->action !== 'searchnote') $style = $color;
+
 		array_push($merged, $checkbox);
 		array_push($merged, $tagList);
 		array_push($merged, $notes);
