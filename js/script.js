@@ -49,7 +49,8 @@
 
 					buildNote(data[2]);
 					
-					$noteList.after(data[3]);
+					$noteList.after('<style> .note .note-tags { background-color: #' + data[3] + '; border-color: #' + data[3] + ' } </style>');
+					color = data[3];
 				} else {
 					$noteList.append('It appears that you have not yet created any notes. Create your first one.');
 				}
@@ -124,7 +125,7 @@
 			var note = '<div class="note" data-id="' + value.id + '"><span class="note-id" id="' + value.id + '">Note ID: ' + value.id + '</span>';
 			note += '<h4 class="note-title">' + value.title + '</h4><p class="note-text">' + value.text + '</p>';
 			$.each(data[0][0], function(i, v) {	// the tags will always be in the first index 
-				note += '<span class="note-tags note-tags note-tags-' + value.color + '" title="Click to show all notes with this tag." data-tag="' + v + '">' + v + '</span>';
+				note += '<span class="note-tags note-tags-' + value.color + '" title="Click to show all notes with this tag." data-tag="' + v + '">' + v + '</span>';
 			});
 
 			if(value.complete === '0') {
@@ -186,7 +187,7 @@
 		.done(function(data, result) {
 			var tags = '';
 			$.each(tagArray, function(index, value) {
-				tags += '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' + value + '">' + value + '</span>';
+				tags += '<span class="note-tags note-tags-' + color + '" title="Click to show all notes with this tag." data-tag="' + value + '">' + value + '</span>';
 			});
 			
 			$noteList.append('<div class="note" data-id="' + data + '"><span class="note-id" id="' + data + '">Note ID: ' + data + '</span><h4 class="note-title">' + noteTitle + '</h4><p class="note-text">' + noteText + '</p>' + tags + '<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>');
@@ -370,7 +371,7 @@
 			var tags = '';
 			
 			$.each(tagArray, function(index, value) {
-				tags += '<span class="note-tags" title="Click to show all notes with this tag." data-tag="' + value + '">' + value + '</span>';
+				tags += '<span class="note-tags note-tags-' + color + '" title="Click to show all notes with this tag." data-tag="' + value + '">' + value + '</span>';
 			});
 			
 			$(newText).after(tags);
