@@ -15,6 +15,7 @@ class LoadNote extends Note {
 	
 	function getNotes() {
 		if(!isset($_POST['userId']) || !isset($_POST['complete'])) {
+			echo json_encode('invalid');
 			return;
 		}
 		
@@ -71,19 +72,13 @@ class LoadNote extends Note {
 		}
 		
 		foreach($rows as $item) {
-			
 			$tags = unserialize($item['NoteTags']);
 			$tagArray = array();
 
 			if(sizeof($tags) > 0 && $tags !== '') {
 				foreach($tags as $tag) {
 					$tagArray[] = $tag;
-				}
-			}
-			
-			if(sizeof($tags) > 0 && $tags !== '') {
-				foreach($tags as $tag) {
-					
+
 					if(!in_array($tag, $tagList)) { 
 						$tagList[] = $tag;
 						
@@ -94,6 +89,7 @@ class LoadNote extends Note {
 					}
 				}
 			}
+
 			$noteArray = array('complete' => $this->complete, 'color' => $item['TagColor'], 'id' => $item['NoteId'], 'title' => $item['NoteTitle'], 'text' => $item['NoteText'], $tagArray);
 			$notes[] = $noteArray;
 			$color = $item['TagColor'];
