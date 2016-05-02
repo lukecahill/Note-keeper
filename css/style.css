@@ -210,6 +210,15 @@ label[for=tag-chooser] {
 	background-color: #eee;
 }
 
+.navbar-container {
+	margin-top: 0;
+	border-radius: 0;
+}
+
+nav.navigation-bar {
+	border-radius: 0;
+}
+
 @media (max-width: 800px) {
 	div.mobile-text-left {
 		text-align: initial;
