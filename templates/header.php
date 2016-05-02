@@ -17,11 +17,7 @@ if(!isset($_SESSION['user']) && !isset($_SESSION['userId'])) {
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container-fluid">
-	<div class="jumbotron">
-		<h1>
-			<img src="images/note.png" class="note-logo"></img>
-			</span>
-				Note Keeper.
-		</h1>
-	</div>
+
+	<?php include 'links.php'; ?>
+
+	<div class="container-fluid">
