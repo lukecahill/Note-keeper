@@ -2,8 +2,8 @@
 	$url = $_SERVER['REQUEST_URI']; 
 ?>
 
-<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
+<nav class="navbar navbar-inverse navigation-bar">
+	<div class="container-fluid navbar-container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9" aria-expanded="true">
 				<span class="sr-only">
@@ -13,11 +13,11 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">
+			<a class="navbar-brand" href="index.php">
 				Note Keeper
 			</a>
 		</div>
-		<div class="navbar-collapse collapse in" id="bs-example-navbar-collapse-9" aria-expanded="true"> 
+		<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-9" aria-expanded="true"> 
 			<ul class="nav navbar-nav">
 				<li <?php if(strpos($url, 'index.php')) echo 'class="active" ' ?>>
 					<a href="index.php">
