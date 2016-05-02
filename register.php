@@ -3,22 +3,22 @@
 require_once 'authentication.php';
 
 class Register extends Authentication {
-	private $emailHash = '';
-	private $passwordHash = '';
-	private $error = '';
+	public $emailHash = '';
+	public $passwordHash = '';
+	public $error = '';
 
 	function __construct($email, $password) {
 		parent::__construct($email, $password);
 	}
 
 	function hashEmail() {
-		$this->emailHash = md5($email);
+		$this->emailHash = md5($this->email);
 		return $this->emailHash;
 	}
 
 	function hashPassword() {
-		$this->hashPassword = password_hash($password, PASSWORD_DEFAULT);
-		return $this->hashPassword;
+		$this->passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
+		return $this->passwordHash;
 	}
 
 	function checkExists() {
@@ -32,6 +32,8 @@ class Register extends Authentication {
 	}
 
 	function addUser() {
+		$this->hashEmail();
+		$this->hashPassword();
 		$stmt = $this->db->prepare('INSERT INTO note_users (UserId, UserEmail, UserPassword) VALUES(:id, :email, :password);');
 		$stmt->execute(array(':id' => $this->emailHash, ':email' => $this->email, ':password' => $this->passwordHash));
 	}

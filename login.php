@@ -3,7 +3,7 @@
 require_once 'authentication.php';
 
 class Login extends Authentication {
-	private $error = '';
+	public $error = '';
 
 	function __construct($email, $password) {
 		parent::__construct($email, $password);
