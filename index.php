@@ -2,7 +2,7 @@
 	
 <div class="col-sm-12 row">
 
-	<?php include 'templates/signin.php'; ?>
+	<?php //include 'templates/signin.php'; ?>
 
 	<div class="col-sm-7">
 		<button class="btn btn-success" id="new-note-button">
@@ -17,14 +17,13 @@
 	</div>
 	
 	<div class="col-sm-5 text-right mobile-text-left">
-		<button class="btn btn-default" id="refresh-button">
-			<span class="glyphicon glyphicon-refresh"></span>
-			Refresh
-		</button>
-		
 		<button class="btn btn-default" id="show-all-notes-button">
 			<span class="glyphicon glyphicon-inbox"></span>
 			Show All Notes
+		</button>
+
+		<button class="btn btn-default" id="refresh-button">
+			<span class="glyphicon glyphicon-refresh"></span>
 		</button>
 		
 		<button class="btn btn-default" id="show-search-button">
