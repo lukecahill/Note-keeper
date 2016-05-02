@@ -1,8 +1,6 @@
 <?php include 'templates/header.php'; ?>
 	
 <div class="col-sm-12 row">
-
-	<?php include 'templates/signin.php'; ?>
 	<div class="col-sm-12">
 		<h2>
 			User Options 
