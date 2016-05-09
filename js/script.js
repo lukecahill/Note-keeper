@@ -121,10 +121,11 @@
 	}
 
 	function buildNote(data) {
+		var note = '';
 		$.each(data, function(index, value) {
-			var note = '<div class="note" data-id="' + value.id + '"><span class="note-id" id="' + value.id + '">Note ID: ' + value.id + '</span>';
+			note = '<div class="note" data-id="' + value.id + '"><span class="note-id" id="' + value.id + '">Note ID: ' + value.id + '</span>';
 			note += '<h4 class="note-title">' + value.title + '</h4><p class="note-text">' + value.text + '</p>';
-			$.each(data[0][0], function(i, v) {	// the tags will always be in the first index 
+			$.each(data[index][0], function(i, v) {	// the tags will always be in the first index 
 				note += '<span class="note-tags note-tags-' + value.color + '" title="Click to show all notes with this tag." data-tag="' + v + '">' + v + '</span>';
 			});
 
@@ -146,7 +147,7 @@
 		"closeButton": true
 	};
 
-	// Hide the form to create new note until clicked
+	// Hide the until clicked
 	$newNoteSection.hide();
 	$('.note-text-validation, .edit-note-text-validation, #seach-input').hide();
 	
