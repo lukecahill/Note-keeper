@@ -125,7 +125,7 @@
 		$.each(data, function(index, value) {
 			note = '<div class="note" data-id="' + value.id + '"><span class="note-id" id="' + value.id + '">Note ID: ' + value.id + '</span>';
 			note += '<h4 class="note-title">' + value.title + '</h4><p class="note-text">' + value.text + '</p>';
-			$.each(data[index][0], function(i, v) {	// the tags will always be in the first index 
+			$.each(data[index][0], function(i, v) {
 				note += '<span class="note-tags note-tags-' + value.color + '" title="Click to show all notes with this tag." data-tag="' + v + '">' + v + '</span>';
 			});
 
@@ -165,7 +165,7 @@
 		var noteTitle = $('#add-note-title').val();
 		var tagArray = [];
 		
-		if(noteText.trim() === '') {
+		if(noteText.trim() === '' && noteTitle.trim() === '') {
 			$('.note-text-validation').show(); 
 			return;
 		}
