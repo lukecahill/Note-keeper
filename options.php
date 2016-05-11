@@ -22,8 +22,20 @@
 				<?php include 'templates/color-select.html'; ?>
 			</div>
 			<button class="btn btn-success" id="tag-color-button">
+				<span class="glyphicon glyphicon-pencil"></span>
+				Change color
+			</button>
+		</div>
+		
+		<div class="options-tag-color">
+			<div class="form-group">
+				<p>
+					Available Sections
+				</p>
+			</div>
+			<button class="btn btn-success" id="tag-color-button">
 				<span class="glyphicon glyphicon-plus"></span>
-				Change Color
+				Add section
 			</button>
 		</div>
 			
