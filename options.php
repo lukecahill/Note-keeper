@@ -17,27 +17,9 @@
 			<?php echo $_SESSION['user']; ?>
 		</p>
 		
-		<div class="options-tag-color">
-			<div class="form-group">
-				<?php include 'templates/color-select.html'; ?>
-			</div>
-			<button class="btn btn-success" id="tag-color-button">
-				<span class="glyphicon glyphicon-pencil"></span>
-				Change color
-			</button>
-		</div>
+		<?php include 'templates/color-select.html'; ?>
 		
-		<div class="options-tag-color">
-			<div class="form-group">
-				<p>
-					Available Sections
-				</p>
-			</div>
-			<button class="btn btn-success" id="tag-color-button">
-				<span class="glyphicon glyphicon-plus"></span>
-				Add section
-			</button>
-		</div>
+		<?php include 'templates/sections.html'; ?>
 			
 		<?php include 'templates/password.php'; ?>
 	</div>
