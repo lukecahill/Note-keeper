@@ -1,7 +1,8 @@
 (function() {
 	
 	getSettings();
-	
+	loadSections();
+
 	function getSettings() {		
 		$.ajax({
 			method: 'POST',
@@ -10,16 +11,38 @@
 				id: userId,
 				action: 'get-tag-color'
 			}
-		})		
-		.done(function(data, status) {
-			data = JSON.parse(data);
-			$('#user-tag-color').val(data);
 		})
 		.fail(function(error) {
 			// fail
 			console.log('An error occurred', error);
 		});
 	}
+
+	function loadSections() {
+		$.ajax({
+			method: 'POST',
+			url: 'includes/user-settings.php',
+			data: {
+				id: userId,
+				action: 'get-sections'
+			}
+		})
+		.done(function(data, status) {
+			// TODO : below
+
+			//data = JSON.parse(data);
+			//console.log(data);
+
+			//$('#section-list').append('');
+		})
+		.fail(function(error) {
+			console.log('An error occurred wile getting the available sections', error);
+		});
+	}
+
+	$('#section-button').on('click', function() {
+		console.log($('new-section').val());
+	});
 	
 	$('#tag-color-button').on('click', function() {
 		var color = $('#select-tag-color').val();
@@ -34,7 +57,6 @@
 			}
 		})
 		.done(function(data, status) {
-			// getSettings();
 			toastr.success('Tag color updated!');
 		})
 		.fail(function(error) {
