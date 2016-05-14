@@ -41,6 +41,9 @@ h1 span.glyphicon-comment {
 	font-size: 1.2em;
 	float: right;
 }
+.note .note-glyphicons.note-glyphicons-empty {
+	float: none;
+}
 
 .note .note-glyphicons .glyphicon {
 	margin-right: 5px;
