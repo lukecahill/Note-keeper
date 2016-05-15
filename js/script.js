@@ -4,7 +4,6 @@
 	var showingComplete = false;
 	var $noteList = $('#note-list');
 	var $completedNoteButton = $('#complete-notes-button');
-	var $showAllNotesButton = $('#show-all-notes-button');
 	var $newNoteSection = $('#new-note-section');
 	var $tagChooser = $('#tag-chooser');
 	var $noteTags = $('#add-note-tags');
@@ -43,8 +42,7 @@
 					});
 					
 					$tagChooser.empty();
-					$tagChooser.append($('<option></option>').attr('disabled', true).attr('selected', true).text('-- Choose a tag --')); 
-					$tagChooser.append($('<option></option>').attr('value', 'showall').text('-- Show all --')); 
+					$tagChooser.append($('<option></option>').attr('value', 'showall').attr('selected', true).text('-- Show all --')); 
 					$.each(data[1], function(key, value) {   
 						$tagChooser
 							.append($('<option></option>')
@@ -60,9 +58,9 @@
 				}
 				
 				if(toSend.complete !== 1) {
-					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Completed Notes');		
+					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>');		
 				} else {
-					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>	Show Active Notes');		
+					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>');		
 				} 
 			}
 		})
@@ -153,7 +151,7 @@
 	function buildNote(data) {
 		var note = '';
 		$.each(data, function(index, value) {
-			note = '<div class="note" data-id="' + value.id + '"><span class="note-id" id="' + value.id + '">Note ID: ' + value.id + '</span>';
+			note = '<div class="note" data-id="' + value.id + '">';
 			note += '<h4 class="note-title">' + value.title + '</h4><p class="note-text">' + value.text + '</p>';
 
 			$.each(data[index][0], function(i, v) {
@@ -187,7 +185,8 @@
 	*
 	* Hide these sections until they are clicked to show
 	**/
-	$('.note-text-validation, .edit-note-text-validation, #seach-input', $newNoteSection).hide();
+	$('.note-text-validation, .edit-note-text-validation, #seach-input').hide();
+	$newNoteSection.hide();
 	
 	/**
 	* @function
@@ -197,16 +196,7 @@
 	$('#new-note-button').on('click', function(){
 		$newNoteSection.toggle();
 	});
-	
-	/**
-	* @function
-	*
-	* Show all of the notes in the DOM, as these may be hidden after clicking to show only notes with similar tags
-	**/
-	$showAllNotesButton.on('click', function() {
-		$('.note').show();
-	});
-	
+
 	/**
 	* @function
 	*
