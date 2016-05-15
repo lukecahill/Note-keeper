@@ -222,7 +222,7 @@ nav.navigation-bar {
 	border-radius: 0;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 767px) {
 	div.mobile-text-left {
 		text-align: initial;
 		margin-top: 20px;
