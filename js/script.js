@@ -17,6 +17,8 @@
 	loadNotes(initialLoad);
 	
 	/**
+	* @function loadNotes
+	*
 	* Load the notes from the database
 	* @param {object} toSend
 	**/
@@ -70,6 +72,8 @@
 	}
 	
 	/**
+	* @function searchNotes
+	*
 	* Searches the notes in the database
 	* @param {string} search
 	**/
@@ -85,6 +89,8 @@
 	}
 	
 	/**
+	* @function addTag
+	*
 	* Add a new checkbox for tags to the DOM
 	* @param {string} where
 	* @param {string} input
@@ -104,6 +110,8 @@
 	}
 	
 	/**
+	* @function showTags
+	*
 	* Show all of the notes with the same tag as the one chosen
 	* @param {string} tag
 	**/
@@ -137,6 +145,8 @@
 	}
 
 	/**
+	* @function buildNote
+	*
 	* Build the note and then append it to the DOMs notelist
 	* @param {object} data
 	**/
@@ -173,11 +183,15 @@
 	};
 
 	/**
+	* @function
+	*
 	* Hide these sections until they are clicked to show
 	**/
 	$('.note-text-validation, .edit-note-text-validation, #seach-input', $newNoteSection).hide();
 	
 	/**
+	* @function
+	*
 	* Show the section to add a new note
 	**/
 	$('#new-note-button').on('click', function(){
@@ -185,6 +199,8 @@
 	});
 	
 	/**
+	* @function
+	*
 	* Show all of the notes in the DOM, as these may be hidden after clicking to show only notes with similar tags
 	**/
 	$showAllNotesButton.on('click', function() {
@@ -192,6 +208,8 @@
 	});
 	
 	/**
+	* @function
+	*
 	* The function which is run to add a new note to the database.
 	* Also then appends the note to the DOM - this could be changed to refresh the whole DOM via AJAX instead. 
 	* Hides the new note section after success.
@@ -253,6 +271,8 @@
 	});
 	
 	/**
+	* @function
+	*
 	* Allow the user to click on the notes tags to show notes with the same tag.
 	* This will run the showTags() function.
 	**/
@@ -263,6 +283,8 @@
 	});
 	
 	/**
+	* @function
+	*
 	* Function to run when the user clicks to delete the note.
 	* This will both remove the note from the database and the DOM.
 	**/
@@ -294,6 +316,8 @@
 	});
 	
 	/**
+	* @function
+	*
 	* Function to run when the user clicks to edit the note.
 	* This will show a modal which contains the note information for editing.
 	* This will both edit the note in the database and the DOM.
@@ -326,6 +350,8 @@
 	});
 	
 	/**
+	* @function
+	*
 	* Mark the note as complete in the database.
 	* This note will then not appear on the active notes screen.
 	**/
@@ -352,6 +378,11 @@
 		
 	});
 	
+	/** 
+	* @function
+	*
+	* Toggle to show the active or completed notes.
+	**/
 	$completedNoteButton.on('click', function() {
 		var data = {
 			userId : userId,
@@ -372,6 +403,11 @@
 		}
 	});
 	
+	/**
+	* @function
+	*
+	* Remove a note from the completed notes section, and mark it as active.
+	**/
 	$noteList.on('click', '.mark-note-active', function() {
 		
  		$this = $(this);
@@ -394,6 +430,11 @@
 		
 	});
 	
+	/**
+	* @function
+	* 
+	* Save the note after editing via the modal.
+	**/
 	$('#save-note-button').on('click', function() {
 		
  		var title = $('#edit-note-title').val();
@@ -440,6 +481,12 @@
 		});
 	});
 	
+	/**
+	* @function
+	* 
+	* Fired when an option in the dropdown is chosen.
+	* Will show all notes with the chosen tag, or all if they have chosen to show all.
+	**/
 	$('#tag-chooser').on('change', function() {
 		var value = this.value;
 		if(value !== 'showall') {
@@ -450,6 +497,12 @@
 		}
 	});
 	
+	/**
+	* @function
+	* 
+	* Fired when the search button is clicked. 
+	* Passes the value to the searchNotes function.
+	**/
 	$('#search-note-button').on('click', function() {
 		var text = $('#search-note-text').val();
 		searchNotes(text);
