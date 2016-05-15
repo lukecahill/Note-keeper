@@ -2,44 +2,34 @@
 	
 <div class="col-sm-12 row">
 
-	<?php //include 'templates/signin.php'; ?>
-
 	<div class="col-sm-7">
 		<button class="btn btn-success" id="new-note-button">
 			<span class="glyphicon glyphicon-comment"></span>
-			Add New Note
+			Add new note
 		</button>
 		
 		<button class="btn btn-default" id="complete-notes-button">
 			<span class="glyphicon glyphicon-asterisk"></span>
-			Show Completed Notes
 		</button>
 	</div>
-	
-	<div class="col-sm-5 text-right mobile-text-left">
-		<button class="btn btn-default" id="show-all-notes-button">
-			<span class="glyphicon glyphicon-inbox"></span>
-			Show All Notes
-		</button>
 
-		<button class="btn btn-default" id="refresh-button">
+	<div class="col-sm-5 text-right mobile-text-left">
+		<button class="btn btn-default" id="refresh-button" title="Refresh the note list">
 			<span class="glyphicon glyphicon-refresh"></span>
+			Refresh list
 		</button>
 		
-		<button class="btn btn-default" id="show-search-button">
+		<button class="btn btn-default" id="show-search-button" title="Search for a note via the title">
 			<span class="glyphicon glyphicon-search"></span>
 		</button>
 	</div>
 	
-	<div class="col-sm-12">
+	<div class="col-md-12">
 		<label for="tag-chooser">
 			Choose a tag to display all notes with this tag.
 		</label>
 		<select id="tag-chooser" class="form-control">
-			<option disabled selected>
-				-- Choose a tag --
-			</option>
-			<option value="showall">
+			<option selected value="showall">
 				-- Show all --
 			</option>
 		</select>
