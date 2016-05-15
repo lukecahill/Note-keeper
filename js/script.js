@@ -48,8 +48,6 @@
 					});
 
 					buildNote(data[2]);
-					
-					$noteList.after('<style> .note .note-tags { background-color: #' + data[3] + '; border-color: #' + data[3] + ' } </style>');
 					color = data[3];
 				} else {
 					$noteList.append('It appears that you have not yet created any notes. Create your first one.');
