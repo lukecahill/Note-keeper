@@ -16,6 +16,10 @@
 	};
 	loadNotes(initialLoad);
 	
+	/**
+	* Load the notes from the database
+	* @param {object} toSend
+	**/
 	function loadNotes(toSend) {
 		
 		$.ajax({
@@ -65,6 +69,10 @@
 		});
 	}
 	
+	/**
+	* Searches the notes in the database
+	* @param {string} search
+	**/
 	function searchNotes(search) {
 		var data = {
 			userId: userId,
@@ -76,6 +84,12 @@
 		loadNotes(data);
 	}
 	
+	/**
+	* Add a new checkbox for tags to the DOM
+	* @param {string} where
+	* @param {string} input
+	* @param {bool} edit
+	**/
 	function addTag(where, input, edit) {
 		var newTag = $(input).val();
 		
@@ -89,6 +103,10 @@
 		}
 	}
 	
+	/**
+	* Show all of the notes with the same tag as the one chosen
+	* @param {string} tag
+	**/
 	function showTags(tag) {
 		var notes = $('.note');
 		var hide = [];
@@ -118,6 +136,10 @@
 		toastr.info('Now only showing notes with the tag "' + tag + '"');
 	}
 
+	/**
+	* Build the note and then append it to the DOMs notelist
+	* @param {object} data
+	**/
 	function buildNote(data) {
 		var note = '';
 		$.each(data, function(index, value) {
@@ -150,18 +172,30 @@
 		"closeButton": true
 	};
 
-	// Hide the until clicked
-	$newNoteSection.hide();
-	$('.note-text-validation, .edit-note-text-validation, #seach-input').hide();
+	/**
+	* Hide these sections until they are clicked to show
+	**/
+	$('.note-text-validation, .edit-note-text-validation, #seach-input', $newNoteSection).hide();
 	
+	/**
+	* Show the section to add a new note
+	**/
 	$('#new-note-button').on('click', function(){
 		$newNoteSection.toggle();
 	});
 	
+	/**
+	* Show all of the notes in the DOM, as these may be hidden after clicking to show only notes with similar tags
+	**/
 	$showAllNotesButton.on('click', function() {
 		$('.note').show();
 	});
 	
+	/**
+	* The function which is run to add a new note to the database.
+	* Also then appends the note to the DOM - this could be changed to refresh the whole DOM via AJAX instead. 
+	* Hides the new note section after success.
+	**/
 	$('#add-note-button').on('click', function() {
 		
 		var noteText = $('#add-note-text').val();
@@ -218,12 +252,20 @@
 		addTag('#edit-note-tags', '#edit-new-tag-text', true);
 	});
 	
+	/**
+	* Allow the user to click on the notes tags to show notes with the same tag.
+	* This will run the showTags() function.
+	**/
 	$noteList.on('click', '.note-tags', function() {
 		
 		var tag = $(this).data('tag');
 		showTags(tag);
 	});
 	
+	/**
+	* Function to run when the user clicks to delete the note.
+	* This will both remove the note from the database and the DOM.
+	**/
 	$noteList.on('click', '.remove-note', function() {
 		
 		if(!confirm('Are you sure you wish to remove this note?')) {
@@ -251,6 +293,11 @@
 		
 	});
 	
+	/**
+	* Function to run when the user clicks to edit the note.
+	* This will show a modal which contains the note information for editing.
+	* This will both edit the note in the database and the DOM.
+	**/
 	$noteList.on('click', '.edit-note', function() {
 		$this = $(this);
 		var noteId = $this.closest('.note').data('id');
@@ -278,6 +325,10 @@
 		
 	});
 	
+	/**
+	* Mark the note as complete in the database.
+	* This note will then not appear on the active notes screen.
+	**/
 	$noteList.on('click', '.note-done', function() {
 		
 		$this = $(this);
