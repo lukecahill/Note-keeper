@@ -38,7 +38,7 @@
 				data = $.parseJSON(data);
  				if(data !== 'none') {
 					$.each(data[0], function(index, value) {
-						$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+						$noteTags.append('<div class="checkbox new-note-checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
 					});
 					
 					$tagChooser.empty();
@@ -153,10 +153,11 @@
 		$.each(data, function(index, value) {
 			note = '<div class="note" data-id="' + value.id + '">';
 			note += '<h4 class="note-title">' + value.title + '</h4><p class="note-text">' + value.text + '</p>';
-
+			note += '<div>';
 			$.each(data[index][0], function(i, v) {
 				note += '<span class="note-tags note-tags-' + value.color + '" title="Click to show all notes with this tag." data-tag="' + v + '">' + v + '</span>';
 			});
+			note += '</div>';
 
 			if(value.complete === '0') {
 				if(data[index][0].length > 0) {
@@ -242,6 +243,8 @@
 			$('#add-note-title').val('');
 			$('#add-note-text').val('');
 			$('input:checkbox[name=new-tag]').removeAttr('checked');
+			// TODO : below...
+			// $('div.new-note-checkbox').remove();
 			tagsToAdd = [];
 			toastr.success('Note has been added successfully!');
 			$newNoteSection.hide();
@@ -498,47 +501,97 @@
 		searchNotes(text);
 	});
 	
+	/**
+	* @function
+	* 
+	* Fire the searchNotes function when the return key is pressed in the search note input
+	* @param {event} event
+	**/
 	$('#search-note-text').on('keyup', function(event) {
 		if(event.keyCode == 13) {
 			var text = $('#search-note-text').val();
 			searchNotes(text);
 		}
 	});
-	
+		
+	/**
+	* @function
+	* 
+	* Fire the searchNotes function when the return key is pressed in the search note input box
+	* @param {event} event
+	**/
 	$('#show-search-button').on('click', function() {
 		$('#seach-input').toggle();
 		$tagChooser.toggle();
 		$('label[for=tag-chooser').toggle();
 	});
 	
+	/**
+	* @function
+	* 
+	* Delegate to show the edit modal.
+	**/
 	$noteList.on('click', '#note-edit-modal', function() {
 		$('#note-edit-modal').show();
 	});
 	
+	/**
+	* @function
+	* 
+	* Hides the section to add a new note when the close button is clicked.
+	**/
 	$('#close-new-note').on('click', function() {
 		$newNoteSection.hide();
 	});
 	
+	/**
+	* @function
+	* 
+	* Hides the validate notice displayed on the note text input when a character is entered
+	**/
 	$('#add-note-text').on('keyup', function() {
 		$('.note-text-validation').hide();
 	});
 	
+	/**
+	* @function
+	* 
+	* Hides the validate notice displayed on the edit note text input when a character is entered
+	**/
 	$('#edit-note-text').on('keyup', function() {
 		$('.edit-note-text-validation').hide();
 	});
 	
+	/**
+	* @function
+	* 
+	* Fire the searchNotes function when the return key is pressed in the add new tag input box
+	* @param {event} event
+	**/
 	$('#add-new-tag-text').on('keyup', function(event) {
 		if(event.keyCode == 13) {
 			addTag('#add-note-tags', '#add-new-tag-text', false);
 		}
 	});
 	
+	/**
+	* @function
+	* 
+	* Fire the searchNotes function when the return key is pressed in the edit note tag input box
+	* @param {event} event
+	**/
 	$('#edit-new-tag-text').on('keyup', function(event) {
 		if(event.keyCode == 13) {
 			addTag('#edit-note-tags', '#edit-new-tag-text', true);
 		}
 	});
 	
+	/**
+	* @function
+	* 
+	* Refresh the note list - empties the DOM notelist
+	* Then fires the loadNotes() function to re-populate the DOM
+	**/
 	$('#refresh-button').on('click', function() {
 		$noteList.empty();
 		$('.checkbox').remove();
