@@ -1,5 +1,7 @@
 CREATE DATABASE notes;
 
+USE notes;
+
 CREATE TABLE note_users (
     UserId VARCHAR(60) PRIMARY KEY,
     UserEmail VARCHAR(255),
