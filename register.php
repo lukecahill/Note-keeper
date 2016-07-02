@@ -1,63 +1,4 @@
-<?php
-
-require_once 'authentication.php';
-
-class Register extends Authentication {
-	public $emailHash = '';
-	public $passwordHash = '';
-	public $error = '';
-
-	function __construct($email, $password) {
-		parent::__construct($email, $password);
-	}
-
-	function hashEmail() {
-		$this->emailHash = md5($this->email);
-		return $this->emailHash;
-	}
-
-	function hashPassword() {
-		$this->passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
-		return $this->passwordHash;
-	}
-
-	function checkExists() {
-		$check = $this->db->prepare('SELECT UserEmail FROM note_users WHERE UserEmail = :email LIMIT 1');
-		$check->execute(array(':email' => $this->email));
-		if($check->rowCount() == 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	function addUser() {
-		$this->hashEmail();
-		$this->hashPassword();
-		$stmt = $this->db->prepare('INSERT INTO note_users (UserId, UserEmail, UserPassword) VALUES(:id, :email, :password);');
-		$stmt->execute(array(':id' => $this->emailHash, ':email' => $this->email, ':password' => $this->passwordHash));
-	}
-}
-
-if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
-	$email = $_POST['email'];
-	$password = $_POST['password'];	
-	$error = '';
-	$success = false;
-
-	$register = new Register($email, $password);
-	if($register->checkExists()) {
-		$register->addUser();
-		$success = true;
-	} else {
-		$error = '<span class="validation-error">That email is already in use</span>';
-	}
-} else {
-	$success = false; 
-	$error = '';
-}
-
-?>
+<?php require_once 'includes/register-script.php'; ?>
 
 <!DOCTYPE html>
 <html>
@@ -77,46 +18,52 @@ if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METH
 				Note Keeper.
 		</h1>
 	</div>
-
-<div class="col-sm-12 row">
-<?php if($success === false) { ?>
-	<h3>
-		Register
-	</h3>
-	<p>
-		To create an account please enter your email address and a password.
-	</p>
-	<p>
-		Already have an account? Please <a href="login.php">login here</a>.
-	</p>
-	<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-		<div class="form-group">
-			<label for="user-email">
-				Email address
-			</label>
-			<input type="email" name="email" class="form-control" id="user-email" placeholder="Email">
-			<?php if($error !== '') echo $error; ?>
-		</div>
-		<div class="form-group">
-			<label for="user-password">
-				Password
-			</label>
-			<input type="password" name="password" class="form-control" id="user-password" placeholder="Password">
-		</div>
-		<button type="submit" class="btn btn-default">
-			Submit
-		</button>
-	</form>
-<?php } else { ?>
-	<h3>
-		Register
-	</h3>
 	
-	<p>
-		Registration complete. Please <a href="login.php">login</a>.
-	</p>
-<?php } ?>
+	<div class="col-sm-2">
+	</div>
+	
+	<div class="col-sm-8 row">
+	<?php if($success === false) { ?>
+		<h3>
+			Register
+		</h3>
+		<p>
+			To create an account please enter your email address and a password.
+		</p>
+		<p>
+			Already have an account? Please <a href="login.php">login here</a>.
+		</p>
+		<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<div class="form-group">
+				<label for="user-email">
+					Email address
+				</label>
+				<input type="email" name="email" class="form-control" id="user-email" placeholder="Email">
+				<?php if($error !== '') echo $error; ?>
+			</div>
+			<div class="form-group">
+				<label for="user-password">
+					Password
+				</label>
+				<input type="password" name="password" class="form-control" id="user-password" placeholder="Password">
+			</div>
+			<button type="submit" class="btn btn-default">
+				Submit
+			</button>
+		</form>
+	<?php } else { ?>
+		<h3>
+			Register
+		</h3>
+		
+		<p>
+			Registration complete. Please <a href="login.php">login</a>.
+		</p>
+	<?php } ?>
 
-</div>
+	</div>
+	
+	<div class="col-sm-2">
+	</div>
 
 <?php include 'templates/footer.html'; ?>
