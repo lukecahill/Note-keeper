@@ -187,7 +187,7 @@
 	*
 	* Hide these sections until they are clicked to show
 	**/
-	$('.note-text-validation, .edit-note-text-validation, #seach-input').hide();
+	$('.note-text-validation, .edit-note-text-validation, #search-input').hide();
 	$newNoteSection.hide();
 	
 	/**
@@ -522,7 +522,7 @@
 	* @param {event} event
 	**/
 	$('#show-search-button').on('click', function() {
-		$('#seach-input').toggle();
+		$('#search-input').toggle();
 		$tagChooser.toggle();
 		$('label[for=tag-chooser').toggle();
 	});
