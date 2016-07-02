@@ -1,6 +1,6 @@
 <?php
 
-require_once 'note-base.php';
+require_once 'note.php';
 
 class NoteDone extends Note {
 
