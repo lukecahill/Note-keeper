@@ -125,6 +125,10 @@ h1 span.glyphicon-comment {
 	background-color: #6B6B6B;
 }
 
+.note .tag-container {
+	display: inline-block;
+}
+
 .new-note-group {
 	padding: 10px;
 	border: 1px solid #eee;
