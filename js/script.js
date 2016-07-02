@@ -35,6 +35,7 @@
 				if(toSend.action === 'searchnote') {
 					$noteList.empty();
 				}
+				
 				data = $.parseJSON(data);
  				if(data !== 'none') {
 					$.each(data[0], function(index, value) {
@@ -121,7 +122,7 @@
 		$.each(notes, function(index, value) {
 			$value = $(value);
 			
-			var tags = $value.children('.note-tags');
+			var tags = $value.find('.note-tags');
 			var tagData = [];
 			
 			$.each(tags, function(i, childTag) {
@@ -221,7 +222,7 @@
 		});
 		
 		$.ajax({
-			url: 'includes/note.php',
+			url: 'includes/note-api.php',
 			method: 'POST',
 			data: { 
 				noteText: noteText, 
@@ -292,7 +293,7 @@
 		
  		$.ajax({
 			method: 'POST',
-			url: 'includes/note.php',
+			url: 'includes/note-api.php',
 			data: {
 				deleteNote: deleteId,
 				action: 'deletenote'
@@ -441,7 +442,7 @@
 		
  		$.ajax({
 			method: 'POST',
-			url: 'includes/note.php',
+			url: 'includes/note-api.php',
 			data: {
 				noteText: text,
 				noteId: noteId,
