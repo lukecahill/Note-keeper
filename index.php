@@ -1,27 +1,29 @@
 <?php include 'templates/header.php'; ?>
 	
-<div class="col-sm-12 row">
-
-	<div class="col-sm-7">
-		<button class="btn btn-success" id="new-note-button">
-			<span class="glyphicon glyphicon-comment"></span>
-			Add new note
-		</button>
+<div class="col-md-12 row">
+	<div class="row col-md-12">
+		<div class="col-sm-6">
 		
-		<button class="btn btn-default" id="complete-notes-button">
-			<span class="glyphicon glyphicon-asterisk"></span>
-		</button>
-	</div>
+			<button class="btn btn-success" id="new-note-button">
+				<span class="glyphicon glyphicon-comment"></span>
+				Add new note
+			</button>
+			
+			<button class="btn btn-default" id="complete-notes-button">
+				<span class="glyphicon glyphicon-asterisk"></span>
+			</button>
+		</div>
 
-	<div class="col-sm-5 text-right mobile-text-left">
-		<button class="btn btn-default" id="refresh-button" title="Refresh the note list">
-			<span class="glyphicon glyphicon-refresh"></span>
-			Refresh list
-		</button>
-		
-		<button class="btn btn-default" id="show-search-button" title="Search for a note via the title">
-			<span class="glyphicon glyphicon-search"></span>
-		</button>
+		<div class="col-sm-6 text-right mobile-text-left">
+			<button class="btn btn-default" id="refresh-button" title="Refresh the note list">
+				<span class="glyphicon glyphicon-refresh"></span>
+				Refresh list
+			</button>
+			
+			<button class="btn btn-default" id="show-search-button" title="Search for a note via the title">
+				<span class="glyphicon glyphicon-search"></span>
+			</button>
+		</div>
 	</div>
 	
 	<div class="col-md-12">
