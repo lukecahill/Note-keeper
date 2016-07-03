@@ -24,12 +24,12 @@
 						Home
 					</a>
 				</li>
-				<li <?php if(strpos($url, 'options.php')) echo 'class="active" ' ?>>
-					<a href="options.php">
-						Options
+				<li <?php if(strpos($url, 'account.php')) echo 'class="active" ' ?>>
+					<a href="account.php">
+						Account
 					</a>
 				</li>
-				<li class="pull right">
+				<li>
 					<a href="includes/logout.php">
 						Logout
 					</a>
