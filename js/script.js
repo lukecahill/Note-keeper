@@ -39,7 +39,7 @@
 				data = $.parseJSON(data);
  				if(data !== 'none') {
 					$.each(data[0], function(index, value) {
-						$noteTags.append('<div class="checkbox new-note-checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+						$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
 					});
 					
 					$tagChooser.empty();
@@ -99,10 +99,12 @@
 		var newTag = $(input).val();
 		
 		if(newTag.trim() !== '') {
-			if(edit) {
+			if(edit === 1) {
 				$(where).append('<div class="checkbox"><label><input type="checkbox" checked name="edit-tag" data-tag="' + newTag + '" value="' + newTag + '">' + newTag + '</label></div>');
-			} else {
+			} else if(edit === 0) {
 				$(where).append('<div class="checkbox"><label><input type="checkbox" checked name="new-tag" data-tag="' + newTag + '" value="' + newTag + '">' + newTag + '</label></div>');
+			} else if(edit === 2) {
+				$(where).append('<div class="checkbox new-note-checkbox"><label><input type="checkbox" checked name="new-tag" data-tag="' + newTag + '" value="' + newTag + '">' + newTag + '</label></div>');
 			}
 			$(input).val('');
 		}
@@ -245,7 +247,7 @@
 			$('#add-note-text').val('');
 			$('input:checkbox[name=new-tag]').removeAttr('checked');
 			// TODO : below...
-			// $('div.new-note-checkbox').remove();
+			$('.new-note-checkbox').remove();
 			tagsToAdd = [];
 			toastr.success('Note has been added successfully!');
 			$newNoteSection.hide();
@@ -257,11 +259,11 @@
 	});
 	
 	$('#show-new-tag-button').on('click', function() {
-		addTag('#add-note-tags', '#add-new-tag-text', false);
+		addTag('#add-note-tags', '#add-new-tag-text', 2);
 	});
 	
 	$('#edit-new-tag-button').on('click', function() {
-		addTag('#edit-note-tags', '#edit-new-tag-text', true);
+		addTag('#edit-note-tags', '#edit-new-tag-text', 1);
 	});
 	
 	/**
@@ -571,7 +573,7 @@
 	**/
 	$('#add-new-tag-text').on('keyup', function(event) {
 		if(event.keyCode == 13) {
-			addTag('#add-note-tags', '#add-new-tag-text', false);
+			addTag('#add-note-tags', '#add-new-tag-text', 2);
 		}
 	});
 	
@@ -583,7 +585,7 @@
 	**/
 	$('#edit-new-tag-text').on('keyup', function(event) {
 		if(event.keyCode == 13) {
-			addTag('#edit-note-tags', '#edit-new-tag-text', true);
+			addTag('#edit-note-tags', '#edit-new-tag-text', 1);
 		}
 	});
 	
