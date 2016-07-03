@@ -7,6 +7,14 @@
 		</h2>
 		
 		<p>
+			<form action="includes/logout.php">
+				<button class="btn btn-default pull-right">
+					Logout
+				</button>
+			</form>
+		</p>
+		
+		<p>
 			Modify your options to your preferences. 
 		</p>
 		
