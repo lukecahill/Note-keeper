@@ -19,8 +19,6 @@
 		
 		<?php include 'templates/color-select.html'; ?>
 		
-		<?php include 'templates/sections.html'; ?>
-			
 		<?php include 'templates/password.php'; ?>
 	</div>
 </div>
