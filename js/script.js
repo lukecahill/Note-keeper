@@ -461,7 +461,7 @@
 			$(note).children('.note-title')[0].textContent = title;
 			$(note).children('.note-text')[0].textContent = text;
 			var newText = $(note).children('.note-text')[0];
-			$(note).children('.note-tags').remove();
+			$(note).find('.note-tags').remove();
 			var tags = '';
 			
 			$.each(tagArray, function(index, value) {
