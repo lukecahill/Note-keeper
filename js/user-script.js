@@ -1,8 +1,7 @@
 (function() {
 	
 	getSettings();
-	loadSections();
-
+	
 	function getSettings() {		
 		$.ajax({
 			method: 'POST',
@@ -12,31 +11,15 @@
 				action: 'get-tag-color'
 			}
 		})
+		.done(function(data, result) {
+			var $item = $('#select-tag-color').find('option[value=' + data + ']');
+			$('#select-tag-color').find('option[value=' + data + ']').remove();
+			$('#select-tag-color').find('option:eq(0)').before($item);
+			$('#select-tag-color > option:eq(0)').attr('selected', true);
+		})
 		.fail(function(error) {
 			// fail
 			console.log('An error occurred', error);
-		});
-	}
-
-	function loadSections() {
-		$.ajax({
-			method: 'POST',
-			url: 'includes/user-settings.php',
-			data: {
-				id: userId,
-				action: 'get-sections'
-			}
-		})
-		.done(function(data, status) {
-			// TODO : below
-
-			//data = JSON.parse(data);
-			//console.log(data);
-
-			//$('#section-list').append('');
-		})
-		.fail(function(error) {
-			console.log('An error occurred wile getting the available sections', error);
 		});
 	}
 
