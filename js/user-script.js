@@ -1,7 +1,11 @@
 (function() {
 	
 	getSettings();
-	
+	/**
+	* @function
+	*
+	* Will get the users chosen tag color from the database.
+	**/
 	function getSettings() {		
 		$.ajax({
 			method: 'POST',
@@ -18,15 +22,15 @@
 			$('#select-tag-color > option:eq(0)').attr('selected', true);
 		})
 		.fail(function(error) {
-			// fail
 			console.log('An error occurred', error);
 		});
 	}
-
-	$('#section-button').on('click', function() {
-		console.log($('new-section').val());
-	});
 	
+	/**
+	*@function 
+	*
+	* Will update the users chosen color in the database
+	**/
 	$('#tag-color-button').on('click', function() {
 		var color = $('#select-tag-color').val();
 		
@@ -43,11 +47,19 @@
 			toastr.success('Tag color updated!');
 		})
 		.fail(function(error) {
-			// fail
 			console.log('An error occurred', error);
 		});
 	});
 	
+	/**
+	* @function
+	*
+	* Change the users password.
+	* Will validate that the user wishes to change their password 
+	* the old password has something entered into it's field,
+	* and that the new password being entered has been confirmed.
+	* @param {object} e
+	**/
 	$('#change-password-form').on('submit', function(e) {
 		var newPassword = $('#new-password').val();
 		var confirmPassword = $('#confirm-password').val();
