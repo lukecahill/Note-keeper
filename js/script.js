@@ -55,7 +55,7 @@
 					buildNote(data[2]);
 					color = data[3];
 				} else {
-					$noteList.append('It appears that you have not yet created any notes. Create your first one.');
+					$noteList.append('<p id="first-note">It appears that you have not yet created any notes. Create your first one.</p>');
 				}
 				
 				if(toSend.complete !== 1) {
@@ -248,8 +248,9 @@
 			$('#add-note-title').val('');
 			$('#add-note-text').val('');
 			$('input:checkbox[name=new-tag]').removeAttr('checked');
-			// TODO : below...
 			$('.new-note-checkbox').remove();
+			$('#first-note').remove();
+
 			tagsToAdd = [];
 			toastr.success('Note has been added successfully!');
 			$newNoteSection.hide();
