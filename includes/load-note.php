@@ -66,7 +66,7 @@ class LoadNote extends Note {
 		$tagList = $checkbox = $merged = $notes = array();
 		$color = '';
 		
-		if($count < 0) {
+		if(0 === $count) {
 			echo json_encode('none');
 			return;
 		}
