@@ -230,6 +230,11 @@ nav.navigation-bar {
 	border-radius: 0;
 }
 
+p#first-note {
+	text-align: center;
+	font-weight: bold;
+}
+
 @media (max-width: 767px) {
 	div.mobile-text-left {
 		text-align: initial;
