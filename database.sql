@@ -6,7 +6,8 @@ CREATE TABLE note_users (
     UserId VARCHAR(60) PRIMARY KEY,
     UserEmail VARCHAR(255),
     UserPassword VARCHAR(512),
-    TagColor VARCHAR(6) DEFAULT 'red'
+    TagColor VARCHAR(6) DEFAULT 'red',
+    EmailConfirmation VARCHAR(20) 
 );
 
 CREATE TABLE note (
