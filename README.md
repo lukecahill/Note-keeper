@@ -9,4 +9,6 @@ Supports the ability for users to create an account which is only associated wit
 
 User can change password and customize the color of the tags in the user options page - further options are to be added.
 
+Currently implementing email confirmation on sign-up.
+
 Has now been updated to return the JSON, rather than the full HTML, for each note which is then built client-side. This will allow the potential use of AngularJS in the future.
