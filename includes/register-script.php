@@ -1,6 +1,7 @@
 <?php
 
 require_once 'authentication.php';
+require_once 'email-confirmation/send.php';
 
 class Register extends Authentication {
 	public $emailHash = '';
@@ -37,6 +38,11 @@ class Register extends Authentication {
 		$stmt = $this->db->prepare('INSERT INTO note_users (UserId, UserEmail, UserPassword) VALUES(:id, :email, :password);');
 		$stmt->execute(array(':id' => $this->emailHash, ':email' => $this->email, ':password' => $this->passwordHash));
 	}
+	
+	function sendConfirmation() {
+		$confirm = new Email($this->email, $this->emailHash);
+		$confirm->constructConfirmLink();
+	}
 }
 
 if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -49,6 +55,7 @@ if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METH
 	if($register->checkExists()) {
 		$register->addUser();
 		$success = true;
+		$register->sendConfirmation();
 	} else {
 		$error = '<span class="validation-error">That email is already in use</span>';
 	}
