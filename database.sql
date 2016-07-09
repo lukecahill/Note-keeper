@@ -7,7 +7,8 @@ CREATE TABLE note_users (
     UserEmail VARCHAR(255),
     UserPassword VARCHAR(512),
     TagColor VARCHAR(6) DEFAULT 'red',
-    EmailConfirmation VARCHAR(20) 
+    EmailConfirmation VARCHAR(20),
+	Active TINYINT DEFAULT '0'
 );
 
 CREATE TABLE note (
