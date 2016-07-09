@@ -19,7 +19,7 @@ class Login extends Authentication {
 	}
 
 	function verify() {
-		$stmt = $this->db->prepare('SELECT UserEmail, UserPassword, UserId
+		$stmt = $this->db->prepare('SELECT UserEmail, UserPassword, UserId, Active
 								FROM note_users 
 								WHERE UserEmail = :email 
 								LIMIT 1'
@@ -29,6 +29,8 @@ class Login extends Authentication {
 
 		if(count($results) == 0) {
 			$this->error = "<span class='validation-error'>Username/Password invalid</span>";
+		} else if($results[0]['Active'] == 0) {
+			$this->error = "<span class='validation-error'>This email address has not been confimred! Please check your email and follow the confirmation link.</span>";
 		} else {
 			$encrypted = $results[0]['UserPassword'];
 			$userId = $results[0]['UserId'];
