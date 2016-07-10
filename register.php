@@ -57,7 +57,8 @@
 		</h3>
 		
 		<p>
-			Registration complete. Please <a href="login.php">login</a>.
+			Registration complete. Please now check your email to your email address before logging in.
+			If you have already confirmed your email then please <a href="login.php">login</a>.
 		</p>
 	<?php } ?>
 
