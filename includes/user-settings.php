@@ -30,7 +30,7 @@ class UserSettings {
 			$this->color = $_POST['color'];
 			$this->id = $_POST['id'];
 			
-			$stmt = $this->db->prepare('UPDATE note_users SET TagColor = :color WHERE UserId = :id ');
+			$stmt = $this->db->prepare('UPDATE user_preferences SET TagColor = :color WHERE UserId = :id ');
 			$stmt->execute(array( ':color' => $this->color, ':id' => $this->id));
 		}
 	}
@@ -39,7 +39,7 @@ class UserSettings {
 		if($_POST['id'] !== 0) {
 			$this->id = $_POST['id'];
 
-			$stmt = $this->db->prepare('SELECT TagColor FROM note_users WHERE UserId = :id ');
+			$stmt = $this->db->prepare('SELECT TagColor FROM user_preferences WHERE UserId = :id ');
 			$stmt->execute(array(':id' => $this->id));
 			$color = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			
