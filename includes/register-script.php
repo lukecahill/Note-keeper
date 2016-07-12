@@ -37,6 +37,17 @@ class Register extends Authentication {
 		$this->hashPassword();
 		$stmt = $this->db->prepare('INSERT INTO note_users (UserId, UserEmail, UserPassword) VALUES(:id, :email, :password);');
 		$stmt->execute(array(':id' => $this->emailHash, ':email' => $this->email, ':password' => $this->passwordHash));
+		
+		if($stmt) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function createUserPreferences() {
+		$stmt = $this->db->prepare('INSERT INTO user_preferences (UserId) VALUES (:id)');
+		$stmt->execute(array(':id' => $this->emailHash));
 	}
 	
 	function sendConfirmation() {
@@ -53,9 +64,11 @@ if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METH
 
 	$register = new Register($email, $password);
 	if($register->checkExists()) {
-		$register->addUser();
-		$success = true;
-		$register->sendConfirmation();
+		if($register->addUser()) {
+			$success = true;
+			$register->sendConfirmation();
+			$register->createUserPreferences();
+		}
 	} else {
 		$error = '<span class="validation-error">That email is already in use</span>';
 	}
