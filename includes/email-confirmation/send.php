@@ -25,7 +25,7 @@ class Email {
 		$stmt->execute(array(':confirm' => $confirm, ':userId' => $this->userId));
 
 		$url = $_SERVER['SERVER_NAME'];
-		$link = 'http://' . $url . '/notes/includes/email-confirmation/confirm.php?hash=' . $this->userId . '&user=' . $this->userId;
+		$link = 'http://' . $url . '/notes/confirm.php?hash=' . $confirm . '&user=' . $this->userId;
 		$this->message = 'Please follow this link to confirm your account <a href="' . $link . '">' . $link . '</a>';
 		$this->sendEmail();
 	}
