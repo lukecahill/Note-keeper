@@ -35,7 +35,7 @@
 				if(toSend.action === 'searchnote') {
 					$noteList.empty();
 				}
-				
+
 				data = $.parseJSON(data);
  				if(data !== 'none') {
 					$.each(data[0], function(index, value) {
