@@ -6,9 +6,16 @@ CREATE TABLE note_users (
     UserId VARCHAR(60) PRIMARY KEY,
     UserEmail VARCHAR(255),
     UserPassword VARCHAR(512),
-    TagColor VARCHAR(6) DEFAULT 'red',
-    EmailConfirmation VARCHAR(20),
+    EmailConfirmation VARCHAR(40),
 	Active TINYINT DEFAULT '0'
+);
+
+CREATE TABLE user_preferences (
+	PreferenceId INT(4) PRIMARY KEY,
+	UserId VARCHAR(60),
+    TagColor VARCHAR(6) DEFAULT 'red',
+	Pagination TINYINT DEFAULT '1',
+	FOREIGN KEY (UserId) REFERENCES note_users(UserId) ON DELETE CASCADE
 );
 
 CREATE TABLE note (
