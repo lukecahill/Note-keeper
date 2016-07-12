@@ -27,7 +27,7 @@ class ConfirmEmail {
 		$stmt = $this->db->prepare('UPDATE note_users SET Active = 1 WHERE UserId = :id');
 		$stmt->execute(array(':id' => $this->id));
 		
-		if($stmt->rowCount() == 0) {
+		if($stmt->rowCount() != 0) {
 			return true;
 		} else {
 			return false;
