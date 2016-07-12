@@ -22,9 +22,10 @@ class LoadNote extends Note {
 		$this->userId = $_POST['userId'];
 		$this->complete = $_POST['complete'];
 		
-		$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, u.TagColor 
+		$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor 
 								FROM note n 
 								INNER JOIN note_users u ON u.UserId = n.UserId
+								INNER JOIN user_preferences p ON p.UserId = u.UserId
 								WHERE NoteComplete = :complete
 								AND n.UserId = :userId"
 							);
@@ -32,7 +33,7 @@ class LoadNote extends Note {
 		$stmt->execute(array(':userId' => $this->userId, ':complete' => $this->complete));
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$count = $stmt->rowCount();
-
+		
 		$this->returnNote($rows, $count);
 	}
 	
@@ -47,9 +48,10 @@ class LoadNote extends Note {
 
 		$this->search = '%' . $this->search . '%';
 		
-		$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, u.TagColor 
+		$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor 
 								FROM note n 
 								INNER JOIN note_users u ON u.UserId = n.UserId
+								INNER JOIN user_preferences p ON p.UserId = u.UserId
 								WHERE NoteComplete = :complete
 								AND n.UserId = :userId
 								AND n.NoteTitle LIKE :searchtitle"
