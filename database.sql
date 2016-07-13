@@ -3,10 +3,10 @@ CREATE DATABASE notes;
 USE notes;
 
 CREATE TABLE note_users (
-    UserId VARCHAR(60) PRIMARY KEY,
+    UserId CHAR(32) PRIMARY KEY,
     UserEmail VARCHAR(255),
     UserPassword VARCHAR(512),
-    EmailConfirmation VARCHAR(40),
+    EmailConfirmation CHAR(32),
 	Active TINYINT DEFAULT '0'
 );
 
