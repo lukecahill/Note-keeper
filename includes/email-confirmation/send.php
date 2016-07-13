@@ -1,5 +1,5 @@
 <?php
-
+ini_set('display_errors', 1);
 
 class Email {
 	public $db = null;
@@ -9,11 +9,10 @@ class Email {
 	public $message = '';
 	public $userId = '';
 
-	function __construct($email, $userId) {
+	function __construct($email, $userId, $db) {
 		$this->email = $email;
 		$this->userId = $userId;
-		require_once '../db-connect.inc.php';
-		$this->db = Database::ConnectDb();
+		$this->db = $db;
 	}
 
 	function constructConfirmLink() {

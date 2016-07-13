@@ -51,7 +51,7 @@ class Register extends Authentication {
 	}
 	
 	function sendConfirmation() {
-		$confirm = new Email($this->email, $this->emailHash);
+		$confirm = new Email($this->email, $this->emailHash, $this->db);
 		$confirm->constructConfirmLink();
 	}
 }
