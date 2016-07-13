@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-
 class Email {
 	public $db = null;
 	public $email = '';
