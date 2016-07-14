@@ -6,6 +6,7 @@ class Email {
 	public $subject = 'Note Keeper - please confirm your email.';
 	public $message = '';
 	public $userId = '';
+	public $headers = 'From: luke@lcahill.co.uk' . "\r\n" . 'Reply-To: luke@lcahill.co.uk' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
 	function __construct($email, $userId, $db) {
 		$this->email = $email;
@@ -23,12 +24,12 @@ class Email {
 
 		$url = $_SERVER['SERVER_NAME'];
 		$link = 'http://' . $url . '/notes/confirm.php?hash=' . $confirm . '&user=' . $this->userId;
-		$this->message = 'Please follow this link to confirm your account <a href="' . $link . '">' . $link . '</a>';
+		$this->message = 'Please follow this link to confirm your account ' . $link;
 		$this->sendEmail();
 	}
 
 	function sendEmail() {
-		mail($this->email, $this->subject, $this->message);
+		mail($this->email, $this->subject, $this->message, $this->headers);
 	}
 }
 
