@@ -16,17 +16,17 @@ class Register extends Authentication {
 	
 	function verify() {
 		if(empty($this->email)) {
-			$this->error = 'No email';
+			$this->error = '<span class="validation-error">Please enter your email!</span>';
 			return false;
 		}
 		
 		if(empty($this->password)) {
-			$this->error = 'No password';
+			$this->error = '<span class="validation-error">Please enter a password!</span>';
 			return false;
 		}
 		
 		if(empty($this->confirm)) {
-			$this->error = 'No confirmation password';
+			$this->error = '<span class="validation-error">Please confirm your password!</span>';
 			return false;
 		}
 		
@@ -79,8 +79,8 @@ class Register extends Authentication {
 
 if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	$email = $_POST['email'];
-	$password = $_POST['password'];	
-	$confirm = $_POST['confirm-password'];	
+	$password = $_POST['password'];
+	$confirm = $_POST['confirm-password'];
 	$error = '';
 	$success = false;
 
