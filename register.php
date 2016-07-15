@@ -27,6 +27,7 @@
 		<h3>
 			Register
 		</h3>
+		<?php if($error !== '') echo $error; ?>
 		<p>
 			To create an account please enter your email address and a password.
 		</p>
@@ -39,7 +40,6 @@
 					Email address
 				</label>
 				<input type="email" name="email" class="form-control" id="user-email" placeholder="Email">
-				<?php if($error !== '') echo $error; ?>
 			</div>
 			<div class="form-group">
 				<label for="user-password">
@@ -47,7 +47,13 @@
 				</label>
 				<input type="password" name="password" class="form-control" id="user-password" placeholder="Password">
 			</div>
-			<button type="submit" class="btn btn-default">
+			<div class="form-group">
+				<label for="confirm-user-password">
+					Confirm Password
+				</label>
+				<input type="password" name="confirm-password" class="form-control" id="confirm-user-password" placeholder="Password confirmation">
+			</div>
+			<button type="submit" id="register-btn" class="btn btn-default">
 				Submit
 			</button>
 		</form>
@@ -66,5 +72,8 @@
 	
 	<div class="col-sm-2">
 	</div>
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="js/register.js"></script>
 
 <?php include 'templates/footer.html'; ?>
