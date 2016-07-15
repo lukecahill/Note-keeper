@@ -6,7 +6,7 @@ class Email {
 	public $subject = 'Note Keeper - please confirm your email.';
 	public $message = '';
 	public $userId = '';
-	public $headers = 'From: luke@lcahill.co.uk' . "\r\n" . 'Reply-To: luke@lcahill.co.uk' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+	public $headers = "From: luke@lcahill.co.uk \r\n Reply-To: luke@lcahill.co.uk \r\n";
 
 	function __construct($email, $userId, $db) {
 		$this->email = $email;
