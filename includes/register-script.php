@@ -6,10 +6,31 @@ require_once 'email-confirmation/send.php';
 class Register extends Authentication {
 	public $emailHash = '';
 	public $passwordHash = '';
+	public $confirm = '';
 	public $error = '';
 
-	function __construct($email, $password) {
+	function __construct($email, $password, $confirm) {
 		parent::__construct($email, $password);
+		$this->confirm = $confirm;
+	}
+	
+	function verify() {
+		if(empty($this->email)) {
+			$this->error = 'No email';
+			return false;
+		}
+		
+		if(empty($this->password)) {
+			$this->error = 'No password';
+			return false;
+		}
+		
+		if(empty($this->confirm)) {
+			$this->error = 'No confirmation password';
+			return false;
+		}
+		
+		return true;
 	}
 
 	function hashEmail() {
@@ -59,10 +80,16 @@ class Register extends Authentication {
 if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	$email = $_POST['email'];
 	$password = $_POST['password'];	
+	$confirm = $_POST['confirm-password'];	
 	$error = '';
 	$success = false;
 
-	$register = new Register($email, $password);
+	$register = new Register($email, $password, $confirm);
+	if(!$register->verify()) {
+		$error = $register->error;
+		return;
+	}
+	
 	if($register->checkExists()) {
 		if($register->addUser()) {
 			$success = true;
