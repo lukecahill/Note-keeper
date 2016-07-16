@@ -72,6 +72,7 @@ h1 span.glyphicon-comment {
 	color: #fff;
 	cursor: pointer;
 	margin-top: 5px;
+	display: inline-block;
 }
 
 .note .note-tags-red {
@@ -249,5 +250,9 @@ p#first-note {
 	
 	.container-fluid {
 		width: 90%;
+	}
+	
+	.note .note-glyphicons {
+		float: initial;
 	}
 }
