@@ -1,6 +1,4 @@
-<?php 
-	$url = $_SERVER['REQUEST_URI']; 
-?>
+<?php $url = $_SERVER['REQUEST_URI']; ?>
 
 <nav class="navbar navbar-inverse navigation-bar">
 	<div class="container-fluid navbar-container">
@@ -19,7 +17,7 @@
 		</div>
 		<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-9" aria-expanded="true"> 
 			<ul class="nav navbar-nav">
-				<li <?php if(strpos($url, 'index.php')) echo 'class="active" ' ?>>
+				<li <?php if(strpos($url, 'index.php') || !strpos($url, 'account.php')) echo 'class="active" ' ?>>
 					<a href="index.php">
 						Home
 					</a>
