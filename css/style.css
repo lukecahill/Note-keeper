@@ -195,7 +195,7 @@ span.login-link, span.register-link {
 	cursor: pointer;
 }
 
-#change-password-form, .options-tag-color {
+.options-border {
 	padding: 10px;
 	border: 1px solid #eee;
 	border-radius: 6px;
