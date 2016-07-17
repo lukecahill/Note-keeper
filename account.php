@@ -27,6 +27,8 @@
 		
 		<?php include 'templates/color-select.html'; ?>
 		
+		<?php include 'templates/note-order.html'; ?>
+		
 		<?php include 'templates/password.php'; ?>
 	</div>
 </div>
