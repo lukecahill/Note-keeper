@@ -31,6 +31,14 @@
 			$noteOrder.find('option[value=' + color + ']').remove();
 			$noteOrder.find('option:eq(0)').before($item);
 			$('#options-note-order > option:eq(0)').attr('selected', true);
+			
+			if(data[2] === "true") {
+				$('#search_title').prop('checked', true);
+			}
+			
+			if(data[3] === "true") {
+				$('#search_text').prop('checked', true);
+			}
 		})
 		.fail(function(error) {
 			console.log('An error occurred', error);
@@ -62,6 +70,12 @@
 		});
 	});
 	
+	/**
+	*@function 
+	*
+	* Will update the users chosen order to sidplay the notes in. 
+	* Order is taken from a select list.
+	**/
 	$('#options-order-button').on('click', function() {
 		var order = $('#options-note-order').val();
 		
@@ -76,6 +90,34 @@
 		})
 		.done(function(data, status) {
 			toastr.success('Note order has been successfully updated!');
+		})
+		.fail(function(error) {
+			console.log('An error occurred', error);
+		});
+	});
+	
+	/**
+	*@function 
+	*
+	* Will update the users choice of what to search the database for
+	* when the search function is used.
+	**/
+	$('#options-search-button').on('click', function() {
+		var title = $('#search_title').is(':checked');
+		var text = $('#search_text').is(':checked');
+		
+		$.ajax({
+			method: 'POST',
+			url: 'includes/user-settings.php',
+			data: {
+				id: userId,
+				action: 'set-search-parameters',
+				text: text,
+				title: title
+			}
+		})
+		.done(function(data, status) {
+			toastr.success('Search settings updated!');
 		})
 		.fail(function(error) {
 			console.log('An error occurred', error);
