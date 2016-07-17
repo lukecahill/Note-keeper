@@ -3,10 +3,12 @@
 if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 	$user = new UserSettings($_POST['action']);
 	
-	if($user->method === 'get-tag-color') {
-		$user->getTagColor();
+	if($user->method === 'get-settings') {
+		$user->getSettings();
 	} else if($user->method === 'set-tag-color') {
 		$user->setTagColor();
+	} else if($user->method === 'set-note-order') {
+		$user->setNoteOrder();
 	}
 
 } else {
@@ -17,6 +19,7 @@ class UserSettings {
 	public $method = '';
 	public $id = 0;
 	public $color = '';
+	public $order = '';
 	public $db = null;
 	
 	function __construct($method) {
@@ -35,15 +38,28 @@ class UserSettings {
 		}
 	}
 	
-	function getTagColor() {
+	function setNoteOrder() {
+		if($_POST['id'] !== 0) {
+			$this->order = $_POST['order'];
+			$this->id = $_POST['id'];
+			
+			$stmt = $this->db->prepare('UPDATE user_preferences SET NoteOrder = :order WHERE UserId = :id ');
+			$stmt->execute(array(':order' => $this->order, ':id' => $this->id));
+		}
+	}
+	
+	function getSettings() {
 		if($_POST['id'] !== 0) {
 			$this->id = $_POST['id'];
 
-			$stmt = $this->db->prepare('SELECT TagColor FROM user_preferences WHERE UserId = :id ');
+			$stmt = $this->db->prepare('SELECT TagColor, NoteOrder FROM user_preferences WHERE UserId = :id ');
 			$stmt->execute(array(':id' => $this->id));
-			$color = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			
-			echo json_encode($color[0]['TagColor']);
+			$order = $row[0]['NoteOrder'];
+			$color = $row[0]['TagColor'];
+			$return = array($color, $order);
+			echo json_encode($return);
 		}
 	}
 }
