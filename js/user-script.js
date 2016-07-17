@@ -12,14 +12,25 @@
 			url: 'includes/user-settings.php',
 			data: {
 				id: userId,
-				action: 'get-tag-color'
+				action: 'get-settings'
 			}
 		})
 		.done(function(data, result) {
-			var $item = $('#select-tag-color').find('option[value=' + data + ']');
-			$('#select-tag-color').find('option[value=' + data + ']').remove();
-			$('#select-tag-color').find('option:eq(0)').before($item);
+			data = $.parseJSON(data)
+			var color = data[0];
+			var order = data[1];
+			
+			var $selectColor = $('#select-tag-color');
+			var $item = $selectColor.find('option[value=' + color + ']');
+			$selectColor.find('option[value=' + color + ']').remove();
+			$selectColor.find('option:eq(0)').before($item);
 			$('#select-tag-color > option:eq(0)').attr('selected', true);
+			
+			$noteOrder = $('#options-note-order');
+			$item = $noteOrder.find('option[value=' + order + ']');
+			$noteOrder.find('option[value=' + color + ']').remove();
+			$noteOrder.find('option:eq(0)').before($item);
+			$('#options-note-order > option:eq(0)').attr('selected', true);
 		})
 		.fail(function(error) {
 			console.log('An error occurred', error);
@@ -45,6 +56,26 @@
 		})
 		.done(function(data, status) {
 			toastr.success('Tag color updated!');
+		})
+		.fail(function(error) {
+			console.log('An error occurred', error);
+		});
+	});
+	
+	$('#options-order-button').on('click', function() {
+		var order = $('#options-note-order').val();
+		
+		$.ajax({
+			method: 'POST',
+			url: 'includes/user-settings.php',
+			data: {
+				id: userId,
+				action: 'set-note-order',
+				order: order
+			}
+		})
+		.done(function(data, status) {
+			toastr.success('Note order has been successfully updated!');
 		})
 		.fail(function(error) {
 			console.log('An error occurred', error);
