@@ -15,30 +15,30 @@ class LoadNote extends Note {
 	
 	function getNotes() {
 		if(!isset($_POST['userId']) || !isset($_POST['complete'])) {
-			echo json_encode('invalid');
+			echo json_encode('invalid request');
 			return;
 		}
 		
 		$this->userId = $_POST['userId'];
 		$this->complete = $_POST['complete'];
 		
-		$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor 
-								FROM note n 
-								INNER JOIN note_users u ON u.UserId = n.UserId
-								INNER JOIN user_preferences p ON p.UserId = u.UserId
-								WHERE NoteComplete = :complete
-								AND n.UserId = :userId"
-							);
+		$stmt = $this->db->prepare("SELECT NoteOrder FROM user_preferences WHERE UserId = :id");
+		$stmt->execute(array(':id' => $this->userId));
+		$order = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$order = $order[0]['NoteOrder'];
+		
+		$stmt = $this->noteOrder($order);
 		
 		$stmt->execute(array(':userId' => $this->userId, ':complete' => $this->complete));
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$count = $stmt->rowCount();
 		
-		$this->returnNote($rows, $count);
+		$this->returnNote($rows, $count, $order);
 	}
 	
 	function searchNote() {
 		if(!isset($_POST['userId']) || !isset($_POST['complete']) || !isset($_POST['search'])) {
+			echo json_encode('invalid request');
 			return;
 		}
 		
@@ -48,13 +48,14 @@ class LoadNote extends Note {
 
 		$this->search = '%' . $this->search . '%';
 		
-		$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor 
+		$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor, p.NoteOrder
 								FROM note n 
 								INNER JOIN note_users u ON u.UserId = n.UserId
 								INNER JOIN user_preferences p ON p.UserId = u.UserId
 								WHERE NoteComplete = :complete
 								AND n.UserId = :userId
-								AND n.NoteTitle LIKE :searchtitle"
+								AND n.NoteTitle LIKE :searchtitle
+								OR n.NoteText LIKE :searchtitle"
 							);
 		
 		$stmt->execute(array(':complete' => $this->complete, ':userId' => $this->userId, ':searchtitle' => $this->search));
@@ -64,10 +65,10 @@ class LoadNote extends Note {
 		$this->returnNote($rows, $count);
 	}
 	
-	function returnNote($rows, $count) {
+	function returnNote($rows, $count, $order = 'oldest') {
 		$tagList = $checkbox = $merged = $notes = array();
 		$color = '';
-		
+
 		if(0 === $count) {
 			echo json_encode('none');
 			return;
@@ -96,7 +97,10 @@ class LoadNote extends Note {
 			$notes[] = $noteArray;
 			$color = $item['TagColor'];
 		}
-
+		
+		if($order == 'newest') {
+			rsort($notes);
+		}
 
 		if($this->action !== 'searchnote') $style = $color;
 
@@ -105,6 +109,39 @@ class LoadNote extends Note {
 		array_push($merged, $notes);
 		if($this->action !== 'searchnote') array_push($merged, $style);
 		echo json_encode($merged);
+	}
+	
+	function noteOrder($order) {
+		// Improve this if possible.
+		if($order == 'alphabetically') {
+			$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor, p.NoteOrder
+								FROM note n 
+								INNER JOIN note_users u ON u.UserId = n.UserId
+								INNER JOIN user_preferences p ON p.UserId = u.UserId
+								WHERE NoteComplete = :complete
+								AND n.UserId = :userId
+								ORDER BY NoteTitle"
+							);
+		} else if($order == 'alpha_backwards') {
+			$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor, p.NoteOrder
+								FROM note n 
+								INNER JOIN note_users u ON u.UserId = n.UserId
+								INNER JOIN user_preferences p ON p.UserId = u.UserId
+								WHERE NoteComplete = :complete
+								AND n.UserId = :userId
+								ORDER BY NoteTitle DESC"
+							);
+		} else {
+			$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor, p.NoteOrder
+								FROM note n 
+								INNER JOIN note_users u ON u.UserId = n.UserId
+								INNER JOIN user_preferences p ON p.UserId = u.UserId
+								WHERE NoteComplete = :complete
+								AND n.UserId = :userId"
+							);
+		}
+		
+		return $stmt;
 	}
 }
 
