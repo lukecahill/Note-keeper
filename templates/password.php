@@ -31,7 +31,7 @@ if(isset($_POST['new-password']) && isset($_POST['confirm-password']) && isset($
 
 ?>
 
-<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="change-password-form">
+<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="change-password-form" class="options-border">
 	<h4>
 		Change your password here.
 	</h4>
