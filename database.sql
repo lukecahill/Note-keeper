@@ -16,6 +16,7 @@ CREATE TABLE user_preferences (
     TagColor VARCHAR(6) DEFAULT 'red',
 	Pagination TINYINT DEFAULT '1',
 	NoteOrder VARCHAR(15) DEFAULT 'oldest',
+	SearchOptions VARCHAR(50) DEFAULT 'a:2:{i:0;s:4:"true";i:1;s:4:"true";}',
 	FOREIGN KEY (UserId) REFERENCES note_users(UserId) ON DELETE CASCADE
 );
 
