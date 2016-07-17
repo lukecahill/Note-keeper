@@ -106,6 +106,11 @@
 		var title = $('#search_title').is(':checked');
 		var text = $('#search_text').is(':checked');
 		
+		if(title === false && text === false) {
+			alert('You must chose to search by either one or both of title and text!');
+			return;
+		}
+		
 		$.ajax({
 			method: 'POST',
 			url: 'includes/user-settings.php',
