@@ -29,6 +29,8 @@
 		
 		<?php include 'templates/note-order.html'; ?>
 		
+		<?php include 'templates/search-options.html'; ?>
+		
 		<?php include 'templates/password.php'; ?>
 	</div>
 </div>
