@@ -28,7 +28,7 @@ class LoadNote extends Note {
 		$order = $order[0]['NoteOrder'];
 		
 		$stmt = $this->noteOrder($order);
-		
+		$stmt = $this->db->prepare($stmt);
 		$stmt->execute(array(':userId' => $this->userId, ':complete' => $this->complete));
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$count = $stmt->rowCount();
@@ -48,16 +48,23 @@ class LoadNote extends Note {
 
 		$this->search = '%' . $this->search . '%';
 		
-		$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor, p.NoteOrder
-								FROM note n 
-								INNER JOIN note_users u ON u.UserId = n.UserId
-								INNER JOIN user_preferences p ON p.UserId = u.UserId
-								WHERE NoteComplete = :complete
-								AND n.UserId = :userId
-								AND n.NoteTitle LIKE :searchtitle
-								OR n.NoteText LIKE :searchtitle"
-							);
+		$stmt = $this->db->prepare("SELECT NoteOrder, SearchOptions FROM user_preferences WHERE UserId = :id");
+		$stmt->execute(array(':id' => $this->userId));
+		$row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$order = $row[0]['NoteOrder'];
 		
+		$search = unserialize($row[0]['SearchOptions']);
+		$searchOptions = array();
+		if(sizeof($search) > 0 && $search !== '') {
+			foreach($search as $item) {
+				$searchOptions[] = $item;
+			}
+		}
+		$title = $searchOptions[0];
+		$text = $searchOptions[1];
+
+		$stmt = $this->searchNoteBuild($order, $title, $text);
+		$stmt = $this->db->prepare($stmt);
 		$stmt->execute(array(':complete' => $this->complete, ':userId' => $this->userId, ':searchtitle' => $this->search));
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$count = $stmt->rowCount();
@@ -113,32 +120,64 @@ class LoadNote extends Note {
 	
 	function noteOrder($order) {
 		// Improve this if possible.
+		$stmt = 'SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, 
+				p.TagColor, p.NoteOrder
+				FROM note n 
+				INNER JOIN note_users u ON u.UserId = n.UserId
+				INNER JOIN user_preferences p ON p.UserId = u.UserId
+				WHERE NoteComplete = :complete
+				AND n.UserId = :userId';
+
 		if($order == 'alphabetically') {
-			$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor, p.NoteOrder
-								FROM note n 
-								INNER JOIN note_users u ON u.UserId = n.UserId
-								INNER JOIN user_preferences p ON p.UserId = u.UserId
-								WHERE NoteComplete = :complete
-								AND n.UserId = :userId
-								ORDER BY NoteTitle"
-							);
+			$stmt .= ' ORDER BY NoteTitle';
 		} else if($order == 'alpha_backwards') {
-			$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor, p.NoteOrder
-								FROM note n 
-								INNER JOIN note_users u ON u.UserId = n.UserId
-								INNER JOIN user_preferences p ON p.UserId = u.UserId
-								WHERE NoteComplete = :complete
-								AND n.UserId = :userId
-								ORDER BY NoteTitle DESC"
-							);
-		} else {
-			$stmt = $this->db->prepare("SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, p.TagColor, p.NoteOrder
-								FROM note n 
-								INNER JOIN note_users u ON u.UserId = n.UserId
-								INNER JOIN user_preferences p ON p.UserId = u.UserId
-								WHERE NoteComplete = :complete
-								AND n.UserId = :userId"
-							);
+			$stmt .= ' ORDER BY NoteTitle DESC';
+		}
+		
+		return $stmt;
+	}
+	
+	function searchNoteBuild($order, $title, $text) {
+		$stmt = "SELECT n.NoteTitle, n.NoteText, n.NoteId, 
+			n.NoteTags, p.TagColor, p.NoteOrder
+			FROM note n 
+			INNER JOIN note_users u ON u.UserId = n.UserId
+			INNER JOIN user_preferences p ON p.UserId = u.UserId
+			WHERE NoteComplete = :complete
+			AND n.UserId = :userId";
+			
+		if($title === 'true' && $text === 'true') {
+			$stmt = "SELECT n.NoteTitle, n.NoteText, n.NoteId, 
+			n.NoteTags, p.TagColor, p.NoteOrder
+			FROM note n 
+			INNER JOIN note_users u ON u.UserId = n.UserId
+			INNER JOIN user_preferences p ON p.UserId = u.UserId
+			WHERE NoteComplete = :complete
+			AND n.UserId = :userId
+			AND n.NoteTitle LIKE :searchtitle
+			OR n.NoteText LIKE :searchtitle";
+		
+			$stmt = $this->searchNoteOrder($stmt, $order);
+			return $stmt;
+		}
+			
+		if($title === 'true') {
+			$stmt .= " AND n.NoteTitle LIKE :searchtitle";
+		}
+		
+		if($text === 'true' && $title === 'false') {
+			$stmt .= " AND n.NoteText LIKE :searchtitle";
+		}
+		
+		$stmt = $this->searchNoteOrder($stmt, $order);
+		return $stmt;
+	}
+	
+	function searchNoteOrder($stmt, $order) {
+		if($order == 'alphabetically') {
+			$stmt .= ' ORDER BY NoteTitle';
+		} else if($order == 'alpha_backwards') {
+			$stmt .= ' ORDER BY NoteTitle DESC';
 		}
 		
 		return $stmt;
