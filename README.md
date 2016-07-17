@@ -12,3 +12,5 @@ User can change password and customize the color of the tags in the user options
 Includes email confirmation on user registration. 
 
 Has now been updated to return the JSON, rather than the full HTML, for each note which is then built client-side. This will allow the potential use of AngularJS in the future.
+
+The SQL used for this is provided in 'database.sql'
