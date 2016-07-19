@@ -11,7 +11,7 @@ CREATE TABLE note_users (
 );
 
 CREATE TABLE user_preferences (
-	PreferenceId INT(4) PRIMARY KEY,
+	PreferenceId INT(4) PRIMARY KEY AUTO_INCREMENT,
 	UserId VARCHAR(60),
     TagColor VARCHAR(6) DEFAULT 'red',
 	Pagination TINYINT DEFAULT '1',
