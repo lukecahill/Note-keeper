@@ -155,7 +155,9 @@ class LoadNote extends Note {
 			WHERE NoteComplete = :complete
 			AND n.UserId = :userId
 			AND n.NoteTitle LIKE :searchtitle
-			OR n.NoteText LIKE :searchtitle";
+			OR n.NoteText LIKE :searchtitle
+			AND n.UserId = :userId
+			AND NoteComplete = :complete";
 		
 			$stmt = $this->searchNoteOrder($stmt, $order);
 			return $stmt;
