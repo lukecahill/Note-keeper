@@ -21,7 +21,7 @@ class LoadNote extends Note {
 		
 		$this->userId = $_POST['userId'];
 		$this->complete = $_POST['complete'];
-		
+
 		$stmt = $this->db->prepare("SELECT NoteOrder FROM user_preferences WHERE UserId = :id");
 		$stmt->execute(array(':id' => $this->userId));
 		$order = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -110,6 +110,7 @@ class LoadNote extends Note {
 		}
 
 		if($this->action !== 'searchnote') $style = $color;
+		sort($tagList);
 
 		array_push($merged, $checkbox);
 		array_push($merged, $tagList);
