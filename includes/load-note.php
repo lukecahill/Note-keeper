@@ -69,14 +69,18 @@ class LoadNote extends Note {
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$count = $stmt->rowCount();
 
-		$this->returnNote($rows, $count);
+		$this->returnNote($rows, $count, 'oldest', 'search');
 	}
 	
-	function returnNote($rows, $count, $order = 'oldest') {
+	function returnNote($rows, $count, $order = 'oldest', $type = 'load') {
 		$tagList = $checkbox = $merged = $notes = array();
 		$color = '';
 
 		if(0 === $count) {
+			if($type === 'search') {
+				echo json_encode('no_results');
+				return;
+			}
 			echo json_encode('none');
 			return;
 		}
@@ -120,7 +124,6 @@ class LoadNote extends Note {
 	}
 	
 	function noteOrder($order) {
-		// Improve this if possible.
 		$stmt = 'SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, 
 				p.TagColor, p.NoteOrder
 				FROM note n 
@@ -146,7 +149,7 @@ class LoadNote extends Note {
 			INNER JOIN user_preferences p ON p.UserId = u.UserId
 			WHERE NoteComplete = :complete
 			AND n.UserId = :userId";
-			
+
 		if($title === 'true' && $text === 'true') {
 			$stmt = "SELECT n.NoteTitle, n.NoteText, n.NoteId, 
 			n.NoteTags, p.TagColor, p.NoteOrder
@@ -163,15 +166,15 @@ class LoadNote extends Note {
 			$stmt = $this->searchNoteOrder($stmt, $order);
 			return $stmt;
 		}
-			
+
 		if($title === 'true') {
 			$stmt .= " AND n.NoteTitle LIKE :searchtitle";
 		}
-		
+
 		if($text === 'true' && $title === 'false') {
 			$stmt .= " AND n.NoteText LIKE :searchtitle";
 		}
-		
+
 		$stmt = $this->searchNoteOrder($stmt, $order);
 		return $stmt;
 	}
@@ -182,14 +185,14 @@ class LoadNote extends Note {
 		} else if($order == 'alpha_backwards') {
 			$stmt .= ' ORDER BY NoteTitle DESC';
 		}
-		
+
 		return $stmt;
 	}
 }
 
 if(($_SERVER['REQUEST_METHOD'] == 'POST') && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 	$note = new LoadNote($_POST['action']);
-	
+
 	if($note->action === 'loadnote') {
 		$note->getNotes();
 	} else if($note->action === 'searchnote') {
