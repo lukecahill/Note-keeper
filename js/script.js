@@ -37,7 +37,8 @@
 				}
 
 				data = $.parseJSON(data);
- 				if(data !== 'none') {
+ 				if(data !== 'none' && data !== 'no_results') {
+					$('#no-results').remove();
 					$.each(data[0], function(index, value) {
 						$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
 					});
@@ -54,6 +55,9 @@
 
 					buildNote(data[2]);
 					color = data[3];
+				} else if(data === 'no_results') {
+					// no search results found
+					$noteList.append('<p id="no-results">No note with that search could be found!</p>');
 				} else {
 					$noteList.append('<p id="first-note">It appears that you have not yet created any notes. Create your first one.</p>');
 				}
