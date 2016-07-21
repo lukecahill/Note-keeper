@@ -231,7 +231,7 @@ nav.navigation-bar {
 	border-radius: 0;
 }
 
-p#first-note {
+p#first-note, p#no-results {
 	text-align: center;
 	font-weight: bold;
 }
