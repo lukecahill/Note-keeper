@@ -3,7 +3,7 @@ Note keeping system which allows for the creating, updating, archiving and delet
 
 Each note may have several tags attached to it for reference. Clicking this tag will show similar notes which also have this tag. 
 
-Search system which currently supports searching for the note title, and note text. 
+Search system which currently supports searching for the user defined options, which can be note title, text, or a combination of both of these. 
 
 Supports the ability for users to create an account which is only associated with the notes that they create. 
 
@@ -13,4 +13,4 @@ Includes email confirmation on user registration.
 
 Has now been updated to return the JSON, rather than the full HTML, for each note which is then built client-side. This will allow the potential use of AngularJS in the future.
 
-The SQL used for this is provided in 'database.sql'
+The SQL used for this is provided in 'database.sql'.
