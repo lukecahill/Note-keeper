@@ -23,19 +23,16 @@
 			<button class="btn btn-default" id="show-search-button" title="Search for a note via the title">
 				<span class="glyphicon glyphicon-search"></span>
 			</button>
+			
+			<button class="btn btn-default" id="show-tag-chooser-button" title="Show a list of tags which are available to show all notes with that tag.">
+				<span class="glyphicon glyphicon-tag"></span>
+			</button>
 		</div>
 	</div>
-	
-	<div class="col-md-12">
-		<label for="tag-chooser">
-			Choose a tag to display all notes with this tag.
-		</label>
-		<select id="tag-chooser" class="form-control">
-			<option selected value="showall">
-				-- Show all --
-			</option>
-		</select>
-	</div>
+	<?php
+		include 'templates/tag-chooser.html';
+		include 'templates/search.html';
+	?>
 </div>
 
 <?php 
