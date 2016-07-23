@@ -30,51 +30,63 @@
 			action: 'loadnote'
 		})
 		.done(function(data, result) {
-			if(result === 'success') {
-				
-				if(toSend.action === 'searchnote') {
-					$noteList.empty();
-				}
-
-				data = $.parseJSON(data);
- 				if(data !== 'none' && data !== 'no_results') {
-					$('#no-results').remove();
-					if(toSend.complete === 0) {
-						$noteTags.empty();
-						$.each(data[0], function(index, value) {
-							$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
-						});
-					}
-					
-					$tagChooser.empty();
-					$tagChooser.append($('<option></option>').attr('value', 'showall').attr('selected', true).text('-- Show all --')); 
-					$.each(data[1], function(key, value) {   
-						$tagChooser
-							.append($('<option></option>')
-							.attr('value', value)
-							.attr('data-tag', value)
-							.text(value)); 
-					});
-
-					buildNote(data[2]);
-					color = data[3];
-				} else if(data === 'no_results') {
-					// no search results found
-					$noteList.append('<p id="no-results">No note with that search could be found!</p>');
-				} else {
-					$noteList.append('<p id="first-note">It appears that you have not yet created any notes. Create your first one.</p>');
-				}
-				
-				if(toSend.complete !== 1) {
-					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>');		
-				} else {
-					$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>');		
-				} 
-			}
+			loadNotesSuccess(data, result, toSend);
 		})
 		.fail(function(error) {
 			console.log('It failed: ', error);
 		});
+	}
+	
+	/**
+	* @function loadNotesSuccess
+	*
+	* Function which occurs when the loading of the from the database is successful.
+	* @param {object} data
+	* @param {string} result
+	* @param {object} toSend
+	**/
+	function loadNotesSuccess(data, result, toSend) {
+		if(result === 'success') {
+			
+			if(toSend.action === 'searchnote') {
+				$noteList.empty();
+			}
+
+			data = $.parseJSON(data);
+			if(data !== 'none' && data !== 'no_results') {
+				$('#no-results').remove();
+				if(toSend.complete === 0) {
+					$noteTags.empty();
+					$.each(data[0], function(index, value) {
+						$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+					});
+				}
+				
+				$tagChooser.empty();
+				$tagChooser.append($('<option></option>').attr('value', 'showall').attr('selected', true).text('-- Show all --')); 
+				$.each(data[1], function(key, value) {   
+					$tagChooser
+						.append($('<option></option>')
+						.attr('value', value)
+						.attr('data-tag', value)
+						.text(value)); 
+				});
+
+				buildNote(data[2]);
+				color = data[3];
+			} else if(data === 'no_results') {
+				// no search results found
+				$noteList.append('<p id="no-results">No note with that search could be found!</p>');
+			} else {
+				$noteList.append('<p id="first-note">It appears that you have not yet created any notes. Create your first one.</p>');
+			}
+			
+			if(toSend.complete !== 1) {
+				$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>');		
+			} else {
+				$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>');		
+			} 
+		}
 	}
 	
 	/**
