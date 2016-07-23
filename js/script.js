@@ -195,7 +195,7 @@
 	*
 	* Hide these sections until they are clicked to show
 	**/
-	$('.note-text-validation, .edit-note-text-validation, #search-input').hide();
+	$('.note-text-validation, .edit-note-text-validation, #search-input, #tag-chooser-input').hide();
 	$newNoteSection.hide();
 	
 	/**
@@ -532,8 +532,20 @@
 	**/
 	$('#show-search-button').on('click', function() {
 		$('#search-input').toggle();
-		$tagChooser.toggle();
-		$('label[for=tag-chooser').toggle();
+		//$tagChooser.toggle();
+		//$('label[for=tag-chooser').toggle();
+		$('#tag-chooser-input').hide();
+	});
+	
+	/**
+	* @function
+	* 
+	* Fire the searchNotes function when the return key is pressed in the search note input box
+	* @param {event} event
+	**/
+	$('#show-tag-chooser-button').on('click', function() {
+		$('#search-input').hide();
+		$('#tag-chooser-input').toggle();
 	});
 	
 	/**
