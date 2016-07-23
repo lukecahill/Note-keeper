@@ -39,9 +39,12 @@
 				data = $.parseJSON(data);
  				if(data !== 'none' && data !== 'no_results') {
 					$('#no-results').remove();
-					$.each(data[0], function(index, value) {
-						$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
-					});
+					if(toSend.complete === 0) {
+						$noteTags.empty();
+						$.each(data[0], function(index, value) {
+							$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+						});
+					}
 					
 					$tagChooser.empty();
 					$tagChooser.append($('<option></option>').attr('value', 'showall').attr('selected', true).text('-- Show all --')); 
