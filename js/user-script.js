@@ -16,6 +16,7 @@
 			}
 		})
 		.done(function(data, result) {
+
 			data = $.parseJSON(data)
 			var color = data[0];
 			var order = data[1];
@@ -38,6 +39,10 @@
 			
 			if(data[3] === "true") {
 				$('#search_text').prop('checked', true);
+			}
+			
+			if(data[4] === "true") {
+				$('#search_mark_done').prop('checked', true);
 			}
 		})
 		.fail(function(error) {
@@ -105,6 +110,7 @@
 	$('#options-search-button').on('click', function() {
 		var title = $('#search_title').is(':checked');
 		var text = $('#search_text').is(':checked');
+		var searchComplete = $('#search_mark_done').is(':checked');
 		
 		if(title === false && text === false) {
 			alert('You must chose to search by either one or both of title and text!');
@@ -118,7 +124,8 @@
 				id: userId,
 				action: 'set-search-parameters',
 				text: text,
-				title: title
+				title: title,
+				complete: searchComplete
 			}
 		})
 		.done(function(data, status) {
