@@ -54,7 +54,8 @@ class UserSettings {
 	function setSearchParameters() {
 		$title = $_POST['title'];
 		$text = $_POST['text'];
-		$arr = array($title, $text);
+		$complete = $_POST['complete'];
+		$arr = array($title, $text, $complete);
 		$arr = serialize($arr);
 		$stmt = $this->db->prepare('UPDATE user_preferences SET SearchOptions = :options WHERE UserId = :id');
 		$stmt->execute(array(':options' => $arr, ':id' => $this->id));
@@ -77,7 +78,8 @@ class UserSettings {
 		$color = $row[0]['TagColor'];
 		$title = $searchOptions[0];
 		$text = $searchOptions[1];
-		$return = array($color, $order, $title, $text);
+		$complete = $searchOptions[2];
+		$return = array($color, $order, $title, $text, $complete);
 		echo json_encode($return);
 	}
 }
