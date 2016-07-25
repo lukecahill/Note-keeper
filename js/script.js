@@ -7,6 +7,7 @@
 	var $newNoteSection = $('#new-note-section');
 	var $tagChooser = $('#tag-chooser');
 	var $noteTags = $('#add-note-tags');
+	var color = 'red';
 	
 	var initialLoad = { 
 		userId : userId,
@@ -139,6 +140,7 @@
 		var notes = $('.note');
 		var hide = [];
 		$('.note').show();
+		tag = tag.toLowerCase();
 		
 		$.each(notes, function(index, value) {
 			$value = $(value);
@@ -149,7 +151,7 @@
 			$.each(tags, function(i, childTag) {
 				$this = $(childTag);
 				var data = $this.data('tag');
-				tagData.push(data);
+				tagData.push(data.toLowerCase());
 			});
 			
 			if(tagData.indexOf(tag) === -1) {
