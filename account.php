@@ -15,7 +15,7 @@
 		</p>
 		
 		<p>
-			Modify your options to your preferences. 
+			Modify the available options to your preferences. Click on the header to show the available options.  
 		</p>
 		
 		<p>
