@@ -38,17 +38,15 @@ class LoadNote extends Note {
 	
 	function searchNote() {
 		if(!isset($_POST['userId']) || !isset($_POST['complete']) || !isset($_POST['search'])) {
-			echo json_encode('invalid request');
+			echo json_encode('invalid_request');
 			return;
 		}
 		
 		$this->userId = $_POST['userId'];
-		$this->complete = $_POST['complete'];
 		$this->search = $_POST['search'];
-
 		$this->search = '%' . $this->search . '%';
 		
-		$stmt = $this->db->prepare("SELECT NoteOrder, SearchOptions FROM user_preferences WHERE UserId = :id");
+		$stmt = $this->db->prepare("SELECT NoteOrder, SearchOptions FROM user_preferences WHERE UserId = :id LIMIT 1");
 		$stmt->execute(array(':id' => $this->userId));
 		$row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$order = $row[0]['NoteOrder'];
@@ -62,10 +60,17 @@ class LoadNote extends Note {
 		}
 		$title = $searchOptions[0];
 		$text = $searchOptions[1];
+		$complete = $searchOptions[2];
+
+		if($complete === 'true') {
+			$complete = 1;
+		} else {
+			$complete = 0;
+		}
 
 		$stmt = $this->searchNoteBuild($order, $title, $text);
 		$stmt = $this->db->prepare($stmt);
-		$stmt->execute(array(':complete' => $this->complete, ':userId' => $this->userId, ':searchtitle' => $this->search));
+		$stmt->execute(array(':complete' => $complete, ':userId' => $this->userId, ':searchtitle' => $this->search));
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$count = $stmt->rowCount();
 
