@@ -9,6 +9,13 @@
 	var $noteTags = $('#add-note-tags');
 	var color = 'red';
 	
+	// configuration for toastr notificiations.
+	toastr.options = {
+		"timeOut": "2000",
+		"preventDuplicates": false,
+		"closeButton": true
+	};
+	
 	var initialLoad = { 
 		userId : userId,
 		complete: 0,
@@ -48,7 +55,7 @@
 	**/
 	function loadNotesSuccess(data, result, toSend) {
 		if(result === 'success') {
-			
+
 			if(toSend.action === 'searchnote') {
 				$noteList.empty();
 			}
@@ -163,7 +170,7 @@
 			$(value).hide();
 		});
 		
-		toastr.info('Now only showing notes with the tag "' + tag + '"');
+		toastr.info('Showing all notes with the tag "' + tag + '"');
 	}
 
 	/**
@@ -200,12 +207,6 @@
 			$noteList.append(note);
 		});
 	}
-	
-	toastr.options = {
-		"timeOut": "2000",
-		"preventDuplicates": false,
-		"closeButton": true
-	};
 
 	/**
 	* @function
