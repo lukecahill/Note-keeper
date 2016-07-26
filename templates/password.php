@@ -32,33 +32,35 @@ if(isset($_POST['new-password']) && isset($_POST['confirm-password']) && isset($
 ?>
 
 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="change-password-form" class="options-border">
-	<h4>
+	<h4 id="password-header">
 		Change your password here.
 	</h4>
-	<div class="form-group">
-		<label for="old-password">
-			Enter old password:
-		</label>
-		<input type="password" id="old-password" name="old-password" class="form-control">
-		<?php if($error !== '') echo $error; ?>
-	</div>
+	<div id="password-change">
+		<div class="form-group">
+			<label for="old-password">
+				Enter old password:
+			</label>
+			<input type="password" id="old-password" name="old-password" class="form-control">
+			<?php if($error !== '') echo $error; ?>
+		</div>
 
-	<div class="form-group">
-		<label for="new-password">
-			Enter new password:
-		</label>
-		<input type="password" id="new-password" name="new-password" class="form-control">
-	</div>
+		<div class="form-group">
+			<label for="new-password">
+				Enter new password:
+			</label>
+			<input type="password" id="new-password" name="new-password" class="form-control">
+		</div>
 
-	<div class="form-group">
-		<label for="confirm-password">
-			Confirm new password:
-		</label>
-		<input type="password" id="confirm-password" name="confirm-password" class="form-control">
-	</div>
+		<div class="form-group">
+			<label for="confirm-password">
+				Confirm new password:
+			</label>
+			<input type="password" id="confirm-password" name="confirm-password" class="form-control">
+		</div>
 
-	<button class="btn btn-success" id="change-password-button" name="change-password-button" type="submit">
-		<span class="glyphicon glyphicon-asterisk"></span>
-		Change Password
-	</button>
+		<button class="btn btn-success" id="change-password-button" name="change-password-button" type="submit">
+			<span class="glyphicon glyphicon-asterisk"></span>
+			Change Password
+		</button>
+	</div>
 </form>
