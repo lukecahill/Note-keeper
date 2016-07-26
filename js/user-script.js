@@ -1,5 +1,7 @@
 (function() {
 	
+	$('#password-change').hide();
+	
 	getSettings();
 	/**
 	* @function
@@ -167,6 +169,10 @@
 			$('#confirm-password').after('<span class="validation-error">The confirmation password is different!</span>');
 			return;
 		}
+	});
+	
+	$('#password-header').on('click', function() {
+		$('#password-change').toggle();
 	});
 	
 })();
