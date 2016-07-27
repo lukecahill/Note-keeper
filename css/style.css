@@ -236,6 +236,10 @@ p#first-note, p#no-results {
 	font-weight: bold;
 }
 
+.password_span {
+	float: right;
+}
+
 @media (max-width: 767px) {
 	div.mobile-text-left {
 		text-align: initial;
