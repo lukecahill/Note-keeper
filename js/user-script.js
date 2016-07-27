@@ -1,6 +1,8 @@
 (function() {
 	
 	$('#password-change').hide();
+	var $passwordDropdown = $('.password_span');
+	var passwordDown = false;
 	
 	getSettings();
 	/**
@@ -148,6 +150,7 @@
 	* @param {object} e
 	**/
 	$('#change-password-form').on('submit', function(e) {
+		$('.validation-error').remove();
 		var newPassword = $('#new-password').val();
 		var confirmPassword = $('#confirm-password').val();
 		var old = $('#old-password').val();
@@ -163,16 +166,31 @@
 			return;
 		}
 		
-		if(newPassword !== confirmPassword) {
-			console.log('These passwords are different!');
+		if(newPassword.trim() === '' || confirmPassword.trim() === '') {
+			$('#new-password').after('<span class="validation-error">The new or confirmation input is empty!</span>');
 			e.preventDefault();
+			return;
+		}
+		
+		if(newPassword !== confirmPassword) {
 			$('#confirm-password').after('<span class="validation-error">The confirmation password is different!</span>');
+			e.preventDefault();
 			return;
 		}
 	});
 	
 	$('#password-header').on('click', function() {
 		$('#password-change').toggle();
+		
+		if(passwordDown) {
+			$passwordDropdown.addClass('glyphicon-chevron-up');
+			$passwordDropdown.removeClass('glyphicon-chevron-down');
+			passwordDown = false;
+		} else {
+			$passwordDropdown.addClass('glyphicon-chevron-down');
+			$passwordDropdown.removeClass('glyphicon-chevron-up');
+			passwordDown = true;
+		}
 	});
 	
 })();
