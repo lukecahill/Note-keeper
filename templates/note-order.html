@@ -1,25 +1,29 @@
 <div class="options-order options-border">
-	<h4>
+	<h4 id="order-header">
 		Change the order of your loaded notes. 
+		<span class="password_span glyphicon glyphicon-chevron-up">
+		</span>
 	</h4>
-	<div class="form-group">
-		<select id="options-note-order" class="form-control">
-			<option value="oldest">
-				Oldest first
-			</option>
-			<option value="newest">
-				Newest first
-			</option>
-			<option value="alphabetically">
-				A-Z
-			</option>
-			<option value="alpha_backwards">
-				Z-A
-			</option>
-		</select>
+	<div id="order-div">
+		<div class="form-group">
+			<select id="options-note-order" class="form-control">
+				<option value="oldest">
+					Oldest first
+				</option>
+				<option value="newest">
+					Newest first
+				</option>
+				<option value="alphabetically">
+					A-Z
+				</option>
+				<option value="alpha_backwards">
+					Z-A
+				</option>
+			</select>
+		</div>
+		<button class="btn btn-success" id="options-order-button">
+			<span class="glyphicon glyphicon-sort"></span>
+			Change order
+		</button>
 	</div>
-	<button class="btn btn-success" id="options-order-button">
-		<span class="glyphicon glyphicon-sort"></span>
-		Change order
-	</button>
 </div>
