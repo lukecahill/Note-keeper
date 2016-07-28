@@ -281,7 +281,7 @@
 			$.each(tagArray, function(index, value) {
 				tags += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(color, value);
 			});
-			
+			noteText = noteText.replace(/\n/g, '<br>');
 			$noteList.append('<div class="note" data-id="{0}"><h4 class="note-title">{1}</h4><p class="note-text">{2}</p>{3}<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>'.format(data, noteTitle, noteText, tags));
 				
 			// Reset and confirmation.

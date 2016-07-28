@@ -10,7 +10,7 @@ class NoteApi extends Note {
 
 	function addNote($id, $text, $tags, $title) {
 		$tags = serialize($tags);
-
+		$text = nl2br($text);
 		$stmt = $this->db->prepare('INSERT INTO note(NoteTitle, NoteText, NoteTags, UserId) VALUES (:title, :text, :tags, :userId)');
 		$stmt->execute(array(':title' => $title, ':text' => $text, ':tags' => $tags, ':userId' => $id));
 		
