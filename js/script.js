@@ -145,11 +145,11 @@
 		
 		if(newTag.trim() !== '') {
 			if(edit === 1) {
-				$(where).append('<div class="checkbox"><label><input type="checkbox" checked name="edit-tag" data-tag="' + newTag + '" value="' + newTag + '">' + newTag + '</label></div>');
+				$(where).append('<div class="checkbox"><label><input type="checkbox" checked name="edit-tag" data-tag="{0}" value="{0}">{0}</label></div>'.format(newTag));
 			} else if(edit === 0) {
-				$(where).append('<div class="checkbox"><label><input type="checkbox" checked name="new-tag" data-tag="' + newTag + '" value="' + newTag + '">' + newTag + '</label></div>');
+				$(where).append('<div class="checkbox"><label><input type="checkbox" checked name="new-tag" data-tag="{0}" value="{0}">{0}</label></div>'.format(newTag));
 			} else if(edit === 2) {
-				$(where).append('<div class="checkbox new-note-checkbox"><label><input type="checkbox" checked name="new-tag" data-tag="' + newTag + '" value="' + newTag + '">' + newTag + '</label></div>');
+				$(where).append('<div class="checkbox new-note-checkbox"><label><input type="checkbox" checked name="new-tag" data-tag="{0}" value="{0}">{0}</label></div>'.format(newTag));
 			}
 			$(input).val('');
 		}
@@ -188,7 +188,7 @@
 			$(value).hide();
 		});
 		
-		toastr.info('Showing all notes with the tag "' + tag + '"');
+		toastr.info('Showing all notes with the tag "{0}"'.format(tag));
 	}
 
 	/**
@@ -200,12 +200,12 @@
 	function buildNote(data) {
 		var note = '';
 		$.each(data, function(index, value) {
-			note = '<div class="note" data-id="' + value.id + '">';
-			note += '<h4 class="note-title">' + value.title + '</h4><p class="note-text">' + value.text + '</p>';
+			note = '<div class="note" data-id="{0}">'.format(value.id);
+			note += '<h4 class="note-title">{0}</h4><p class="note-text">{1}</p>'.format(value.title, value.text);
 			if(data[index][0].length > 0) {
 				note += '<div class="tag-container">';
 				$.each(data[index][0], function(i, v) {
-					note += '<span class="note-tags note-tags-' + value.color + '" title="Click to show all notes with this tag." data-tag="' + v + '">' + v + '</span>';
+					note += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(value.color, v);
 				});
 				note += '</div>';
 			}
@@ -279,10 +279,10 @@
 		.done(function(data, result) {
 			var tags = '';
 			$.each(tagArray, function(index, value) {
-				tags += '<span class="note-tags note-tags-' + color + '" title="Click to show all notes with this tag." data-tag="' + value + '">' + value + '</span>';
+				tags += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(color, value);
 			});
 			
-			$noteList.append('<div class="note" data-id="' + data + '"><h4 class="note-title">' + noteTitle + '</h4><p class="note-text">' + noteText + '</p>' + tags + '<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>');
+			$noteList.append('<div class="note" data-id="{0}"><h4 class="note-title">{1}</h4><p class="note-text">{2}</p>{3}<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>'.format(data, noteTitle, noteText, tags));
 				
 			// Reset and confirmation.
 			$('#add-note-title').val('');
@@ -383,7 +383,7 @@
 		$('#edit-note-title').val(title);
 		$('#edit-note-text').val(text);		
 		$.each(tagArray, function(index, value) {
-			$('#edit-note-tags').append('<div class="checkbox"><label><input type="checkbox" checked name="edit-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+			$('#edit-note-tags').append('<div class="checkbox"><label><input type="checkbox" checked name="edit-tag" data-tag="{0}" value="{0}">{0}</label></div>'.format(value));
 		});
 		
 	});
@@ -507,7 +507,7 @@
 			var tags = '';
 			
 			$.each(tagArray, function(index, value) {
-				tags += '<span class="note-tags note-tags-' + color + '" title="Click to show all notes with this tag." data-tag="' + value + '">' + value + '</span>';
+				tags += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(color, value);
 			});
 			
 			$(newText).after(tags);
