@@ -14,16 +14,22 @@ class LoadNote extends Note {
 	}
 	
 	function getNotes() {
-		if(!isset($_POST['userId']) || !isset($_POST['complete'])) {
-			echo json_encode('invalid request');
+		if(!isset($_POST['userId']) || !isset($_POST['auth'])) {
+			echo json_encode('invalid_request');
 			return;
 		}
 		
 		$this->userId = $_POST['userId'];
 		$this->complete = $_POST['complete'];
+		$auth = $_POST['auth'];
 
-		$stmt = $this->db->prepare("SELECT NoteOrder FROM user_preferences WHERE UserId = :id");
-		$stmt->execute(array(':id' => $this->userId));
+		$stmt = $this->db->prepare("SELECT p.NoteOrder
+									FROM user_preferences p
+									INNER JOIN note_users u ON u.UserId = p.UserId 
+									WHERE u.UserId = :id
+									AND u.JsonAuthentication = :auth"
+		);
+		$stmt->execute(array(':id' => $this->userId, ':auth' => $auth));
 		$order = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$order = $order[0]['NoteOrder'];
 		
@@ -37,17 +43,23 @@ class LoadNote extends Note {
 	}
 	
 	function searchNote() {
-		if(!isset($_POST['userId']) || !isset($_POST['complete']) || !isset($_POST['search'])) {
+		if(!isset($_POST['userId']) || !isset($_POST['auth']) || !isset($_POST['search'])) {
 			echo json_encode('invalid_request');
 			return;
 		}
 		
 		$this->userId = $_POST['userId'];
 		$this->search = $_POST['search'];
+		$auth = $_POST['auth'];
 		$this->search = '%' . $this->search . '%';
 		
-		$stmt = $this->db->prepare("SELECT NoteOrder, SearchOptions FROM user_preferences WHERE UserId = :id LIMIT 1");
-		$stmt->execute(array(':id' => $this->userId));
+		$stmt = $this->db->prepare("SELECT p.NoteOrder, p.SearchOptions 
+		FROM user_preferences p
+		INNER JOIN note_users u ON u.UserId = p.UserId 
+		WHERE p.UserId = :id 
+		AND u.JsonAuthentication = :auth
+		LIMIT 1");
+		$stmt->execute(array(':id' => $this->userId, ':auth' => $auth));
 		$row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$order = $row[0]['NoteOrder'];
 		
