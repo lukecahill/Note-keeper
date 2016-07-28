@@ -1,8 +1,27 @@
 (function() {
 	
-	$('#password-change').hide();
+	$('#password-change, #search-div, #order-div, #color-div').hide();
 	var $passwordDropdown = $('.password_span');
-	var passwordDown = false;
+	var $orderDropdown = $('.order_dropdown_span');
+	var $searchDropdown = $('.search_dropdown_span');
+	var $colorDropdown = $('.color_dropdown_span');
+	var passwordDown = false, colorDown = false, orderDown = false, searchDown = false;
+	
+	/**
+	* @function String format
+	*
+	* Add functionality to String object, for C# style string formatting.
+	* Usage: "{0} is dead, but {1} is alive! {0} {2}".format("ASP", "ASP.NET")
+	* From; http://stackoverflow.com/a/4673436
+	**/
+	if (!String.prototype.format) {
+		String.prototype.format = function() {
+			var args = arguments;
+			return this.replace(/{(\d+)}/g, function(match, number) { 
+				return typeof args[number] != 'undefined' ? args[number] : match;
+			});
+		};
+	}
 	
 	getSettings();
 	/**
@@ -26,14 +45,14 @@
 			var order = data[1];
 			
 			var $selectColor = $('#select-tag-color');
-			var $item = $selectColor.find('option[value=' + color + ']');
-			$selectColor.find('option[value=' + color + ']').remove();
+			var $item = $selectColor.find('option[value={0}]'.format(color));
+			$selectColor.find('option[value={0}]'.format(color)).remove();
 			$selectColor.find('option:eq(0)').before($item);
 			$('#select-tag-color > option:eq(0)').attr('selected', true);
 			
 			$noteOrder = $('#options-note-order');
-			$item = $noteOrder.find('option[value=' + order + ']');
-			$noteOrder.find('option[value=' + color + ']').remove();
+			$item = $noteOrder.find('option[value={0}]'.format(order));
+			$noteOrder.find('option[value={0}]'.format(order)).remove();
 			$noteOrder.find('option:eq(0)').before($item);
 			$('#options-note-order > option:eq(0)').attr('selected', true);
 			
@@ -190,6 +209,48 @@
 			$passwordDropdown.addClass('glyphicon-chevron-down');
 			$passwordDropdown.removeClass('glyphicon-chevron-up');
 			passwordDown = true;
+		}
+	});
+	
+	$('#color-header').on('click', function() {
+		$('#color-div').toggle();
+		
+		if(colorDown) {
+			$colorDropdown.addClass('glyphicon-chevron-up');
+			$colorDropdown.removeClass('glyphicon-chevron-down');
+			colorDown = false;
+		} else {
+			$colorDropdown.addClass('glyphicon-chevron-down');
+			$colorDropdown.removeClass('glyphicon-chevron-up');
+			colorDown = true;
+		}
+	});
+	
+	$('#order-header').on('click', function() {
+		$('#order-div').toggle();
+		
+		if(orderDown) {
+			$orderDropdown.addClass('glyphicon-chevron-up');
+			$orderDropdown.removeClass('glyphicon-chevron-down');
+			orderDown = false;
+		} else {
+			$orderDropdown.addClass('glyphicon-chevron-down');
+			$orderDropdown.removeClass('glyphicon-chevron-up');
+			orderDown = true;
+		}
+	});
+	
+	$('#search-header').on('click', function() {
+		$('#search-div').toggle();
+		
+		if(searchDown) {
+			$searchDropdown.addClass('glyphicon-chevron-up');
+			$searchDropdown.removeClass('glyphicon-chevron-down');
+			searchDown = false;
+		} else {
+			$searchDropdown.addClass('glyphicon-chevron-down');
+			$searchDropdown.removeClass('glyphicon-chevron-up');
+			searchDown = true;
 		}
 	});
 	
