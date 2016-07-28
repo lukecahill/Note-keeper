@@ -19,9 +19,26 @@
 	var initialLoad = { 
 		userId : userId,
 		complete: 0,
-		action: 'loadnote'
+		action: 'loadnote',
+		auth: auth
 	};
 	loadNotes(initialLoad);
+	
+	/**
+	* @function String format
+	*
+	* Add functionality to String object, for C# style string formatting.
+	* Useage: "{0} is dead, but {1} is alive! {0} {2}".format("ASP", "ASP.NET")
+	* From; http://stackoverflow.com/a/4673436
+	**/
+	if (!String.prototype.format) {
+		String.prototype.format = function() {
+			var args = arguments;
+			return this.replace(/{(\d+)}/g, function(match, number) { 
+				return typeof args[number] != 'undefined' ? args[number] : match;
+			});
+		};
+	}
 	
 	/**
 	* @function loadNotes
@@ -66,7 +83,7 @@
 				if(toSend.complete === 0) {
 					$noteTags.empty();
 					$.each(data[0], function(index, value) {
-						$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="' + value + '" value="' + value + '">' + value + '</label></div>');
+						$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="{0}" value="{0}">{0}</label></div>'.format(value));
 					});
 				}
 				
@@ -108,7 +125,8 @@
 			userId: userId,
 			complete: 0,
 			action: 'searchnote',
-			search: search
+			search: search,
+			auth: auth
 		};
 		
 		loadNotes(data);
@@ -408,7 +426,8 @@
 		var data = {
 			userId : userId,
 			complete: 0,
-			action: 'loadnote'
+			action: 'loadnote',
+			auth: auth
 		};
 		
 		if(showingComplete) {
