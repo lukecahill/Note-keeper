@@ -411,8 +411,13 @@
 			}
 		})
 		.done(function(data, result) {
-			$this.closest('.note').remove();
-			toastr.success('Note marked as complete!');
+			if(data == 1) {
+				$this.closest('.note').remove();
+				toastr.success('Note marked as complete!');	
+			} else {
+				alert('Something went wrong! Check the console for more');
+				console.log(data);
+			}
 		})
 		.fail(function(error) {
 			console.log('An error has occurred: ', error);
@@ -465,8 +470,13 @@
 			}
 		})
 		.done(function(data, result) {
-			$this.closest('.note').remove();
-			toastr.success('Note marked as active!');
+			if(data == 1) {
+				$this.closest('.note').remove();
+				toastr.success('Note marked as active!');	
+			} else {
+				alert('Something went wrong! Check the console for more');
+				console.log(data);
+			}
 		})
 		.fail(function(error) {
 			console.log('An error has occurred: ', error);
