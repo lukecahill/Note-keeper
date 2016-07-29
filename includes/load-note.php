@@ -28,7 +28,7 @@ class LoadNote extends Note {
 									INNER JOIN note_users u ON u.UserId = p.UserId 
 									WHERE u.UserId = :id
 									AND u.JsonAuthentication = :auth"
-		);
+								);
 		$stmt->execute(array(':id' => $this->userId, ':auth' => $auth));
 		$order = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$order = $order[0]['NoteOrder'];
@@ -153,6 +153,10 @@ class LoadNote extends Note {
 			$stmt .= ' ORDER BY NoteTitle';
 		} else if($order == 'alpha_backwards') {
 			$stmt .= ' ORDER BY NoteTitle DESC';
+		} else if($order === 'last_edited') {
+			$stmt .= ' ORDER BY NoteLastEdited ASC';
+		} else if($order === 'oldest_edited') {
+			$stmt .= ' ORDER BY NoteLastEdited DESC';
 		}
 		
 		return $stmt;
@@ -201,6 +205,10 @@ class LoadNote extends Note {
 			$stmt .= ' ORDER BY NoteTitle';
 		} else if($order == 'alpha_backwards') {
 			$stmt .= ' ORDER BY NoteTitle DESC';
+		} else if($order === 'last_edited') {
+			$stmt .= ' ORDER BY NoteLastEdited ASC';
+		} else if($order === 'oldest_edited') {
+			$stmt .= ' ORDER BY NoteLastEdited DESC';
 		}
 
 		return $stmt;
