@@ -4,8 +4,9 @@ require_once 'note.php';
 
 class NoteApi extends Note {
 
-	function __construct() {
+	function __construct($id) {
 		parent::__construct();
+		$this->id = $id;
 	}
 
 	function addNote($id, $text, $tags, $title) {
@@ -26,17 +27,27 @@ class NoteApi extends Note {
 	function editNote($id, $text, $title, $tags) {
 		
 		$tags = serialize($tags);
-		$stmt = $this->db->prepare('UPDATE note SET NoteText = :text, NoteTitle = :title, NoteTags = :tags WHERE NoteId = :id ');
+		$stmt = $this->db->prepare('UPDATE note SET NoteText = :text, NoteTitle = :title, NoteTags = :tags, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id ');
 		$stmt->execute(array(':text' => $text, ':title' => $title, ':tags' => $tags, ':id' => $id));
 		
 		echo $id . ' has been updated.';
+	}
+	
+	function MarkDone() {
+		$stmt = $this->db->prepare('UPDATE note SET NoteComplete = 1 WHERE NoteId = :id');
+		$stmt->execute(array(':id' => $this->id));
+	}
+
+	function MarkActive() {
+		$stmt = $this->db->prepare('UPDATE note SET NoteComplete = 0, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id');
+		$stmt->execute(array(':id' => $this->id));
 	}
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 	
 	$action = $_POST['action'];
-	$note = new NoteApi();
+	$note = new NoteApi($_POST['userId']);
 
 	if(isset($_POST['noteText']) && ($action === 'addnote')) {
 		$tags = isset($_POST['noteTags']) ? $_POST['noteTags'] : '';
@@ -46,6 +57,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 
 	} else if(($action === 'editnote') && isset($_POST['noteText']) && isset($_POST['noteId'])) {
 		$tags = isset($_POST['noteTags']) ? $_POST['noteTags'] : '';
 		$note->editNote($_POST['noteId'], $_POST['noteText'], $_POST['noteTitle'], $tags);
+	} else if($action === 'setcomplete') {
+		$complete = $_POST['complete'];
+		if($complete == 1) {
+			$note->MarkDone();
+		} else {
+			$note->MarkActive();
+		}
 	}
 
 	$note = null;
