@@ -8,6 +8,7 @@
 	var $tagChooser = $('#tag-chooser');
 	var $noteTags = $('#add-note-tags');
 	var color = 'red';
+	var dropdownTags = [];
 	
 	// configuration for toastr notificiations.
 	toastr.options = {
@@ -28,7 +29,7 @@
 	* @function String format
 	*
 	* Add functionality to String object, for C# style string formatting.
-	* Useage: "{0} is dead, but {1} is alive! {0} {2}".format("ASP", "ASP.NET")
+	* Usage: "{0} is dead, but {1} is alive! {0} {2}".format("ASP", "ASP.NET")
 	* From; http://stackoverflow.com/a/4673436
 	**/
 	if (!String.prototype.format) {
@@ -95,6 +96,7 @@
 						.attr('value', value)
 						.attr('data-tag', value)
 						.text(value)); 
+					dropdownTags.push(value);
 				});
 
 				buildNote(data[2]);
@@ -569,8 +571,6 @@
 	**/
 	$('#show-search-button').on('click', function() {
 		$('#search-input').toggle();
-		//$tagChooser.toggle();
-		//$('label[for=tag-chooser').toggle();
 		$('#tag-chooser-input').hide();
 	});
 	
