@@ -403,7 +403,7 @@
 		
 		$.ajax({
 			method: 'POST',
-			url: 'includes/note-done.php',
+			url: 'includes/note-api.php',
 			data: {
 				noteId: noteId,
 				complete: 1,
@@ -457,7 +457,7 @@
 		var noteId = $this.closest('.note').data('id');
 		$.ajax({
 			method: 'POST',
-			url: 'includes/note-done.php',
+			url: 'includes/note-api.php',
 			data: {
 				noteId: noteId,
 				complete: 0,
