@@ -406,7 +406,8 @@
 			url: 'includes/note-done.php',
 			data: {
 				noteId: noteId,
-				complete: 1
+				complete: 1,
+				action: 'setcomplete'
 			}
 		})
 		.done(function(data, result) {
@@ -459,7 +460,8 @@
 			url: 'includes/note-done.php',
 			data: {
 				noteId: noteId,
-				complete: 0
+				complete: 0,
+				action: 'setcomplete'
 			}
 		})
 		.done(function(data, result) {
