@@ -34,20 +34,23 @@ class NoteApi extends Note {
 	}
 	
 	function MarkDone() {
-		$stmt = $this->db->prepare('UPDATE note SET NoteComplete = 1 WHERE NoteId = :id');
-		$stmt->execute(array(':id' => $this->id));
+		$stmt = $this->db->prepare('UPDATE note SET NoteComplete = 1, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id');
+		$status = $stmt->execute(array(':id' => $this->id));
+		echo $status;
 	}
 
 	function MarkActive() {
 		$stmt = $this->db->prepare('UPDATE note SET NoteComplete = 0, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id');
 		$stmt->execute(array(':id' => $this->id));
+		$status = $stmt->execute(array(':id' => $this->id));
+		echo $status;
 	}
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
 	
 	$action = $_POST['action'];
-	$note = new NoteApi($_POST['userId']);
+	$note = new NoteApi($_POST['noteId']);
 
 	if(isset($_POST['noteText']) && ($action === 'addnote')) {
 		$tags = isset($_POST['noteTags']) ? $_POST['noteTags'] : '';
