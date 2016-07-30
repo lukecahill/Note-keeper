@@ -1,11 +1,12 @@
 (function() {
 	
+	// want to hide these initially
 	$('#password-change, #search-div, #order-div, #color-div').hide();
-	var $passwordDropdown = $('.password_span');
-	var $orderDropdown = $('.order_dropdown_span');
-	var $searchDropdown = $('.search_dropdown_span');
-	var $colorDropdown = $('.color_dropdown_span');
 	var passwordDown = false, colorDown = false, orderDown = false, searchDown = false;
+	
+	// cache the DOM
+	var $passwordDropdown = $('.password_span'), $orderDropdown = $('.order_dropdown_span'),$searchDropdown = $('.search_dropdown_span'), $colorDropdown = $('.color_dropdown_span');
+	
 	
 	/**
 	* @function String format
@@ -197,7 +198,12 @@
 			return;
 		}
 	});
-	
+
+	/**
+	* @function
+	* Toggle to show the form to change the users password 
+	* 
+	**/
 	$('#password-header').on('click', function() {
 		$('#password-change').toggle();
 		
@@ -212,6 +218,11 @@
 		}
 	});
 	
+	/**
+	* @function
+	* Toggle to show the form for the user to choose their notes color
+	* 
+	**/
 	$('#color-header').on('click', function() {
 		$('#color-div').toggle();
 		
@@ -225,7 +236,12 @@
 			colorDown = true;
 		}
 	});
-	
+		
+	/**
+	* @function
+	* Toggle to show the form for the user to choose what order to display the notes
+	* 
+	**/
 	$('#order-header').on('click', function() {
 		$('#order-div').toggle();
 		
@@ -239,7 +255,12 @@
 			orderDown = true;
 		}
 	});
-	
+		
+	/**
+	* @function
+	* Toggle to show the form for the user to customise the search option
+	* 
+	**/
 	$('#search-header').on('click', function() {
 		$('#search-div').toggle();
 		
