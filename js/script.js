@@ -279,23 +279,28 @@
 			}
 		})
 		.done(function(data, result) {
-			var tags = '';
-			$.each(tagArray, function(index, value) {
-				tags += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(color, value);
-			});
-			noteText = noteText.replace(/\n/g, '<br>');
-			$noteList.append('<div class="note" data-id="{0}"><h4 class="note-title">{1}</h4><p class="note-text">{2}</p>{3}<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>'.format(data, noteTitle, noteText, tags));
-				
-			// Reset and confirmation.
-			$('#add-note-title').val('');
-			$('#add-note-text').val('');
-			$('input:checkbox[name=new-tag]').removeAttr('checked');
-			$('.new-note-checkbox').remove();
-			$('#first-note').remove();
+			if(data == 1) {
+				var tags = '';
+				$.each(tagArray, function(index, value) {
+					tags += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(color, value);
+				});
+				noteText = noteText.replace(/\n/g, '<br>');
+				$noteList.append('<div class="note" data-id="{0}"><h4 class="note-title">{1}</h4><p class="note-text">{2}</p>{3}<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>'.format(data, noteTitle, noteText, tags));
+					
+				// Reset and confirmation.
+				$('#add-note-title').val('');
+				$('#add-note-text').val('');
+				$('input:checkbox[name=new-tag]').removeAttr('checked');
+				$('.new-note-checkbox').remove();
+				$('#first-note').remove();
 
-			tagsToAdd = [];
-			toastr.success('Note has been added successfully!');
-			$newNoteSection.hide();
+				tagsToAdd = [];
+				toastr.success('Note has been added successfully!');
+				$newNoteSection.hide();
+			} else {
+				alert('Something went wrong! Check the console for more');
+				console.log(data);
+			}
 		})
 		.fail(function(error) {
 			console.log('There was a failure: ', error);
@@ -347,8 +352,13 @@
 			}
 		})
 		.done(function(data, result) {
-			$this.closest('.note').remove();
-			toastr.success('Note has been deleted!');
+			if(data == 1) {
+				$this.closest('.note').remove();
+				toastr.success('Note has been deleted!');
+			} else {
+				alert('Something went wrong! Check the console for more');
+				console.log(data);				
+			}
 		})
 		.fail(function(error) {
 			console.log('An error has occurred: ', error);
@@ -513,22 +523,28 @@
 		})
 		.done(function(data, result) {
 			// update the DOM here.
-			var note = $('[data-id="' + noteId + '"]');
-			$(note).children('.note-title')[0].textContent = title;
-			$(note).children('.note-text')[0].textContent = text;
-			var newText = $(note).children('.note-text')[0];
-			$(note).find('.note-tags').remove();
-			var tags = '';
-			
-			$.each(tagArray, function(index, value) {
-				tags += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(color, value);
-			});
-			
-			$(newText).after(tags);
-			
-			$('#note-edit-modal').modal('hide');	
-			
-			toastr.success('Note successfully updated!');
+			if(data == 1) {
+				var note = $('[data-id="' + noteId + '"]');
+				$(note).children('.note-title')[0].textContent = title;
+				$(note).children('.note-text')[0].textContent = text;
+				var newText = $(note).children('.note-text')[0];
+				$(note).find('.note-tags').remove();
+				var tags = '';
+				
+				$.each(tagArray, function(index, value) {
+					tags += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(color, value);
+				});
+				
+				$(newText).after(tags);
+				
+				$('#note-edit-modal').modal('hide');	
+				
+				toastr.success('Note successfully updated!');				
+			} else {
+				alert('Something went wrong! Check the console for more');
+				console.log(data);
+			}
+
 		})
 		.fail(function(error) {
 			console.log('An error has occurred: ', error);
