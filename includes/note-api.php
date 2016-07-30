@@ -20,17 +20,17 @@ class NoteApi extends Note {
 
 	function deleteNote($noteId) {
 		$stmt = $this->db->prepare('DELETE FROM note WHERE NoteId = :noteId');
-		$stmt->execute(array(':noteId' => $noteId));
-		echo 'Complete';
+		$status = $stmt->execute(array(':noteId' => $noteId));
+		echo $status;
 	}
 
 	function editNote($id, $text, $title, $tags) {
 		
 		$tags = serialize($tags);
 		$stmt = $this->db->prepare('UPDATE note SET NoteText = :text, NoteTitle = :title, NoteTags = :tags, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id ');
-		$stmt->execute(array(':text' => $text, ':title' => $title, ':tags' => $tags, ':id' => $id));
+		$status = $stmt->execute(array(':text' => $text, ':title' => $title, ':tags' => $tags, ':id' => $id));
 		
-		echo $id . ' has been updated.';
+		echo $status;
 	}
 	
 	function MarkDone() {
