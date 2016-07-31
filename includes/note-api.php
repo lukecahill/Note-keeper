@@ -60,7 +60,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 
 	} else if(($action === 'editnote') && isset($_POST['noteText']) && isset($_POST['noteId'])) {
 		$tags = isset($_POST['noteTags']) ? $_POST['noteTags'] : '';
 		$note->editNote($_POST['noteId'], $_POST['noteText'], $_POST['noteTitle'], $tags);
-	} else if($action === 'setcomplete') {
+	} else if((isset($_POST['complete'])) && ($action === 'setcomplete')) {
 		$complete = $_POST['complete'];
 		if($complete == 1) {
 			$note->MarkDone();
