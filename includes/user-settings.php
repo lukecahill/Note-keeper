@@ -66,6 +66,10 @@ class UserSettings {
 		$stmt->execute(array(':id' => $this->id));
 		$row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		
+		$stmt = $this->db->prepare('SELECT COUNT(*) AS total FROM note WHERE UserId = :id AND NoteComplete = 0');
+		$stmt->execute(array(':id' => $this->id));
+		$count = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
 		$search = unserialize($row[0]['SearchOptions']);
 		$searchOptions = array();
 		if(sizeof($search) > 0 && $search !== '') {
@@ -79,7 +83,8 @@ class UserSettings {
 		$title = $searchOptions[0];
 		$text = $searchOptions[1];
 		$complete = $searchOptions[2];
-		$return = array($color, $order, $title, $text, $complete);
+		$count = $count[0]['total'];
+		$return = array($color, $order, $title, $text, $complete, $count);
 		echo json_encode($return);
 	}
 }
