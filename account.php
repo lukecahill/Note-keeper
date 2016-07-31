@@ -25,6 +25,14 @@
 			<?php echo $_SESSION['user']; ?>
 		</p>
 		
+		<p>
+			<b>
+				Total number of active notes:
+			</b>
+			<span id="total_notes">
+			</span>
+		</p>
+		
 		<?php include 'templates/color-select.html'; ?>
 		
 		<?php include 'templates/note-order.html'; ?>
