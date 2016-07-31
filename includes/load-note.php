@@ -153,10 +153,10 @@ class LoadNote extends Note {
 			$stmt .= ' ORDER BY NoteTitle';
 		} else if($order == 'alpha_backwards') {
 			$stmt .= ' ORDER BY NoteTitle DESC';
-		} else if($order === 'last_edited') {
-			$stmt .= ' ORDER BY NoteLastEdited ASC';
-		} else if($order === 'oldest_edited') {
+		} else if($order == 'last_edited') {
 			$stmt .= ' ORDER BY NoteLastEdited DESC';
+		} else if($order == 'oldest_edited') {
+			$stmt .= ' ORDER BY NoteLastEdited ASC';
 		}
 		
 		return $stmt;
@@ -205,10 +205,10 @@ class LoadNote extends Note {
 			$stmt .= ' ORDER BY NoteTitle';
 		} else if($order == 'alpha_backwards') {
 			$stmt .= ' ORDER BY NoteTitle DESC';
-		} else if($order === 'last_edited') {
-			$stmt .= ' ORDER BY NoteLastEdited ASC';
-		} else if($order === 'oldest_edited') {
+		} else if($order == 'last_edited') {
 			$stmt .= ' ORDER BY NoteLastEdited DESC';
+		} else if($order == 'oldest_edited') {
+			$stmt .= ' ORDER BY NoteLastEdited ASC';
 		}
 
 		return $stmt;
