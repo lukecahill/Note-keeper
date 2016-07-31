@@ -47,13 +47,13 @@
 			
 			var $selectColor = $('#select-tag-color');
 			var $item = $selectColor.find('option[value={0}]'.format(color));
-			$selectColor.find('option[value={0}]'.format(color)).remove();
+			$item.remove();
 			$selectColor.find('option:eq(0)').before($item);
 			$('#select-tag-color > option:eq(0)').attr('selected', true);
 			
 			$noteOrder = $('#options-note-order');
 			$item = $noteOrder.find('option[value={0}]'.format(order));
-			$noteOrder.find('option[value={0}]'.format(order)).remove();
+			$item.remove();
 			$noteOrder.find('option:eq(0)').before($item);
 			$('#options-note-order > option:eq(0)').attr('selected', true);
 			
@@ -68,6 +68,8 @@
 			if(data[4] === "true") {
 				$('#search_mark_done').prop('checked', true);
 			}
+			
+			$('#total_notes').append(data[5]);
 		})
 		.fail(function(error) {
 			console.log('An error occurred', error);
