@@ -62,7 +62,11 @@ class UserSettings {
 	}
 	
 	function getSettings() {
-		$stmt = $this->db->prepare('SELECT TagColor, NoteOrder, SearchOptions FROM user_preferences WHERE UserId = :id ');
+		$stmt = $this->db->prepare('SELECT p.TagColor, p.NoteOrder, p.SearchOptions, u.RecentIps
+									FROM user_preferences p
+									INNER JOIN note_users u ON p.UserId = u.UserId
+									WHERE p.UserId = :id 
+									');
 		$stmt->execute(array(':id' => $this->id));
 		$row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		
@@ -78,13 +82,21 @@ class UserSettings {
 			}
 		}
 		
+		$ips = unserialize($row[0]['RecentIps']);
+		$recentIps = array();
+		if(sizeof($ips) > 0 && $ips !== '') {
+			foreach($ips as $item) {
+				$recentIps[] = $item;
+			}
+		}
+		
 		$order = $row[0]['NoteOrder'];
 		$color = $row[0]['TagColor'];
 		$title = $searchOptions[0];
 		$text = $searchOptions[1];
 		$complete = $searchOptions[2];
 		$count = $count[0]['total'];
-		$return = array($color, $order, $title, $text, $complete, $count);
+		$return = array($color, $order, $title, $text, $complete, $count, $recentIps);
 		echo json_encode($return);
 	}
 }
