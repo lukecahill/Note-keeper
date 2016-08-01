@@ -70,6 +70,10 @@
 			}
 			
 			$('#total_notes').append(data[5]);
+			
+			$.each(data[6], function(i, v) {
+				console.log(v)
+			});
 		})
 		.fail(function(error) {
 			console.log('An error occurred', error);
