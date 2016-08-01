@@ -18,21 +18,51 @@ class Login extends Authentication {
 		}
 	}
 	
-	function generateJsonAuthentication($email, $userId) {
+	function generateJsonAuthentication($email) {
 		$date = new DateTime();
 		$timestamp = $date->getTimestamp();
 		$authentication = md5($email);
 		$authentication .= (string)md5($timestamp);
 		
-		$stmt = $this->db->prepare("UPDATE note_users SET JsonAuthentication = :json WHERE UserId = :id");
-		$stmt->execute(array(':json' => $authentication, ':id' => $userId));
-		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		
 		return $authentication;
 	}
-
+	
+	function logIpAddress($past) {
+		if(!empty($past) || $past != '') {
+			$past = unserialize($past);
+		}
+		
+		$ip = $_SERVER['REMOTE_ADDR'];
+		if($ip !== '::1') {
+			if(strpos($ip, ':') !== false) {
+				$ip = array_pop(explode(':', $ip));
+			}
+		}
+		
+		$past[] = $ip;
+		$past = serialize($past);
+		return $past;
+	}
+	
+	function updateUser($past, $authentication, $userId) {
+		$stmt = $this->db->prepare("UPDATE note_users SET JsonAuthentication = :json, RecentIps = :ips WHERE UserId = :id");
+		$status = $stmt->execute(array(':json' => $authentication, ':ips' => $past, ':id' => $userId));
+		return $status;
+	}
+	
+	function verifyPassword($encrypted, $userId, $authentication){
+		if(password_verify($this->password, $encrypted)) {
+			session_start();
+			$_SESSION['user'] = $this->email;
+			$_SESSION['userId'] = $userId;
+			$_SESSION['authentication'] = $authentication;
+			die(header('Location: index.php'));
+		} else {
+			$this->error = "<span class='validation-error'>Username/Password invalid</span>";
+		}
+	}
 	function verify() {
-		$stmt = $this->db->prepare('SELECT UserEmail, UserPassword, UserId, Active
+		$stmt = $this->db->prepare('SELECT UserEmail, UserPassword, UserId, Active, RecentIps
 								FROM note_users 
 								WHERE UserEmail = :email 
 								LIMIT 1'
@@ -47,16 +77,15 @@ class Login extends Authentication {
 		} else {
 			$encrypted = $results[0]['UserPassword'];
 			$userId = $results[0]['UserId'];
-			$authentication = $this->generateJsonAuthentication($this->email, $userId);
-			if(password_verify($this->password, $encrypted)) {
-				session_start();
-				$_SESSION['user'] = $this->email;
-				$_SESSION['userId'] = $userId;
-				$_SESSION['authentication'] = $authentication;
-				die(header('Location: index.php'));
+			$pastIps = $this->logIpAddress($results[0]['RecentIps']);
+			$authentication = $this->generateJsonAuthentication($this->email);
+			$status = $this->updateUser($pastIps, $authentication, $userId);
+			
+			if($status == 1) {
+				verifyPassword($encrypted, $userId, $authentication);
 			} else {
-				$this->error = "<span class='validation-error'>Username/Password invalid</span>";
-			}	
+				$this->error = "<span class='validation-error'>Something went wrong! Please try again later.</span>";
+			}
 		}
 	}
 }
