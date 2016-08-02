@@ -32,14 +32,16 @@
 			<span id="total_notes">
 			</span>
 		</p>
-		
+
 		<?php include 'templates/color-select.html'; ?>
-		
+
 		<?php include 'templates/note-order.html'; ?>
-		
+
 		<?php include 'templates/search-options.html'; ?>
-		
+
 		<?php include 'templates/password.php'; ?>
+
+		<?php include 'templates/recent-ips.html'; ?>
 	</div>
 </div>
 
