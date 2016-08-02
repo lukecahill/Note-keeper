@@ -28,8 +28,10 @@ class Login extends Authentication {
 	}
 	
 	function logIpAddress($past) {
+		$count = 0;
 		if(!empty($past) || $past != '') {
 			$past = unserialize($past);
+			$count = count($past);
 		}
 		
 		$ip = $_SERVER['REMOTE_ADDR'];
@@ -37,6 +39,10 @@ class Login extends Authentication {
 			if(strpos($ip, ':') !== false) {
 				$ip = array_pop(explode(':', $ip));
 			}
+		}
+		
+		if($count > 0 && $count === 5) {
+			array_shift($past);
 		}
 		
 		$past[] = $ip;
@@ -61,6 +67,7 @@ class Login extends Authentication {
 			$this->error = "<span class='validation-error'>Username/Password invalid</span>";
 		}
 	}
+
 	function verify() {
 		$stmt = $this->db->prepare('SELECT UserEmail, UserPassword, UserId, Active, RecentIps
 								FROM note_users 
@@ -82,7 +89,7 @@ class Login extends Authentication {
 			$status = $this->updateUser($pastIps, $authentication, $userId);
 			
 			if($status == 1) {
-				verifyPassword($encrypted, $userId, $authentication);
+				$this->verifyPassword($encrypted, $userId, $authentication);
 			} else {
 				$this->error = "<span class='validation-error'>Something went wrong! Please try again later.</span>";
 			}
