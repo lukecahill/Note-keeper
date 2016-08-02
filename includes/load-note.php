@@ -54,22 +54,16 @@ class LoadNote extends Note {
 		$this->search = '%' . $this->search . '%';
 		
 		$stmt = $this->db->prepare("SELECT p.NoteOrder, p.SearchOptions 
-		FROM user_preferences p
-		INNER JOIN note_users u ON u.UserId = p.UserId 
-		WHERE p.UserId = :id 
-		AND u.JsonAuthentication = :auth
-		LIMIT 1");
+									FROM user_preferences p
+									INNER JOIN note_users u ON u.UserId = p.UserId 
+									WHERE p.UserId = :id 
+									AND u.JsonAuthentication = :auth
+									LIMIT 1");
 		$stmt->execute(array(':id' => $this->userId, ':auth' => $auth));
 		$row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$order = $row[0]['NoteOrder'];
 		
-		$search = unserialize($row[0]['SearchOptions']);
-		$searchOptions = array();
-		if(sizeof($search) > 0 && $search !== '') {
-			foreach($search as $item) {
-				$searchOptions[] = $item;
-			}
-		}
+		$searchOptions = $this->getSearchOptions($row);
 		$title = $searchOptions[0];
 		$text = $searchOptions[1];
 		$complete = $searchOptions[2];
@@ -87,6 +81,18 @@ class LoadNote extends Note {
 		$count = $stmt->rowCount();
 
 		$this->returnNote($rows, $count, 'oldest', 'search');
+	}
+	
+	function getSearchOptions($row) {
+		$search = unserialize($row[0]['SearchOptions']);
+		$searchOptions = array();
+		if(sizeof($search) > 0 && $search !== '') {
+			foreach($search as $item) {
+				$searchOptions[] = $item;
+			}
+		}
+
+		return $searchOptions;
 	}
 	
 	function returnNote($rows, $count, $order = 'oldest', $type = 'load') {
