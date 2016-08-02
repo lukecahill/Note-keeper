@@ -1,11 +1,11 @@
 (function() {
 	
 	// want to hide these initially
-	$('#password-change, #search-div, #order-div, #color-div').hide();
-	var passwordDown = false, colorDown = false, orderDown = false, searchDown = false;
+	$('#password-change, #search-div, #order-div, #color-div, #recent-ips-div').hide();
+	var passwordDown = false, colorDown = false, orderDown = false, searchDown = false, ipsDown = false;
 	
 	// cache the DOM
-	var $passwordDropdown = $('.password_span'), $orderDropdown = $('.order_dropdown_span'),$searchDropdown = $('.search_dropdown_span'), $colorDropdown = $('.color_dropdown_span');
+	var $passwordDropdown = $('.password_span'), $orderDropdown = $('.order_dropdown_span'),$searchDropdown = $('.search_dropdown_span'), $colorDropdown = $('.color_dropdown_span'), $recentIps = $('#recent-ips-div'), $ipsDropdown = $('.recent_ips_span');
 	
 	
 	/**
@@ -72,7 +72,7 @@
 			$('#total_notes').append(data[5]);
 			
 			$.each(data[6], function(i, v) {
-				console.log(v)
+				$recentIps.append('<p>{0}</p>'.format(v));
 			});
 		})
 		.fail(function(error) {
@@ -278,6 +278,25 @@
 			$searchDropdown.addClass('glyphicon-chevron-down');
 			$searchDropdown.removeClass('glyphicon-chevron-up');
 			searchDown = true;
+		}
+	});
+
+	/**
+	* @function
+	* Toggle to show the list of recently used IPs
+	* 
+	**/
+	$('#recent-ips-header').on('click', function() {
+		$('#recent-ips-div').toggle();
+
+		if(ipsDown) {
+			$ipsDropdown.addClass('glyphicon-chevron-up');
+			$ipsDropdown.removeClass('glyphicon-chevron-down');
+			ipsDown = false;
+		} else {
+			$ipsDropdown.addClass('glyphicon-chevron-down');
+			$ipsDropdown.removeClass('glyphicon-chevron-up');
+			ipsDown = true;
 		}
 	});
 	
