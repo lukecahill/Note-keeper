@@ -7,9 +7,9 @@ Search system which currently supports searching for the user defined options, w
 
 Supports the ability for users to create an account which is only associated with the notes that they create. 
 
-User can change password and customize the color of the tags in the user options page. Now includes the option for the user to chose in what order the notes should be displayed. This can currently be oldest first, newest first, A-Z, or Z-A.
+User can change password and customize the color of the tags in the user options page. Now includes the option for the user to chose in what order the notes should be displayed. This can currently be oldest first, newest first, A-Z, Z-A, lsat edited and oldest edited.
 
-Includes email confirmation on user registration. 
+Includes email confirmation on user registration. Users IP address is now logged when they log-in, and will keep the most recent 5.
 
 Has now been updated to return the JSON, rather than the full HTML, for each note which is then built client-side. This will allow the potential use of AngularJS in the future.
 
