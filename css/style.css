@@ -236,11 +236,11 @@ p#first-note, p#no-results {
 	font-weight: bold;
 }
 
-.password_span, .order_dropdown_span, .search_dropdown_span, .color_dropdown_span {
+.password_span, .order_dropdown_span, .search_dropdown_span, .color_dropdown_span, .recent_ips_span {
 	float: right;
 }
 
-#password-header, #color-header, #order-header, #search-header {
+#password-header, #color-header, #order-header, #search-header, #recent-ips-header {
 	cursor: pointer;
 }
 
