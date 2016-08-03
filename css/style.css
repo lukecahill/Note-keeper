@@ -63,6 +63,7 @@ h1 span.glyphicon-comment {
 .note .note-text {
 	margin-left: 10px;
 	font-size: 1.1em;
+	word-wrap: break-word;
 }
 
 .note .note-tags {
