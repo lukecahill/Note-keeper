@@ -279,13 +279,15 @@
 			}
 		})
 		.done(function(data, result) {
-			if(data == 1) {
+			console.log(data)
+			data = $.parseJSON(data);
+			if(data[0] == 1) {
 				var tags = '';
 				$.each(tagArray, function(index, value) {
 					tags += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(color, value);
 				});
 				noteText = noteText.replace(/\n/g, '<br>');
-				$noteList.append('<div class="note" data-id="{0}"><h4 class="note-title">{1}</h4><p class="note-text">{2}</p>{3}<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>'.format(data, noteTitle, noteText, tags));
+				$noteList.append('<div class="note" data-id="{0}"><h4 class="note-title">{1}</h4><p class="note-text">{2}</p>{3}<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>'.format(data[1], noteTitle, noteText, tags));
 					
 				// Reset and confirmation.
 				$('#add-note-title').val('');
@@ -347,18 +349,13 @@
 			method: 'POST',
 			url: 'includes/note-api.php',
 			data: {
-				deleteNote: deleteId,
+				noteId: deleteId,
 				action: 'deletenote'
 			}
 		})
 		.done(function(data, result) {
-			if(data == 1) {
-				$this.closest('.note').remove();
-				toastr.success('Note has been deleted!');
-			} else {
-				alert('Something went wrong! Check the console for more');
-				console.log(data);				
-			}
+			$this.closest('.note').remove();
+			toastr.success('Note has been deleted!');
 		})
 		.fail(function(error) {
 			console.log('An error has occurred: ', error);
@@ -524,6 +521,7 @@
 		.done(function(data, result) {
 			// update the DOM here.
 			if(data == 1) {
+				text = text.replace(/\n/g, '<br>');
 				var note = $('[data-id="' + noteId + '"]');
 				$(note).children('.note-title')[0].textContent = title;
 				$(note).children('.note-text')[0].textContent = text;
