@@ -18,11 +18,14 @@ class Login extends Authentication {
 		}
 	}
 	
-	function generateJsonAuthentication($email) {
+	function generateJsonAuthentication() {
 		$date = new DateTime();
 		$timestamp = $date->getTimestamp();
-		$authentication = md5($email);
-		$authentication .= (string)md5($timestamp);
+		
+		$random = rand();
+		$a = sha1($random);
+		$authentication = $timestamp;		
+		$authentication = sha1($authentication . $timestamp);
 		
 		return $authentication;
 	}
@@ -85,7 +88,7 @@ class Login extends Authentication {
 			$encrypted = $results[0]['UserPassword'];
 			$userId = $results[0]['UserId'];
 			$pastIps = $this->logIpAddress($results[0]['RecentIps']);
-			$authentication = $this->generateJsonAuthentication($this->email);
+			$authentication = $this->generateJsonAuthentication();
 			$status = $this->updateUser($pastIps, $authentication, $userId);
 			
 			if($status == 1) {
