@@ -349,7 +349,9 @@
 			}
 		})
 		.done(function(data, result) {
-			$this.closest('.note').remove();
+			$this.closest('.note').fadeOut(500, function() {
+				$this.closest('.note').remove();
+			});
 			toastr.success('Note has been deleted!');
 		})
 		.fail(function(error) {
@@ -414,7 +416,9 @@
 		})
 		.done(function(data, result) {
 			if(data == 1) {
-				$this.closest('.note').remove();
+				$this.closest('.note').fadeOut(500, function() {
+					$this.closest('.note').remove();
+				});
 				toastr.success('Note marked as complete!');	
 			} else {
 				alert('Something went wrong! Check the console for more');
@@ -473,7 +477,9 @@
 		})
 		.done(function(data, result) {
 			if(data == 1) {
-				$this.closest('.note').remove();
+				$this.closest('.note').fadeOut(500, function() {
+					$this.closest('.note').remove();
+				});
 				toastr.success('Note marked as active!');	
 			} else {
 				alert('Something went wrong! Check the console for more');
