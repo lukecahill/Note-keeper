@@ -71,6 +71,8 @@
 			
 			$('#total_notes').append(data[5]);
 			
+			data[6].reverse();
+			$recentIps.append('<b>Most Recent</b>');
 			$.each(data[6], function(i, v) {
 				$recentIps.append('<p>{0}</p>'.format(v));
 			});
