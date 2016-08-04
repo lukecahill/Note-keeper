@@ -107,12 +107,6 @@
 			} else {
 				$noteList.append('<p id="first-note">It appears that you have not yet created any notes. Create your first one.</p>');
 			}
-			
-			if(toSend.complete !== 1) {
-				$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>');		
-			} else {
-				$completedNoteButton.html('<span class="glyphicon glyphicon-asterisk"></span>');		
-			} 
 		}
 	}
 	
@@ -125,7 +119,6 @@
 	function searchNotes(search) {
 		var data = {
 			userId: userId,
-			complete: 0,
 			action: 'searchnote',
 			search: search,
 			auth: auth
@@ -201,6 +194,7 @@
 	**/
 	function buildNote(data) {
 		var note = '';
+
 		$.each(data, function(index, value) {
 			note = '<div class="note" data-id="{0}">'.format(value.id);
 			note += '<h4 class="note-title">{0}</h4><p class="note-text">{1}</p>'.format(value.title, value.text);
@@ -212,7 +206,8 @@
 				note += '</div>';
 			}
 
-			if(value.complete === '0') {
+			if(value.complete == 0) {
+
 				if(data[index][0].length > 0) {
 					note += '<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span>';
 				} else {
