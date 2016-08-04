@@ -74,9 +74,9 @@ class LoadNote extends Note {
 			$complete = 0;
 		}
 
-		$stmt = $this->searchNoteBuild($order, $title, $text);
+		$stmt = $this->searchNoteBuild($order, $title, $text, $complete);
 		$stmt = $this->db->prepare($stmt);
-		$stmt->execute(array(':complete' => $complete, ':userId' => $this->userId, ':searchtitle' => $this->search));
+		$stmt->execute(array(':userId' => $this->userId, ':searchtitle' => $this->search));
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$count = $stmt->rowCount();
 
@@ -127,7 +127,7 @@ class LoadNote extends Note {
 				}
 			}
 
-			$noteArray = array('complete' => $this->complete, 'color' => $item['TagColor'], 'id' => $item['NoteId'], 'title' => $item['NoteTitle'], 'text' => $item['NoteText'], $tagArray);
+			$noteArray = array('complete' => $item['NoteComplete'], 'color' => $item['TagColor'], 'id' => $item['NoteId'], 'title' => $item['NoteTitle'], 'text' => $item['NoteText'], $tagArray);
 			$notes[] = $noteArray;
 			$color = $item['TagColor'];
 		}
@@ -147,7 +147,7 @@ class LoadNote extends Note {
 	}
 	
 	function noteOrder($order) {
-		$stmt = 'SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, 
+		$stmt = 'SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, n.NoteComplete,
 				p.TagColor, p.NoteOrder
 				FROM note n 
 				INNER JOIN note_users u ON u.UserId = n.UserId
@@ -168,28 +168,34 @@ class LoadNote extends Note {
 		return $stmt;
 	}
 	
-	function searchNoteBuild($order, $title, $text) {
+	function searchNoteBuild($order, $title, $text, $showComplete) {
 		$stmt = "SELECT n.NoteTitle, n.NoteText, n.NoteId, 
-			n.NoteTags, p.TagColor, p.NoteOrder
+			n.NoteTags, n.NoteComplete, p.TagColor, p.NoteOrder
 			FROM note n 
 			INNER JOIN note_users u ON u.UserId = n.UserId
 			INNER JOIN user_preferences p ON p.UserId = u.UserId
-			WHERE NoteComplete = :complete
-			AND n.UserId = :userId";
+			WHERE n.UserId = :userId";
 
 		if($title === 'true' && $text === 'true') {
 			$stmt = "SELECT n.NoteTitle, n.NoteText, n.NoteId, 
-			n.NoteTags, p.TagColor, p.NoteOrder
+			n.NoteTags, n.NoteComplete, p.TagColor, p.NoteOrder
 			FROM note n 
 			INNER JOIN note_users u ON u.UserId = n.UserId
 			INNER JOIN user_preferences p ON p.UserId = u.UserId
-			WHERE NoteComplete = :complete
-			AND n.UserId = :userId
-			AND n.NoteTitle LIKE :searchtitle
-			OR n.NoteText LIKE :searchtitle
-			AND n.UserId = :userId
-			AND NoteComplete = :complete";
-		
+			WHERE n.UserId = :userId
+			AND n.NoteTitle LIKE :searchtitle";
+			
+			if($showComplete === 0) {
+				$stmt .= " AND n.NoteComplete = 0";
+			}
+
+			$stmt .= " OR n.UserId = :userId
+			AND n.NoteText LIKE :searchtitle";
+			
+			if($showComplete === 0) {
+				$stmt .= " AND n.NoteComplete = 0";
+			}
+			
 			$stmt = $this->searchNoteOrder($stmt, $order);
 			return $stmt;
 		}
@@ -201,6 +207,10 @@ class LoadNote extends Note {
 		if($text === 'true' && $title === 'false') {
 			$stmt .= " AND n.NoteText LIKE :searchtitle";
 		}
+		
+		if($showComplete === 0) {
+			$stmt .= " AND n.NoteComplete = 0";
+		}
 
 		$stmt = $this->searchNoteOrder($stmt, $order);
 		return $stmt;
@@ -208,13 +218,13 @@ class LoadNote extends Note {
 	
 	function searchNoteOrder($stmt, $order) {
 		if($order == 'alphabetically') {
-			$stmt .= ' ORDER BY NoteTitle';
+			$stmt .= ' ORDER BY n.NoteTitle';
 		} else if($order == 'alpha_backwards') {
-			$stmt .= ' ORDER BY NoteTitle DESC';
+			$stmt .= ' ORDER BY n.NoteTitle DESC';
 		} else if($order == 'last_edited') {
-			$stmt .= ' ORDER BY NoteLastEdited DESC';
+			$stmt .= ' ORDER BY n.NoteLastEdited DESC';
 		} else if($order == 'oldest_edited') {
-			$stmt .= ' ORDER BY NoteLastEdited ASC';
+			$stmt .= ' ORDER BY n.NoteLastEdited ASC';
 		}
 
 		return $stmt;
