@@ -60,13 +60,19 @@ h1 span.glyphicon-comment {
 }
 
 .note .note-tags {
-	padding: 2px;
-    border-radius: 6px;
-    margin: 2px;
+	display: inline;
+	padding: .2em .5em .2em;
+	font-size: 85%;
+	font-weight: 700;
+	line-height: 1;
 	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	/* border-radius: .25em; */
+    margin: 2px;
 	cursor: pointer;
 	margin-top: 5px;
-	display: inline-block;
 }
 
 .note .note-tags-red {
