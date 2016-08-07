@@ -33,6 +33,7 @@ class NoteApi extends Note {
 	function editNote($id, $text, $title, $tags) {
 		
 		$tags = serialize($tags);
+		$text = nl2br($text);
 		$stmt = $this->db->prepare('UPDATE note SET NoteText = :text, NoteTitle = :title, NoteTags = :tags, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id ');
 		$status = $stmt->execute(array(':text' => $text, ':title' => $title, ':tags' => $tags, ':id' => $id));
 		
