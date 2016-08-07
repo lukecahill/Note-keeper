@@ -16,9 +16,9 @@ if(!isset($_SESSION['user']) && !isset($_SESSION['userId']) || !isset($_SESSION[
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
 	
-	<link href='https://fonts.googleapis.com/css?family=Droid+Sans:700,400' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Droid+Sans:700,400' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
