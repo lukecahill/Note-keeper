@@ -1,6 +1,6 @@
 (function() {
 	$('#register-btn').on('click', function(e) {
-		e.preventDefault();
+		$('.validation-error').remove();
 		var confirmPassword = $('#confirm-user-password').val();
 		var password = $('#user-password').val();
 		var $email = $('#user-email');
