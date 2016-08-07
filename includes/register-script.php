@@ -92,9 +92,9 @@ if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METH
 	
 	if($register->checkExists()) {
 		if($register->addUser()) {
-			$success = true;
 			$register->sendConfirmation();
 			$register->createUserPreferences();
+			$success = true;
 		}
 	} else {
 		$error = '<span class="validation-error">That email is already in use</span>';
