@@ -69,7 +69,6 @@ h1 span.glyphicon-comment {
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: baseline;
-	/* border-radius: .25em; */
     margin: 2px;
 	cursor: pointer;
 	margin-top: 5px;
@@ -133,7 +132,7 @@ h1 span.glyphicon-comment {
 .new-note-group {
 	padding: 10px;
 	border: 1px solid #eee;
-	border-radius: 6px;
+	/* border-radius: 6px; */
 	margin-top: 10px;
 }
 
@@ -198,7 +197,7 @@ span.login-link, span.register-link {
 .options-border {
 	padding: 10px;
 	border: 1px solid #eee;
-	border-radius: 6px;
+	/* border-radius: 6px; */
 	margin-top: 10px;
 }
 
@@ -242,6 +241,10 @@ p#first-note, p#no-results {
 
 #password-header, #color-header, #order-header, #search-header, #recent-ips-header {
 	cursor: pointer;
+}
+
+.btn {
+	border-radius: 0;
 }
 
 @media (max-width: 767px) {
