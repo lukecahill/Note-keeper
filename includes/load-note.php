@@ -8,11 +8,21 @@ class LoadNote extends Note {
 	public $search = '';
 	public $action = '';
 	
+	/**  
+	* Construct the LoadNote class
+	*
+	* @param string $action The action of what method to call
+	*/
 	function __construct($action) {
 		parent::__construct();
 		$this->action = $action;
 	}
 	
+	/**
+	* Gets all of the users notes
+	*
+	* @return void
+	*/
 	function getNotes() {
 		if(!isset($_POST['userId']) || !isset($_POST['auth'])) {
 			echo json_encode('invalid_request');
@@ -42,6 +52,11 @@ class LoadNote extends Note {
 		$this->returnNote($rows, $count, $order);
 	}
 	
+	/**
+	* Searches the users notes by what is entered in the search box.
+	*
+	* @return void
+	*/
 	function searchNote() {
 		if(!isset($_POST['userId']) || !isset($_POST['auth']) || !isset($_POST['search'])) {
 			echo json_encode('invalid_request');
@@ -83,6 +98,13 @@ class LoadNote extends Note {
 		$this->returnNote($rows, $count, 'oldest', 'search');
 	}
 	
+	/**
+	* Searches the users notes by what is entered in the search box.
+	*
+	* @param array $row Returns the users selected search options
+	* 
+	* @return array
+	*/
 	function getSearchOptions($row) {
 		$search = unserialize($row[0]['SearchOptions']);
 		$searchOptions = array();
@@ -95,6 +117,16 @@ class LoadNote extends Note {
 		return $searchOptions;
 	}
 	
+	/**
+	* Returns the JSON representation of the notes.
+	*
+	* @param array $rows The rows that were returned from the load/search
+	* @param int $count The count of the number of rows found
+	* @param string $order The order the notes should be returned in 
+	* @param string $type If this was a search or a normal load.
+	*
+	* @return void
+	*/
 	function returnNote($rows, $count, $order = 'oldest', $type = 'load') {
 		$tagList = $checkbox = $merged = $notes = array();
 		$color = '';
@@ -146,6 +178,13 @@ class LoadNote extends Note {
 		echo json_encode($merged);
 	}
 	
+	/**
+	* Returns the JSON representation of the notes.
+	*
+	* @param string $order
+	*
+	* @return string SQL statement
+	*/
 	function noteOrder($order) {
 		$stmt = 'SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, n.NoteComplete,
 				p.TagColor, p.NoteOrder
@@ -168,6 +207,16 @@ class LoadNote extends Note {
 		return $stmt;
 	}
 	
+	/**
+	* Returns the JSON representation of the notes.
+	*
+	* @param string $order The order the users options indicated the notes should be displayed
+	* @param string $title The option of if the notes should be searched by the title
+	* @param string $text The option of if the notes should be searched by the title
+	* @param bool $showComplete The option of if the notes should be searched if they are completed.
+	*
+	* @return string SQL statement
+	*/
 	function searchNoteBuild($order, $title, $text, $showComplete) {
 		$stmt = "SELECT n.NoteTitle, n.NoteText, n.NoteId, 
 			n.NoteTags, n.NoteComplete, p.TagColor, p.NoteOrder
@@ -216,6 +265,14 @@ class LoadNote extends Note {
 		return $stmt;
 	}
 	
+	/**
+	* Returns the JSON representation of the notes.
+	*
+	* @param string $stmt SQL statement which will be built
+	* @param string $order The order the notes should be returned.
+	*
+	* @return string SQL statement
+	*/
 	function searchNoteOrder($stmt, $order) {
 		if($order == 'alphabetically') {
 			$stmt .= ' ORDER BY n.NoteTitle';
