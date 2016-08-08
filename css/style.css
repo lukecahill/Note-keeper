@@ -60,7 +60,7 @@ h1 span.glyphicon-comment {
 }
 
 .note .note-tags {
-	display: inline;
+	display: inline-block;
 	padding: .2em .5em .2em;
 	font-size: 85%;
 	font-weight: 700;
