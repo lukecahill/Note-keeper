@@ -6,7 +6,7 @@ class Login extends Authentication {
 	public $error = '';
 
 	/**  
-	* Construct the LoadNote class
+	* Construct the Login class
 	*
 	* @param string $email The users email which was used to log in
 	* @param string $password The password the user entered when logging in
