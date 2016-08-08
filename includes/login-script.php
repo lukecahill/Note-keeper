@@ -5,10 +5,21 @@ require_once 'authentication.php';
 class Login extends Authentication {
 	public $error = '';
 
+	/**  
+	* Construct the LoadNote class
+	*
+	* @param string $email The users email which was used to log in
+	* @param string $password The password the user entered when logging in
+	*/
 	function __construct($email, $password) {
 		parent::__construct($email, $password);
 	}
 
+	/**  
+	* Check the email and password entered were not blank
+	*
+	* @return bool Depending on if the passwords entered were not empty
+	*/
 	function checkValid() {
 		if($this->email == '' || $this->password == '') {
 			$this->error = "<span class='validation-error'>Not all fields were entered</span>";
@@ -18,6 +29,12 @@ class Login extends Authentication {
 		}
 	}
 	
+	/**  
+	* Generates a JSON token from the current datetime, and a random number. 
+	* 	These are then appended and hashed using SHA1
+	*
+	* @return string $authentication With the string SHA1 token hash
+	*/
 	function generateJsonAuthentication() {
 		$date = new DateTime();
 		$timestamp = $date->getTimestamp();
@@ -30,6 +47,13 @@ class Login extends Authentication {
 		return $authentication;
 	}
 	
+	/**  
+	* Log the users IP address in the database
+	*
+	* @param string $past Serialised array of the most recent up to 5 IP addresses
+	*
+	* @return string $past Serialised array of the most recent up to 5 IP addresses
+	*/
 	function logIpAddress($past) {
 		$count = 0;
 		if(!empty($past) || $past != '') {
@@ -53,12 +77,30 @@ class Login extends Authentication {
 		return $past;
 	}
 	
+	/**  
+	* Update the users most recent IP, and their JSON token in the database
+	*
+	* @param string $past Serialised array of the most recent up to 5 IP addresses
+	* @param string $authentication JSON token for DB authentication
+	* @param string $userId The MD5 hashed value of the users ID
+	*
+	* @return bool $status If the SQL statement was successful or not
+	*/
 	function updateUser($past, $authentication, $userId) {
 		$stmt = $this->db->prepare("UPDATE note_users SET JsonAuthentication = :json, RecentIps = :ips WHERE UserId = :id");
 		$status = $stmt->execute(array(':json' => $authentication, ':ips' => $past, ':id' => $userId));
 		return $status;
 	}
 	
+	/**  
+	* Verify the users password hash.
+	*
+	* @param string $encrypted The encrypted version of the users password
+	* @param string $userId The MD5 hashed value of the users ID
+	* @param string $authentication JSON token for DB authentication
+	*
+	* @return void
+	*/
 	function verifyPassword($encrypted, $userId, $authentication){
 		if(password_verify($this->password, $encrypted)) {
 			session_start();
@@ -71,6 +113,12 @@ class Login extends Authentication {
 		}
 	}
 
+	/**  
+	* Gets the relevant information from the DB for use with the other functions. 
+	* 	This is also what mainly calls the other functions in the class. 
+	*
+	* @return void
+	*/
 	function verify() {
 		$stmt = $this->db->prepare('SELECT UserEmail, UserPassword, UserId, Active, RecentIps
 								FROM note_users 
