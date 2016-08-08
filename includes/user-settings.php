@@ -24,6 +24,12 @@ class UserSettings {
 	public $order = '';
 	public $db = null;
 	
+	/**  
+	* Construct the UserSettings class
+	*
+	* @param string $method Used to know which method to call
+	* @param string $id The The users ID
+	*/
 	function __construct($method, $id) {
 		$this->method = $method;
 		require_once 'db-connect.inc.php';
@@ -36,7 +42,12 @@ class UserSettings {
 		}
 		
 	}
-	
+
+	/**  
+	* Update the database with the color the user has chosen to display the notes. 
+	*
+	* @return void
+	*/
 	function setTagColor() {
 		$this->color = $_POST['color'];
 		
@@ -44,6 +55,11 @@ class UserSettings {
 		$stmt->execute(array( ':color' => $this->color, ':id' => $this->id));
 	}
 	
+	/**  
+	* Update the database with the order of the notes they would like them to be shown
+	*
+	* @return void
+	*/
 	function setNoteOrder() {
 		$this->order = $_POST['order'];
 		
@@ -51,6 +67,11 @@ class UserSettings {
 		$stmt->execute(array(':order' => $this->order, ':id' => $this->id));
 	}
 	
+	/**  
+	* Update the database with the search parameters the user has chosen.
+	*
+	* @return void
+	*/	
 	function setSearchParameters() {
 		$title = $_POST['title'];
 		$text = $_POST['text'];
@@ -61,6 +82,11 @@ class UserSettings {
 		$stmt->execute(array(':options' => $arr, ':id' => $this->id));
 	}
 	
+	/**  
+	* Gets the users settings from their preferences in the database.
+	*
+	* @return void
+	*/	
 	function getSettings() {
 		$stmt = $this->db->prepare('SELECT p.TagColor, p.NoteOrder, p.SearchOptions, u.RecentIps
 									FROM user_preferences p
