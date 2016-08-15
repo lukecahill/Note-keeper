@@ -2,6 +2,15 @@
 
 require_once 'authentication.php';
 
+/**
+* Login is used to log the user into the system. Generates a JSON token for authentication. 
+* Checks the login details are correct. Also logs the users IP address in the system.
+* Inherits from the base class Authentication.
+*
+* @package  Note Keeper
+* @author   Luke Cahill
+* @access   public
+*/
 class Login extends Authentication {
 	public $error = '';
 

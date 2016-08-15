@@ -2,9 +2,16 @@
 
 require_once 'note.php';
 
+/**
+* NoteApi is used to add, delete, edit and mark notes as active/completed. 
+* Inherits from the base class Note
+*
+* @package  Note Keeper
+* @author   Luke Cahill
+* @access   public
+*/
 class NoteApi extends Note {
 
-	
 	/**  
 	* Construct the NoteApi class
 	*

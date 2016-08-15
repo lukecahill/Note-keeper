@@ -3,6 +3,14 @@
 require_once 'authentication.php';
 require_once 'email-confirmation/send.php';
 
+/**
+* Register is used to register the user in the database. 
+* Inherits from the base class Authentication
+*
+* @package  Note Keeper
+* @author   Luke Cahill
+* @access   public
+*/
 class Register extends Authentication {
 	public $emailHash = '';
 	public $passwordHash = '';

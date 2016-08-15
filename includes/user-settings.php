@@ -17,6 +17,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 
 	echo 'No direct access';
 }
 
+/**
+* UserSettings is used to update, and get the users settings from the database. 
+*
+* @package  Note Keeper
+* @author   Luke Cahill
+* @access   public
+*/
 class UserSettings {
 	public $method = '';
 	public $id = 0;

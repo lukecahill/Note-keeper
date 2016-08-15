@@ -2,6 +2,16 @@
 
 require_once 'note.php';
 
+/**
+* LoadNote is used to get the users notes from the database. 
+* Also allows the user to search the database for the user specified text, 
+* and returns the results in the order the users has specified.
+* Inherits from the base class Note.
+*
+* @package  Note Keeper
+* @author   Luke Cahill
+* @access   public
+*/
 class LoadNote extends Note {
 	public $userId = 0;
 	public $complete = 0;

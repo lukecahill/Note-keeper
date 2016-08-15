@@ -274,7 +274,7 @@
 			}
 		})
 		.done(function(data, result) {
-			console.log(data)
+
 			data = $.parseJSON(data);
 			if(data[0] == 1) {
 				var tags = '';
@@ -522,7 +522,7 @@
 		.done(function(data, result) {
 			// update the DOM here.
 			if(data == 1) {
-				text = text.replace(/\n/g, '<br>');
+				//text = text.replace(/\n/g, '<br>');
 				var note = $('[data-id="' + noteId + '"]');
 				$(note).children('.note-title')[0].textContent = title;
 				$(note).children('.note-text')[0].textContent = text;
