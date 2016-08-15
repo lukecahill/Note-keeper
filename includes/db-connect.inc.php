@@ -1,5 +1,14 @@
 <?php
-
+/**
+* Creates a PDO object for database interaction. 
+* This is a static class
+* Example usage:
+* Database::ConnectDb();
+*
+* @package  Note Keeper
+* @author   Luke Cahill
+* @access   public
+*/
 class Database {
 	public static function ConnectDb() {
 		$host = 'localhost';
