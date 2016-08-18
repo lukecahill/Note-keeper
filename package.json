@@ -1,0 +1,32 @@
+{
+  "name": "note-keeper",
+  "version": "1.0.0",
+  "description": "Note Keeper for online storing of notes.",
+  "main": "gulp.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukecahill/Note-keeper.git"
+  },
+  "keywords": [
+    "note-keeper"
+  ],
+  "author": "Luke Cahill",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lukecahill/Note-keeper/issues"
+  },
+  "homepage": "https://github.com/lukecahill/Note-keeper#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-if": "^2.0.1",
+    "gulp-jshint": "^2.0.1",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^2.0.0",
+    "jshint": "^2.9.3"
+  }
+}
