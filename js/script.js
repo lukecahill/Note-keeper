@@ -11,11 +11,13 @@
 	var dropdownTags = [];
 	
 	// configuration for toastr notificiations.
-	toastr.options = {
-		"timeOut": "2000",
-		"preventDuplicates": false,
-		"closeButton": true
-	};
+	if(typeof(toastr) != 'undefined') {
+		toastr.options = {
+			"timeOut": "2000",
+			"preventDuplicates": false,
+			"closeButton": true
+		};
+	}
 	
 	var initialLoad = { 
 		userId : userId,
