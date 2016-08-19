@@ -204,7 +204,7 @@
 				note += '</div>';
 			}
 
-			if(value.complete === 0) {
+			if(value.complete == '0') {
 
 				if(data[index][0].length > 0) {
 					note += '<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span>';
