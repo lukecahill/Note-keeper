@@ -2,13 +2,9 @@
 	
 	// load the available notes and tags.
 	var showingComplete = false;
-	var $noteList = $('#note-list');
-	var $completedNoteButton = $('#complete-notes-button');
-	var $newNoteSection = $('#new-note-section');
-	var $tagChooser = $('#tag-chooser');
-	var $noteTags = $('#add-note-tags');
-	var color = 'red';
-	var dropdownTags = [];
+	var $noteList = $('#note-list'), $completedNoteButton = $('#complete-notes-button');
+	var $newNoteSection = $('#new-note-section'), $tagChooser = $('#tag-chooser'), $noteTags = $('#add-note-tags');
+	var color = 'red', dropdownTags = [];
 	
 	// configuration for toastr notificiations.
 	if(typeof(toastr) != 'undefined') {
@@ -26,7 +22,7 @@
 		auth: auth
 	};
 	loadNotes(initialLoad);
-	
+
 	/**
 	* @function String format
 	*
@@ -208,7 +204,7 @@
 				note += '</div>';
 			}
 
-			if(value.complete == 0) {
+			if(value.complete === 0) {
 
 				if(data[index][0].length > 0) {
 					note += '<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span>';

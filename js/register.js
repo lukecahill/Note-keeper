@@ -11,13 +11,13 @@
 			return;
 		}
 		
-		if(password.trim() == '') {
+		if(password.trim() === '') {
 			e.preventDefault();
 			$('#user-password').after('<span class="validation-error">Please enter a password!</span>');
 			return;
 		}
 		
-		if(confirmPassword == '') {
+		if(confirmPassword === '') {
 			e.preventDefault();
 			$('#confirm-user-password').after('<span class="validation-error">Please confirm your password!</span>');
 			return;

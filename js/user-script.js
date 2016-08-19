@@ -41,7 +41,7 @@
 		})
 		.done(function(data, result) {
 
-			data = $.parseJSON(data)
+			data = $.parseJSON(data);
 			var color = data[0];
 			var order = data[1];
 			
