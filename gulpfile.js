@@ -3,6 +3,7 @@ var uglify = require('gulp-uglify');
 var gulpIf = require('gulp-if');
 var jshint = require('gulp-jshint');
 var rename = require('gulp-rename');
+var sass = require('gulp-sass');
 
 gulp.task('minify', function() {
 	gulp.src('./js/*.js')
@@ -19,6 +20,12 @@ gulp.task('jsLint', function () {
 	.pipe(jshint.reporter());
 });
 
+gulp.task('sass', function() {
+	gulp.src('./css/*.scss')
+	.pipe(sass())
+	.pipe(gulp.dest('./css/'));
+});
+
 gulp.task('watch-js', function() {
-	gulp.watch(['./js/script.js'], ['minify']);
+	gulp.watch(['./js/script.js'], ['minify', 'jsLint']);
 });
