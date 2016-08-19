@@ -72,19 +72,19 @@ h1 span.glyphicon-comment {
   .note .note-tags-blue {
     border: 1px solid #337ab7;
     background-color: #337ab7; }
-  .note .note-tags-yellow:hover, .note .note .note-tags-yellow:active, .note .note .note-tags-yellow:focus {
+  .note .note-tags-yellow:hover, .note .note-tags-yellow:active, .note .note-tags-yellow:focus {
     border: 1px solid #BDC10B;
     background-color: #BDC10B; }
-  .note .note-tags-blue:hover, .note .note .note-tags-blue:active, .note .note .note-tags-blue:focus {
+  .note .note-tags-blue:hover, .note .note-tags-blue:active, .note .note-tags-blue:focus {
     border: 1px solid #0362B3;
     background-color: #0362B3; }
-  .note .note-tags-green:hover, .note .note .note-tags-green:active, .note .note .note-tags-green:focus {
+  .note .note-tags-green:hover, .note .note-tags-green:active, .note .note-tags-green:focus {
     border: 1px solid #226923;
     background-color: #226923; }
-  .note .note-tags-red:hover, .note .note .note-tags-red:active, .note .note .note-tags-red:focus {
+  .note .note-tags-red:hover, .note .note-tags-red:active, .note .note-tags-red:focus {
     border: 1px solid #AB0E0E;
     background-color: #AB0E0E; }
-  .note .note-tags-black:hover, .note .note .note-tags-black:active, .note .note .note-tags-black:focus {
+  .note .note-tags-black:hover, .note .note-tags-black:active, .note .note-tags-black:focus {
     border: 1px solid #6B6B6B;
     background-color: #6B6B6B; }
 
