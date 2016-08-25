@@ -26,11 +26,11 @@ h1 span.glyphicon-comment {
     text-align: right;
     font-size: 1.2em;
     float: right; }
+    .note .note-glyphicons .glyphicon {
+      margin-right: 5px;
+      cursor: pointer; }
   .note .note-glyphicons.note-glyphicons-empty {
     float: none; }
-  .note .note-glyphicons .glyphicon {
-    margin-right: 5px;
-    cursor: pointer; }
   .note .note-id {
     font-size: 10px;
     float: right; }
@@ -59,34 +59,34 @@ h1 span.glyphicon-comment {
   .note .note-tags-red {
     border: 1px solid #CE3131;
     background-color: #CE3131; }
+    .note .note-tags-red:hover, .note .note-tags-red:active, .note .note-tags-red:focus {
+      border: 1px solid #AB0E0E;
+      background-color: #AB0E0E; }
   .note .note-tags-yellow {
     border: 1px solid #DCE046;
     background-color: #DCE046;
     color: #000; }
+    .note .note-tags-yellow:hover, .note .note-tags-yellow:active, .note .note-tags-yellow:focus {
+      border: 1px solid #BDC10B;
+      background-color: #BDC10B; }
   .note .note-tags-green {
     border: 1px solid #458646;
     background-color: #458646; }
+    .note .note-tags-green:hover, .note .note-tags-green:active, .note .note-tags-green:focus {
+      border: 1px solid #226923;
+      background-color: #226923; }
   .note .note-tags-black {
     border: 1px solid #000;
     background-color: #000; }
+    .note .note-tags-black:hover, .note .note-tags-black:active, .note .note-tags-black:focus {
+      border: 1px solid #6B6B6B;
+      background-color: #6B6B6B; }
   .note .note-tags-blue {
     border: 1px solid #337ab7;
     background-color: #337ab7; }
-  .note .note-tags-yellow:hover, .note .note-tags-yellow:active, .note .note-tags-yellow:focus {
-    border: 1px solid #BDC10B;
-    background-color: #BDC10B; }
-  .note .note-tags-blue:hover, .note .note-tags-blue:active, .note .note-tags-blue:focus {
-    border: 1px solid #0362B3;
-    background-color: #0362B3; }
-  .note .note-tags-green:hover, .note .note-tags-green:active, .note .note-tags-green:focus {
-    border: 1px solid #226923;
-    background-color: #226923; }
-  .note .note-tags-red:hover, .note .note-tags-red:active, .note .note-tags-red:focus {
-    border: 1px solid #AB0E0E;
-    background-color: #AB0E0E; }
-  .note .note-tags-black:hover, .note .note-tags-black:active, .note .note-tags-black:focus {
-    border: 1px solid #6B6B6B;
-    background-color: #6B6B6B; }
+    .note .note-tags-blue:hover, .note .note-tags-blue:active, .note .note-tags-blue:focus {
+      border: 1px solid #0362B3;
+      background-color: #0362B3; }
 
 .new-note-group {
   padding: 10px;
@@ -154,7 +154,7 @@ label[for=tag-chooser] {
   border-radius: 6px; }
   .site-menu a {
     padding: 5px; }
-  .site-menu a:hover, .site-menu .site-menu a:focus, .site-menu .site-menu a:active {
+  .site-menu a:hover, .site-menu a:focus, .site-menu a:active {
     padding: 5px;
     border-radius: 6px;
     background-color: #eee; }

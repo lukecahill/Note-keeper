@@ -47,14 +47,14 @@ h1 span.glyphicon-comment {
 		text-align: right;
 		font-size: 1.2em;
 		float: right;
+		
+		.glyphicon {
+			margin-right: 5px;
+			cursor: pointer;
+		}
 	}
 	.note-glyphicons.note-glyphicons-empty {
 		float: none;
-	}
-
-	.note-glyphicons .glyphicon {
-		margin-right: 5px;
-		cursor: pointer;
 	}
 
 	.note-id {
@@ -95,52 +95,52 @@ h1 span.glyphicon-comment {
 	.note-tags-red {
 		border: 1px solid $tag-red;
 		background-color: $tag-red;
+		
+		&:hover, &:active, &:focus {
+			border: 1px solid $red-hover;
+			background-color: $red-hover;
+		}
 	}
 
 	.note-tags-yellow {
 		border: 1px solid $tag-yellow;
 		background-color: $tag-yellow;
 		color: #000;
+		
+		&:hover, &:active, &:focus {
+			border: 1px solid $yellow-hover;
+			background-color: $yellow-hover;
+		}
 	}
 
 	.note-tags-green {
 		border: 1px solid $tag-green;
 		background-color: $tag-green;
+		
+		&:hover, &:active, &:focus {
+			border: 1px solid $green-hover;
+			background-color: $green-hover;
+		}
 	}
 
 	.note-tags-black {
 		border: 1px solid $tag-black;
 		background-color: $tag-black;
+		
+		&:hover, &:active, &:focus {
+			border: 1px solid $black-hover;
+			background-color: $black-hover;
+		}
 	}
 
 	.note-tags-blue {
 		border: 1px solid $tag-blue;
 		background-color: $tag-blue;
-	}
-	
-	.note-tags-yellow:hover, .note-tags-yellow:active, .note-tags-yellow:focus {
-		border: 1px solid $yellow-hover;
-		background-color: $yellow-hover;
-	}
-
-	.note-tags-blue:hover, .note-tags-blue:active, .note-tags-blue:focus {
-		border: 1px solid $blue-hover;
-		background-color: $blue-hover;
-	}
-
-	.note-tags-green:hover, .note-tags-green:active, .note-tags-green:focus {
-		border: 1px solid $green-hover;
-		background-color: $green-hover;
-	}
-
-	.note-tags-red:hover, .note-tags-red:active, .note-tags-red:focus {
-		border: 1px solid $red-hover;
-		background-color: $red-hover;
-	}
-
-	.note-tags-black:hover, .note-tags-black:active, .note-tags-black:focus {
-		border: 1px solid $black-hover;
-		background-color: $black-hover;
+		
+		&:hover, &:active, &:focus {
+			border: 1px solid $blue-hover;
+			background-color: $blue-hover;
+		}
 	}
 }
 
@@ -229,7 +229,7 @@ label[for=tag-chooser] {
 		padding: 5px;
 	}
 
-	a:hover, .site-menu a:focus, .site-menu a:active {
+	a:hover, a:focus, a:active {
 		padding: 5px;
 		border-radius: 6px;
 		background-color: #eee;
