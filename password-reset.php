@@ -32,6 +32,9 @@
 		<p>
 			To reset your accounts password, please use the below form.
 		</p>
+        <p class="error">
+            Please note that this is currently being implemented.
+        </p>
 		<p>
 			Here by accident? <a href="login.php">Login here</a>.
 		</p>
