@@ -4,6 +4,7 @@ var gulpIf = require('gulp-if');
 var jshint = require('gulp-jshint');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
+var livereload = require('gulp-livereload');
 
 gulp.task('minify', function() {
 	gulp.src('./js/*.js')
@@ -12,6 +13,7 @@ gulp.task('minify', function() {
 		suffix: '.min'
 	}))
     .pipe(gulp.dest('./js/build/'))
+    .pipe(livereload());
 });
 
 gulp.task('jsLint', function () {
@@ -23,9 +25,11 @@ gulp.task('jsLint', function () {
 gulp.task('sass', function() {
 	gulp.src('./css/*.scss')
 	.pipe(sass())
-	.pipe(gulp.dest('./css/'));
+	.pipe(gulp.dest('./css/'))
+    .pipe(livereload());
 });
 
 gulp.task('watch-js', function() {
+	livereload.listen();
 	gulp.watch(['./js/*.js', './css/*.scss'], ['minify', 'jsLint', 'sass']);
 });
