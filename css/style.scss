@@ -261,6 +261,23 @@ p#first-note, p#no-results {
 	border-radius: 0;
 }
 
+.password_reset {
+	background: none !important;
+	border: none; 
+	padding: 0 !important;
+	font: inherit;
+	cursor: pointer;
+	color: #337ab7;
+
+	 &:hover {
+		 text-decoration: underline;
+	 }
+}
+
+.password_reset_container {
+	text-align: right;
+}
+
 @media (max-width: 767px) {
 	div.mobile-text-left {
 		text-align: initial;
