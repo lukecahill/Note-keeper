@@ -27,13 +27,13 @@
 	<div class="col-sm-8 row">
 	<?php if(isset($_POST['password_reset']) && $_SERVER['REQUEST_METHOD'] == 'POST') { ?>
 		<h3>
-			Register
+			Forgotton Password Form
 		</h3>
 		<p>
-			To create an account please enter your email address and a password.
+			To reset your accounts password, please use the below form.
 		</p>
 		<p>
-			Already have an account? Please <a href="login.php">login here</a>.
+			Here by accident? <a href="login.php">Login here</a>.
 		</p>
 		<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<div class="form-group">
@@ -41,18 +41,6 @@
 					Email address
 				</label>
 				<input type="email" name="email" class="form-control" id="user-email" placeholder="Email">
-			</div>
-			<div class="form-group">
-				<label for="user-password">
-					Password
-				</label>
-				<input type="password" name="password" class="form-control" id="user-password" placeholder="Password">
-			</div>
-			<div class="form-group">
-				<label for="confirm-user-password">
-					Confirm Password
-				</label>
-				<input type="password" name="confirm-password" class="form-control" id="confirm-user-password" placeholder="Password confirmation">
 			</div>
 			<button type="submit" id="register-btn" class="btn btn-default">
 				Submit
