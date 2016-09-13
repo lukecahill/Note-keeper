@@ -27,5 +27,5 @@ gulp.task('sass', function() {
 });
 
 gulp.task('watch-js', function() {
-	gulp.watch(['./js/script.js'], ['minify', 'jsLint']);
+	gulp.watch(['./js/*.js', './css/*.scss'], ['minify', 'jsLint', 'sass']);
 });
