@@ -42,7 +42,7 @@
 				</label>
 				<input type="email" name="email" class="form-control" id="user-email" placeholder="Email">
 			</div>
-			<button type="submit" id="register-btn" class="btn btn-default">
+			<button type="submit" id="password-reset-btn" class="btn btn-default">
 				Submit
 			</button>
 		</form>
@@ -62,5 +62,6 @@
 	</div>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="js/password-reset.js"></script>
 
 <?php include 'templates/footer.html'; ?>
