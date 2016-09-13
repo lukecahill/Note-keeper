@@ -22,6 +22,7 @@
 				Note Keeper.
 		</h1>
 	</div>
+
 	<div class="col-sm-2">
 	</div>
 	<div class="col-sm-8 row">
@@ -51,6 +52,13 @@
 			<button type="submit" name="login-button" class="btn btn-default">
 				Submit
 			</button>
+		</form>
+		<form method="POST" action="password-reset.php">
+			<div class="password_reset_container">
+				<button class="password_reset" name="password_reset" type="submit">
+					Forgot your password
+				</button>
+			</div>
 		</form>
 	</div>
 	<div class="col-sm-2">
