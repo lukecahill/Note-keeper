@@ -13,6 +13,6 @@ Includes email confirmation on user registration. Users IP address is now logged
 
 Has now been updated to return the JSON, rather than the full HTML, for each note which is then built client-side. This will allow the potential use of AngularJS in the future.
 
-BootStrap is being used for styling, with Scss now being used to generate the custom CSS. Gupl.js is being used to minify the JS, and also for JSLint.
+BootStrap is being used for styling, with Scss now being used to generate the custom CSS. Gulp.js is being used to minify the JS, and also for JSLint.
 
 The SQL used for this is provided in 'database.sql'.
