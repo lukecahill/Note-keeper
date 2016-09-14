@@ -293,13 +293,13 @@ p#first-note, p#no-results {
 @media (max-width: 900px) {
 	.note {
 		width: 100%;
+
+		.note-glyphicons {
+			float: initial;
+		}
 	}
 	
 	.container-fluid {
 		width: 90%;
-	}
-	
-	.note .note-glyphicons {
-		float: initial;
 	}
 }
