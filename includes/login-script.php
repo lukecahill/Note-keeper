@@ -30,7 +30,7 @@ class Login extends Authentication {
 	* @return bool Depending on if the passwords entered were not empty
 	*/
 	function checkValid() {
-		if($this->email == '' || $this->password == '') {
+		if(!isset($this->email) || trim($this->email) == '' || !isset($this->password) || trim($this->password) == '') {
 			$this->error = "<span class='validation-error'>Not all fields were entered</span>";
 			return false;
 		} else {

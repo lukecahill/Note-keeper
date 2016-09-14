@@ -146,11 +146,14 @@ if(isset($_POST['email']) && isset($_POST['password']) && $_SERVER['REQUEST_METH
 		return;
 	}
 	
+	// find a better way of doing this. 
 	if($register->checkExists()) {
 		if($register->addUser()) {
 			$register->sendConfirmation();
 			$register->createUserPreferences();
 			$success = true;
+		} else {
+			$error = '<span class="validation-error">There was an error when attempting to create your account. Please contact the server host.</span>';
 		}
 	} else {
 		$error = '<span class="validation-error">That email is already in use</span>';
