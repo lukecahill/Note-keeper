@@ -49,6 +49,11 @@ class Register extends Authentication {
 			$this->error = '<span class="validation-error">Please confirm your password!</span>';
 			return false;
 		}
+
+		if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+			$this->error = '<span class="validation-error">Please enter a valid email address!</span>';
+			return false;
+		}
 		
 		return true;
 	}
