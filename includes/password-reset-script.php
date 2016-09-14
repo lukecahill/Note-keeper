@@ -66,8 +66,9 @@ class PasswordReset {
         //      https://stackoverflow.com/questions/1699796/best-way-to-do-multiple-constructors-in-php
         //      ...stupid PHP...
         //
-		//$confirm = new Email($this->email, $this->db); 
-		//$confirm->constructConfirmLink();
+		$hashEmail = md5($this->email); 
+		$confirm = new Email($this->email, $hashEmail, $this->db, true); 
+		$confirm->constructConfirmLink();
 	}
 }
 
