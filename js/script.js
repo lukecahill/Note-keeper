@@ -48,7 +48,7 @@
 	function loadNotes(toSend) {
 		
 		$.ajax({
-			url: 'includes/load-note.php',
+			url: 'includes/LoadNote.php',
 			method: 'POST',
 			data: toSend,
 			action: 'loadnote'
@@ -261,7 +261,7 @@
 		});
 		
 		$.ajax({
-			url: 'includes/note-api.php',
+			url: 'includes/NoteApi.php',
 			method: 'POST',
 			data: { 
 				noteText: noteText, 
@@ -340,7 +340,7 @@
 		
  		$.ajax({
 			method: 'POST',
-			url: 'includes/note-api.php',
+			url: 'includes/NoteApi.php',
 			data: {
 				noteId: deleteId,
 				action: 'deletenote'
@@ -405,7 +405,7 @@
 		
 		$.ajax({
 			method: 'POST',
-			url: 'includes/note-api.php',
+			url: 'includes/NoteApi.php',
 			data: {
 				noteId: noteId,
 				complete: 1,
@@ -466,7 +466,7 @@
 		var noteId = $this.closest('.note').data('id');
 		$.ajax({
 			method: 'POST',
-			url: 'includes/note-api.php',
+			url: 'includes/NoteApi.php',
 			data: {
 				noteId: noteId,
 				complete: 0,
@@ -508,7 +508,7 @@
 		
  		$.ajax({
 			method: 'POST',
-			url: 'includes/note-api.php',
+			url: 'includes/NoteApi.php',
 			data: {
 				noteText: text,
 				noteId: noteId,
