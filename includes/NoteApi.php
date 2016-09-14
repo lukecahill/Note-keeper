@@ -1,6 +1,8 @@
 <?php	
 
-require_once 'note.php';
+spl_autoload_register(function ($class_name) {
+	include $class_name . '.php';
+});
 
 /**
 * NoteApi is used to add, delete, edit and mark notes as active/completed. 

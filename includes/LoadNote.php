@@ -1,6 +1,8 @@
 <?php
 
-require_once 'note.php';
+spl_autoload_register(function ($class_name) {
+	include $class_name . '.php';
+});
 
 /**
 * LoadNote is used to get the users notes from the database. 
@@ -13,6 +15,8 @@ require_once 'note.php';
 * @access   public
 */
 class LoadNote extends Note {
+	const PREGENERATED_TAGS = 5;
+
 	public $userId = 0;
 	public $complete = 0;
 	public $search = '';
@@ -161,8 +165,8 @@ class LoadNote extends Note {
 					if(!in_array($tag, $tagList)) { 
 						$tagList[] = $tag;
 						
-						// limit the pre-loaded tags to 5.
-						if(5 >= count($tagList)) {
+						// limit the pre-loaded tags to value of PREGENERATED_TAGS.
+						if(self::PREGENERATED_TAGS >= count($tagList)) {
 							$checkbox[] = $tag;
 						}
 					}
@@ -178,13 +182,13 @@ class LoadNote extends Note {
 			rsort($notes);
 		}
 
-		if($this->action !== 'searchnote') $style = $color;
+		if($this->action !== 'searchnote') $style = $color;	// is this still needed?
 		sort($tagList);
 
 		array_push($merged, $checkbox);
 		array_push($merged, $tagList);
 		array_push($merged, $notes);
-		if($this->action !== 'searchnote') array_push($merged, $style);
+		if($this->action !== 'searchnote') array_push($merged, $style);	// same question as above.
 		echo json_encode($merged);
 	}
 	
@@ -299,6 +303,7 @@ class LoadNote extends Note {
 }
 
 if(($_SERVER['REQUEST_METHOD'] == 'POST') && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+
 	$note = new LoadNote($_POST['action']);
 
 	if($note->action === 'loadnote') {
