@@ -32,7 +32,7 @@ class Register extends Authentication {
 	/**  
 	* Verify that the user entered an email, password and confirmation password.
 	*
-	* @return bool Depending on if the passwords entered were not empty,a nd the user entered an email
+	* @return bool Depending on if the passwords entered were not empty, and the user entered an email
 	*/
 	function verify() {
 		if(empty($this->email)) {
