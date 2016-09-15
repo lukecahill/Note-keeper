@@ -12,6 +12,7 @@ require_once 'authentication.php';
 * @access   public
 */
 class Login extends Authentication {
+	const MAXIMUM_PAST_IPS = 5;
 	public $error = '';
 
 	/**  
@@ -48,6 +49,7 @@ class Login extends Authentication {
 		$date = new DateTime();
 		$timestamp = $date->getTimestamp();
 		
+		// what the hell is going on here? TODO : Fix this... 
 		$random = rand();
 		$a = sha1($random);
 		$authentication = $timestamp;		
@@ -59,9 +61,9 @@ class Login extends Authentication {
 	/**  
 	* Log the users IP address in the database
 	*
-	* @param string $past Serialised array of the most recent up to 5 IP addresses
+	* @param string $past Serialised array of the most recent up to the value of MAXIMUM_PAST_IPS IP addresses
 	*
-	* @return string $past Serialised array of the most recent up to 5 IP addresses
+	* @return string $past Serialised array of the most recent up to the value of MAXIMUM_PAST_IPS IP addresses
 	*/
 	function logIpAddress($past) {
 		$count = 0;
@@ -77,7 +79,7 @@ class Login extends Authentication {
 			}
 		}
 		
-		if($count > 0 && $count === 5) {
+		if($count > 0 && $count === MAXIMUM_PAST_IPS) {
 			array_shift($past);
 		}
 		
