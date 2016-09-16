@@ -27,7 +27,7 @@
 		<h3>
 			Confirm your email.
 		</h3>
-		<?php include 'includes/email-confirmation/confirm.php'; ?>
+		<?php include 'includes/email-confirmation/ConfirmEmail.php'; ?>
 	</div>
 	
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
