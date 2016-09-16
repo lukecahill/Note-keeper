@@ -79,7 +79,7 @@ class Login extends Authentication {
 			}
 		}
 		
-		if($count > 0 && $count === MAXIMUM_PAST_IPS) {
+		if($count > 0 && $count === self::MAXIMUM_PAST_IPS) {
 			array_shift($past);
 		}
 		
@@ -98,9 +98,14 @@ class Login extends Authentication {
 	* @return bool $status If the SQL statement was successful or not
 	*/
 	function updateUser($past, $authentication, $userId) {
-		$stmt = $this->db->prepare("UPDATE note_users SET JsonAuthentication = :json, RecentIps = :ips WHERE UserId = :id");
-		$status = $stmt->execute(array(':json' => $authentication, ':ips' => $past, ':id' => $userId));
-		return $status;
+		$stmt = $this->db->prepare("UPDATE note_users SET JsonAuthentication = :json, RecentIps = :ips, PasswordAttempts = 0 WHERE UserId = :id");
+		$stmt->execute(array(':json' => $authentication, ':ips' => $past, ':id' => $userId));
+
+		session_start();
+		$_SESSION['user'] = $this->email;
+		$_SESSION['userId'] = $userId;
+		$_SESSION['authentication'] = $authentication;
+		die(header('Location: index.php'));
 	}
 	
 	/**  
@@ -114,13 +119,12 @@ class Login extends Authentication {
 	*/
 	function verifyPassword($encrypted, $userId, $authentication){
 		if(password_verify($this->password, $encrypted)) {
-			session_start();
-			$_SESSION['user'] = $this->email;
-			$_SESSION['userId'] = $userId;
-			$_SESSION['authentication'] = $authentication;
-			die(header('Location: index.php'));
+			return true;
 		} else {
+			$stmt = $this->db->prepare("UPDATE note_users SET PasswordAttempts = PasswordAttempts+1 WHERE UserId = :id");
+			$status = $stmt->execute(array(':id' => $userId));
 			$this->error = "<span class='validation-error'>Username/Password invalid</span>";
+			return false;
 		}
 	}
 
@@ -148,10 +152,10 @@ class Login extends Authentication {
 			$userId = $results[0]['UserId'];
 			$pastIps = $this->logIpAddress($results[0]['RecentIps']);
 			$authentication = $this->generateJsonAuthentication();
-			$status = $this->updateUser($pastIps, $authentication, $userId);
+			$status = $this->verifyPassword($encrypted, $userId, $authentication);
 			
 			if($status == 1) {
-				$this->verifyPassword($encrypted, $userId, $authentication);
+				$this->updateUser($pastIps, $authentication, $userId);
 			} else {
 				$this->error = "<span class='validation-error'>Something went wrong! Please try again later.</span>";
 			}
