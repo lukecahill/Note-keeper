@@ -55,17 +55,11 @@ class PasswordReset {
 	}
     
 	/**  
-	* Creates a new emailer to email the user their confirmation link so that they can 
-	* 	confirm their email address. 
+	* Creates a new emailer to email the user their password reset link.
 	*
 	* @return void
 	*/
 	function sendResetConfirmation() {
-        // TODO : need a new constructor for password resets.
-        //      Also need a page where the reset link takes the user to enter their new password.
-        //      https://stackoverflow.com/questions/1699796/best-way-to-do-multiple-constructors-in-php
-        //      ...stupid PHP...
-        //
 		$hashEmail = md5($this->email); 
 		$confirm = new Email($this->email, $hashEmail, $this->db, true); 
 		$confirm->constructConfirmLink();
