@@ -121,10 +121,20 @@ class Login extends Authentication {
 		if(password_verify($this->password, $encrypted)) {
 			return true;
 		} else {
-			$stmt = $this->db->prepare("UPDATE note_users SET PasswordAttempts = PasswordAttempts+1 WHERE UserId = :id");
-			$status = $stmt->execute(array(':id' => $userId));
-			$this->error = "<span class='validation-error'>Username/Password invalid</span>";
-			return false;
+			$sql = $this->db->prepare("SELECT PasswordAttempts FROM note_users WHERE UserId = :id");
+			$sql->execute(array(':id' => $userId));
+			$result = $sql->fetchAll(PDO::FETCH_ASSOC);
+			if($result[0]['PasswordAttempts'] === '4') {
+				$stmt = $this->db->prepare("UPDATE note_users SET Active = 2 WHERE UserId = :id");
+				$stmt->execute(array(':id' => $userId));
+				$this->error = "<span class='validation-error'>The account has been locked due to too many invalid password attempts.</span>";
+				return false;
+			} else {
+				$stmt = $this->db->prepare("UPDATE note_users SET PasswordAttempts = PasswordAttempts+1 WHERE UserId = :id");
+				$stmt->execute(array(':id' => $userId));
+				$this->error = "<span class='validation-error'>Username/Password invalid</span>";
+				return false;
+			}
 		}
 	}
 
@@ -147,6 +157,8 @@ class Login extends Authentication {
 			$this->error = "<span class='validation-error'>Username/Password invalid</span>";
 		} else if($results[0]['Active'] == 0) {
 			$this->error = "<span class='validation-error'>This email address has not been confimred! Please check your email and follow the confirmation link.</span>";
+		} else if($results[0]['Active'] == 2) {
+			$this->error = "<span class='validation-error'>The account has been locked due to too many invalid password attempts - <a href='password-reset.php'>reset it here</a>.</span>";
 		} else {
 			$encrypted = $results[0]['UserPassword'];
 			$userId = $results[0]['UserId'];
@@ -156,8 +168,6 @@ class Login extends Authentication {
 			
 			if($status == 1) {
 				$this->updateUser($pastIps, $authentication, $userId);
-			} else {
-				$this->error = "<span class='validation-error'>Something went wrong! Please try again later.</span>";
 			}
 		}
 	}
