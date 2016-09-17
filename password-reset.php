@@ -25,7 +25,6 @@
 	</div>
 	
 	<div class="col-sm-8 row">
-	<?php if(isset($_POST['password_reset']) && $_SERVER['REQUEST_METHOD'] == 'POST') { ?>
 		<h3>
 			Forgotton Password Form
 		</h3>
@@ -49,16 +48,6 @@
 				Submit
 			</button>
 		</form>
-	<?php } else { ?>
-        <h3>
-			Invalid request!
-		</h3>
-		<p>
-			There was an invalid request. To go to the login page click <a href="login.php">here</a>.
-		</p>
-        
-     <?php } ?>
-
 	</div>
 	
 	<div class="col-sm-2">
