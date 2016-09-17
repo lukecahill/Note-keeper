@@ -49,11 +49,9 @@ class Login extends Authentication {
 		$date = new DateTime();
 		$timestamp = $date->getTimestamp();
 		
-		// what the hell is going on here? TODO : Fix this... 
 		$random = rand();
-		$a = sha1($random);
-		$authentication = $timestamp;		
-		$authentication = sha1($authentication . $timestamp);
+		$shaRandom = sha1($random);
+		$authentication = sha1($shaRandom . $timestamp);
 		
 		return $authentication;
 	}
