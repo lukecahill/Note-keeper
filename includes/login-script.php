@@ -119,7 +119,7 @@ class Login extends Authentication {
 		if(password_verify($this->password, $encrypted)) {
 			return true;
 		} else {
-			$sql = $this->db->prepare("SELECT PasswordAttempts FROM note_users WHERE UserId = :id");
+			$sql = $this->db->prepare("SELECT PasswordAttempts FROM note_users WHERE UserId = :id LIMIT 1");
 			$sql->execute(array(':id' => $userId));
 			$result = $sql->fetchAll(PDO::FETCH_ASSOC);
 			if($result[0]['PasswordAttempts'] === '4') {
