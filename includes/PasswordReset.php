@@ -71,14 +71,14 @@ if(isset($_POST['email']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 	$error = '';
 	$success = false;
 
-	$register = new Register($email);
-	if(!$register->verify()) {
-		$error = $register->error;
+	$reset = new PasswordReset($email);
+	if(!$reset->verify()) {
+		$error = $reset->error;
 		return;
 	}
 	
-	if($register->checkExists()) {
-		$register->sendResetConfirmation();
+	if($reset->checkExists()) {
+		$reset->sendResetConfirmation();
 		$success = true;
 	} else {
 		$error = '<span class="validation-error">Could not find that email address.</span>';
