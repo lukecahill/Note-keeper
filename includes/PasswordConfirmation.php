@@ -4,10 +4,13 @@ class PasswordConfirmation {
 	public $hash = '';
 	public $id = '';
 	public $db = null;
+    public $error = '';
 	
-	function __construct() {
+	function __construct($hash, $id) {
 		require_once 'includes/db-connect.inc.php';
 		$this->db = Database::ConnectDb();
+        $this->id = $id;
+        $this->hash = $hash;
 	}
 	
 	function check() {
@@ -41,15 +44,15 @@ class PasswordConfirmation {
             $stmt->execute(array(':password' => $new,':id' => $userId));
             echo 'Pasword Changed!';
         } else {
-            $error = '<span class="validation-error">The password you entered was invalid!</span>';
+            $this->error = '<span class="validation-error">The password you entered was invalid!</span>';
         }
     }
 }
 
 if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !empty($_GET['user'])) {
-	
+    
 	$confirm = new PasswordConfirmation($_GET['hash'], $_GET['user']);
-	
+    $error = $confirm->error;
 	if($confirm->check()) {
         ?>
         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="change-password-form" class="options-border">
@@ -83,8 +86,6 @@ if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !emp
         </form>
         <?php
 	} 
-} else if(isset($_POST['reset-confirm-password']) && isset($_POST['reset-new-password']) && isset($_SESSION['userId'])) {
-    $confirm = new PasswordConfirmation();
 } else {
     echo json_encode('No email found are you sure you are meant to be here?');
 }
