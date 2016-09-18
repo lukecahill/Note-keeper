@@ -1,3 +1,4 @@
+<?php require_once 'includes/PasswordReset.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
