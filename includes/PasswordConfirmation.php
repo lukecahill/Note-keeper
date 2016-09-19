@@ -12,6 +12,7 @@ class PasswordConfirmation {
 	public $id = '';
 	public $db = null;
     public $error = '';
+    public $success = false;
 	
 	/**  
 	* Constructs the PasswordConfirmation class. 
@@ -58,10 +59,7 @@ class PasswordConfirmation {
         $stmt = $db->prepare('UPDATE note_users SET UserPassword = :password, Active = 1, EmailConfirmation = "" WHERE UserId = :id');
         $stmt->execute(array(':password' => $passwordHash,':id' => $userId));
 
-            echo 'Pasword Changed!';
-        } else {
-            $this->error = '<span class="validation-error">The password you entered was invalid!</span>';
-        }
+        $this->success = true;
     }
 }
 
@@ -69,8 +67,19 @@ if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !emp
 
 	$confirm = new PasswordConfirmation($_GET['hash'], $_GET['user']);
     $error = $confirm->error;
+    if($confirm->success) {
+        ?>                    
+        <h3>
+            Your password has been changed successfully
+        </h3>
+        <p>
+            Password reset successful, please <a href="login.php">log in</a>
+        </p>
+    }
+    <?php
 	if($confirm->check()) {
         ?>
+
         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="change-password-form" class="options-border">
             <?php if($error !== '') echo $error; ?>
             <h4 id="reset-password-header">
@@ -80,6 +89,7 @@ if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !emp
             </h4>
             <div id="reset-password-change">
 
+            
                 <div class="form-group">
                     <label for="new-password">
                         Enter new password:
