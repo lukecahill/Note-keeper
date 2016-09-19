@@ -1,11 +1,26 @@
 <?php
 
+/**
+* PasswordConfirmation checks that the URL is valid, and will allow the user to reset their password. 
+*
+* @package  Note Keeper
+* @author   Luke Cahill
+* @access   public
+*/
 class PasswordConfirmation {
 	public $hash = '';
 	public $id = '';
 	public $db = null;
     public $error = '';
 	
+	/**  
+	* Constructs the PasswordConfirmation class. 
+    * 
+	* @param string $hash Hash confirmation that the password should be reset
+	* @param string $id User ID
+	*
+	* @return object 
+	*/
 	function __construct($hash, $id) {
 		require_once 'includes/db-connect.inc.php';
 		$this->db = Database::ConnectDb();
@@ -13,8 +28,13 @@ class PasswordConfirmation {
         $this->hash = $hash;
 	}
 	
+	/**  
+	* Checks that the ID and hash which have been entered in the URL are valid. 
+	*
+	* @return bool - true if account and confirmation exists, false if not.
+	*/
 	function check() {
-		$stmt = $this->db->prepare('SELECT UserId FROM note_users WHERE UserId = :id AND EmailConfirmation = :hash');
+		$stmt = $this->db->prepare('SELECT UserId FROM note_users WHERE UserId = :id AND EmailConfirmation = :hash AND Active = 2');
 		$stmt->execute(array(':id' => $this->id, ':hash' => $this->hash));
 		
 		if($stmt->rowCount() != 0) {
@@ -24,24 +44,20 @@ class PasswordConfirmation {
 		}
 	}
 
+	/**  
+	* Updates the users password in the database.
+	*
+	* @return void
+	*/
     function resetPassword() {
-        $new = $_POST['reset-new-password'];
+        $newPassword = $_POST['reset-new-password'];
         $confirm = $_POST['reset-confirm-password'];
         $userId = $_SESSION['userId'];
-        
-        require_once 'includes/db-connect.inc.php';
-        $db = Database::ConnectDb();
-        
-        $stmt = $db->prepare('SELECT UserPassword FROM note_users WHERE UserId = :id');
-        $stmt->execute(array(':id' => $userId));
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        $encrypted = $results[0]['UserPassword'];
-        
-        if(password_verify($old, $encrypted)) {
-            $new = password_hash($new, PASSWORD_DEFAULT);
-            $stmt = $db->prepare('UPDATE note_users SET UserPassword = :password WHERE UserId = :id');
-            $stmt->execute(array(':password' => $new,':id' => $userId));
+
+		$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+        $stmt = $db->prepare('UPDATE note_users SET UserPassword = :password, Active = 1, EmailConfirmation = "" WHERE UserId = :id');
+        $stmt->execute(array(':password' => $passwordHash,':id' => $userId));
+
             echo 'Pasword Changed!';
         } else {
             $this->error = '<span class="validation-error">The password you entered was invalid!</span>';
@@ -50,7 +66,7 @@ class PasswordConfirmation {
 }
 
 if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !empty($_GET['user'])) {
-    
+
 	$confirm = new PasswordConfirmation($_GET['hash'], $_GET['user']);
     $error = $confirm->error;
 	if($confirm->check()) {
