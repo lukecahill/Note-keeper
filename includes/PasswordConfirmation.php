@@ -67,15 +67,6 @@ if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !emp
 
 	$confirm = new PasswordConfirmation($_GET['hash'], $_GET['user']);
     $error = $confirm->error;
-    if($confirm->success) {
-        ?>                    
-        <h3>
-            Your password has been changed successfully
-        </h3>
-        <p>
-            Password reset successful, please <a href="login.php">log in</a>
-        </p>
-    }
     <?php
 	if($confirm->check()) {
         ?>
@@ -104,7 +95,7 @@ if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !emp
                     <input type="password" id="reset-confirm-password" name="reset-confirm-password" class="form-control">
                 </div>
 
-                <button class="btn btn-success" id="reset-password-button" name="change-password-button" type="submit">
+                <button class="btn btn-success" id="reset-password-button" name="reset-password-button" type="submit">
                     <span class="glyphicon glyphicon-asterisk"></span>
                     Change Password
                 </button>
@@ -112,7 +103,16 @@ if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !emp
         </form>
         <?php
 	} 
-} else {
+} else if(isset($_POST['reset-password-button']) {
+    ?>
+        <h3>
+            Your password has been changed successfully
+        </h3>
+        <p>
+            Password reset successful, please <a href="login.php">log in</a>
+        </p>
+    <?php
+    } else {
     echo json_encode('No email found are you sure you are meant to be here?');
 }
 ?>
