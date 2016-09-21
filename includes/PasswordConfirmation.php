@@ -53,11 +53,10 @@ class PasswordConfirmation {
     function resetPassword() {
         $newPassword = $_POST['reset-new-password'];
         $confirm = $_POST['reset-confirm-password'];
-        $userId = $_SESSION['userId'];
 
 		$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
-        $stmt = $db->prepare('UPDATE note_users SET UserPassword = :password, Active = 1, EmailConfirmation = "" WHERE UserId = :id');
-        $stmt->execute(array(':password' => $passwordHash,':id' => $userId));
+        $stmt = $this->db->prepare('UPDATE note_users SET UserPassword = :password, Active = 1, EmailConfirmation = "" WHERE UserId = :id');
+        $stmt->execute(array(':password' => $passwordHash,':id' => $this->id));
 
         $this->success = true;
     }
@@ -67,7 +66,6 @@ if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !emp
 
 	$confirm = new PasswordConfirmation($_GET['hash'], $_GET['user']);
     $error = $confirm->error;
-    <?php
 	if($confirm->check()) {
         ?>
 
@@ -100,10 +98,13 @@ if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !emp
                     Change Password
                 </button>
             </div>
+            <input type="hidden" name="userId" value="<?php echo $_GET['user'] ?>"/>
         </form>
         <?php
 	} 
-} else if(isset($_POST['reset-password-button']) {
+} else if(isset($_POST['reset-password-button'])) {
+	$reset = new PasswordConfirmation('0', $_POST['userId']);
+    $reset->resetPassword();
     ?>
         <h3>
             Your password has been changed successfully
