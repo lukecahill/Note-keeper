@@ -26,15 +26,15 @@
 	</div>
 	
 	<div class="col-sm-8 row">
+	<?php 
+	if(!isset($_POST['password-reset-btn'])) {
+	?>
 		<h3>
 			Forgotton Password Form
 		</h3>
 		<p>
 			To reset your accounts password, please use the below form.
 		</p>
-        <p class="error">
-            Please note that this is currently being implemented.
-        </p>
 		<p>
 			Here by accident? <a href="login.php">Login here</a>.
 		</p>
@@ -49,6 +49,18 @@
 				Submit
 			</button>
 		</form>
+	<?php
+	} else { 
+	?>
+		<h3>
+			Your password reset link has been sent.
+		</h3>
+		<p>
+			Please follow the link provided in your email. 
+		</p>
+	<?php 
+	} 
+	?>
 	</div>
 	
 	<div class="col-sm-2">
