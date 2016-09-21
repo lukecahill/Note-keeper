@@ -54,21 +54,22 @@ class PasswordConfirmation {
         $newPassword = $_POST['reset-new-password'];
         $confirm = $_POST['reset-confirm-password'];
 
+        if($newPassword !== $confirm) {
+            $this->success = false;
+            $this->error = 'Ensure that both password entered are the same!';
+            return false;
+        }
+
 		$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
         $stmt = $this->db->prepare('UPDATE note_users SET UserPassword = :password, Active = 1, EmailConfirmation = "" WHERE UserId = :id');
         $stmt->execute(array(':password' => $passwordHash,':id' => $this->id));
 
         $this->success = true;
+        return true;
     }
-}
 
-if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !empty($_GET['user'])) {
-
-	$confirm = new PasswordConfirmation($_GET['hash'], $_GET['user']);
-    $error = $confirm->error;
-	if($confirm->check()) {
-        ?>
-
+    function showPasswordForm() {
+    ?>
         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="change-password-form" class="options-border">
             <?php if($error !== '') echo $error; ?>
             <h4 id="reset-password-header">
@@ -100,19 +101,35 @@ if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !emp
             </div>
             <input type="hidden" name="userId" value="<?php echo $_GET['user'] ?>"/>
         </form>
-        <?php
-	} 
+    <?php
+    }
+}
+
+if(isset($_GET['hash']) && !empty($_GET['hash']) && isset($_GET['user']) && !empty($_GET['user'])) {
+
+	$confirm = new PasswordConfirmation($_GET['hash'], $_GET['user']);
+    $error = $confirm->error;
+	if($confirm->check()) {
+        $confirm->showPasswordForm();
+	} else {
+        echo 'Link invalid. Please generate a new one';
+    }
 } else if(isset($_POST['reset-password-button'])) {
 	$reset = new PasswordConfirmation('0', $_POST['userId']);
-    $reset->resetPassword();
-    ?>
-        <h3>
-            Your password has been changed successfully
-        </h3>
-        <p>
-            Password reset successful, please <a href="login.php">log in</a>
-        </p>
-    <?php
+    $status = $reset->resetPassword();
+
+        if($status) {
+        ?>
+            <h3>
+                Your password has been changed successfully
+            </h3>
+            <p>
+                Password reset successful, please <a href="login.php">log in</a>
+            </p>
+        <?php
+        } else {
+            $confirm->showPasswordForm();
+        }
     } else {
     echo json_encode('No email found are you sure you are meant to be here?');
 }
