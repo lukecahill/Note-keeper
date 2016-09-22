@@ -68,6 +68,11 @@ class PasswordConfirmation {
         return true;
     }
 
+	/**  
+	* Generates the HTML form used by the user to reset their password.
+	*
+	* @return void
+	*/
     function showPasswordForm() {
     ?>
         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="change-password-form" class="options-border">
