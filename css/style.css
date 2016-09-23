@@ -115,12 +115,12 @@ footer {
 .top-buffer {
   margin-top: 20px; }
 
-span.login-link {
-  margin-right: 10px; }
-
-span.login-link, span.register-link {
+span .login-link, span .register-link {
   text-decoration: underline;
   cursor: pointer; }
+
+span .login-link {
+  margin-right: 10px; }
 
 .divider {
   font-weight: bold; }
@@ -169,7 +169,7 @@ label[for=tag-chooser] {
 nav.navigation-bar {
   border-radius: 0; }
 
-p#first-note, p#no-results {
+p #first-note, p #no-results {
   text-align: center;
   font-weight: bold; }
 

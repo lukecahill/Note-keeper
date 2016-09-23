@@ -180,13 +180,14 @@ footer {
 	margin-top: 20px;
 }
 
-span.login-link {
-	margin-right: 10px;
-}
-
-span.login-link, span.register-link {
-	text-decoration: underline;
-	cursor: pointer
+span {
+	.login-link, .register-link {
+		text-decoration: underline;
+		cursor: pointer
+	}
+	.login-link {
+		margin-right: 10px;
+	}
 }
 
 .divider {
@@ -249,9 +250,11 @@ nav.navigation-bar {
 	border-radius: 0;
 }
 
-p#first-note, p#no-results {
-	text-align: center;
-	font-weight: bold;
+p {
+	#first-note, #no-results {
+		text-align: center;
+		font-weight: bold;
+	}
 }
 
 .password_span, .order_dropdown_span, .search_dropdown_span, .color_dropdown_span, .recent_ips_span {
