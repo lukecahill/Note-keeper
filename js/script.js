@@ -278,6 +278,14 @@
 				var tags = '';
 				$.each(tagArray, function(index, value) {
 					tags += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(color, value);
+					if(dropdownTags.indexOf(value) === -1) {
+						dropdownTags.push(value);					
+						$tagChooser
+						.append($('<option></option>')
+						.attr('value', value)
+						.attr('data-tag', value)
+						.text(value));
+					}
 				});
 				noteText = noteText.replace(/\n/g, '<br>');
 				$noteList.append('<div class="note" data-id="{0}"><h4 class="note-title">{1}</h4><p class="note-text">{2}</p>{3}<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>'.format(data[1], noteTitle, noteText, tags));
