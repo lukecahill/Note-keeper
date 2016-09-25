@@ -20,6 +20,7 @@ CREATE TABLE user_preferences (
 	Pagination TINYINT DEFAULT 0,
 	NoteOrder VARCHAR(15) DEFAULT 'oldest',
 	SearchOptions VARCHAR(80) DEFAULT 'a:3:{i:0;s:4:"true";i:1;s:4:"true";i:2;s:5:"false";}',
+	ColorTheme VARCHAR(16) DEFAULT 'light',
 	FOREIGN KEY (UserId) REFERENCES note_users(UserId) ON DELETE CASCADE
 );
 
