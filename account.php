@@ -42,6 +42,8 @@
 		<?php include 'templates/password.php'; ?>
 
 		<?php include 'templates/recent-ips.html'; ?>
+
+		<?php include 'templates/theme.html'; ?>
 	</div>
 </div>
 
