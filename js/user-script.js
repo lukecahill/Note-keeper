@@ -1,11 +1,12 @@
 (function() {
 	
 	// want to hide these initially
-	$('#password-change, #search-div, #order-div, #color-div, #recent-ips-div').hide();
-	var passwordDown = false, colorDown = false, orderDown = false, searchDown = false, ipsDown = false;
+	$('#password-change, #search-div, #order-div, #color-div, #recent-ips-div, #theme-div').hide();
+	var passwordDown = false, colorDown = false, orderDown = false, searchDown = false, ipsDown = false, themeDown = false;
 	
 	// cache the DOM
-	var $passwordDropdown = $('.password_span'), $orderDropdown = $('.order_dropdown_span'),$searchDropdown = $('.search_dropdown_span'), $colorDropdown = $('.color_dropdown_span'), $recentIps = $('#recent-ips-div'), $ipsDropdown = $('.recent_ips_span');
+	var $passwordDropdown = $('.password_span'), $orderDropdown = $('.order_dropdown_span'), $searchDropdown = $('.search_dropdown_span'), 
+		$colorDropdown = $('.color_dropdown_span'), $recentIps = $('#recent-ips-div'), $ipsDropdown = $('.recent_ips_span'), $themeDropdown = $('.theme_dropdown_span');
 	
 	
 	/**
@@ -76,6 +77,10 @@
 			$.each(data[6], function(i, v) {
 				$recentIps.append('<p>{0}</p>'.format(v));
 			});
+
+			if(data[7] === 'dark') {
+				$('#theme_checkbox').prop('checked', true);
+			}
 		})
 		.fail(function(error) {
 			console.log('An error occurred', error);
@@ -209,6 +214,28 @@
 
 	/**
 	* @function
+	*
+	* Changes the front-end theme. 
+	**/
+	$('#theme-button').on('click', function() {
+		$.ajax({
+			method: 'POST',
+			url: 'includes/user-settings.php',
+			data: {
+				action: 'set-theme',
+				id: userId
+			}
+		})
+		.done(function(data, status) {
+			toastr.success('Updated theme settings! Please refresh your page.');
+		})
+		.fail(function(error) {
+			console.log(error);
+		});
+	});
+
+	/**
+	* @function
 	* Toggle to show the form to change the users password 
 	* 
 	**/
@@ -299,6 +326,25 @@
 			$ipsDropdown.addClass('glyphicon-chevron-down');
 			$ipsDropdown.removeClass('glyphicon-chevron-up');
 			ipsDown = true;
+		}
+	});
+		
+	/**
+	* @function
+	* Toggle to show the form for the user to choose what theme to use - currently dark or light theme.
+	* 
+	**/
+	$('#theme-header').on('click', function() {
+		$('#theme-div').toggle();
+		
+		if(themeDown) {
+			$themeDropdown.addClass('glyphicon-chevron-up');
+			$themeDropdown.removeClass('glyphicon-chevron-down');
+			themeDown = false;
+		} else {
+			$themeDropdown.addClass('glyphicon-chevron-down');
+			$themeDropdown.removeClass('glyphicon-chevron-up');
+			themeDown = true;
 		}
 	});
 	
