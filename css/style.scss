@@ -286,6 +286,17 @@ p {
 	text-align: right;
 }
 
+html.dark-theme {
+	body {
+		background-color: #222;
+	}
+
+	.note {
+		border-color: #888;
+		background-color: #8a8a8a;
+	}
+}
+
 @media (max-width: 767px) {
 	div.mobile-text-left {
 		text-align: initial;
