@@ -218,11 +218,19 @@
 	* Changes the front-end theme. 
 	**/
 	$('#theme-button').on('click', function() {
+		var theme = $('#theme_checkbox').is(':checked');
+		var color = 'light';
+
+		if(theme) {
+			color = 'dark';
+		}
+
 		$.ajax({
 			method: 'POST',
 			url: 'includes/user-settings.php',
 			data: {
 				action: 'set-theme',
+				theme: color,
 				id: userId
 			}
 		})
