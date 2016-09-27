@@ -7,7 +7,7 @@ if(!isset($_SESSION['user']) && !isset($_SESSION['userId']) || !isset($_SESSION[
 
 ?>
 <!DOCTYPE html>
-<html>
+<html <?php if(isset($_SESSION['theme']) && $_SESSION['theme'] === 'dark') echo 'class="dark-theme"'; ?>>
 <head>
 	<title>
 		Note Keeper
