@@ -97,9 +97,9 @@ class UserSettings {
 	* @return void
 	**/
 	function setTheme() {
-		$color = $_POST['color'];
+		$color = $_POST['theme'];
 		$stmt = $this->db->prepare('UPDATE user_preferences SET ColorTheme = :color WHERE UserId = :id');
-		$stmt->execute(array(':color' => $arr, ':id' => $this->id));
+		$stmt->execute(array(':color' => $color, ':id' => $this->id));
 	}
 	
 	/**  
