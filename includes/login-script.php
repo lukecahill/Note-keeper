@@ -95,7 +95,7 @@ class Login extends Authentication {
 	*
 	* @return bool $status If the SQL statement was successful or not
 	*/
-	function updateUser($past, $authentication, $userId) {
+	function updateUser($past, $authentication, $userId, $theme) {
 		$stmt = $this->db->prepare("UPDATE note_users SET JsonAuthentication = :json, RecentIps = :ips, PasswordAttempts = 0 WHERE UserId = :id");
 		$stmt->execute(array(':json' => $authentication, ':ips' => $past, ':id' => $userId));
 
@@ -103,6 +103,7 @@ class Login extends Authentication {
 		$_SESSION['user'] = $this->email;
 		$_SESSION['userId'] = $userId;
 		$_SESSION['authentication'] = $authentication;
+		$_SESSION['theme'] = $theme;
 		die(header('Location: index.php'));
 	}
 	
@@ -143,9 +144,10 @@ class Login extends Authentication {
 	* @return void
 	*/
 	function verify() {
-		$stmt = $this->db->prepare('SELECT UserEmail, UserPassword, UserId, Active, RecentIps
-								FROM note_users 
-								WHERE UserEmail = :email 
+		$stmt = $this->db->prepare('SELECT u.UserEmail, u.UserPassword, u.UserId, u.Active, u.RecentIps, p.ColorTheme
+								FROM note_users u
+								INNER JOIN user_preferences p ON p.UserId = u.UserId
+								WHERE u.UserEmail = :email 
 								LIMIT 1'
 							);
 		$stmt->execute(array(':email' => $this->email));
@@ -160,12 +162,13 @@ class Login extends Authentication {
 		} else {
 			$encrypted = $results[0]['UserPassword'];
 			$userId = $results[0]['UserId'];
+			$theme = $results[0]['ColorTheme'];
 			$pastIps = $this->logIpAddress($results[0]['RecentIps']);
 			$authentication = $this->generateJsonAuthentication();
 			$status = $this->verifyPassword($encrypted, $userId, $authentication);
 			
 			if($status == 1) {
-				$this->updateUser($pastIps, $authentication, $userId);
+				$this->updateUser($pastIps, $authentication, $userId, $theme);
 			}
 		}
 	}
