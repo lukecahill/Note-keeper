@@ -14,3 +14,5 @@ Includes email confirmation on user registration. Users IP address is now logged
 BootStrap is being used for styling, with Scss now being used to generate the custom CSS. Gulp.js is being used to minify the JS, and also for JSLint.
 
 The SQL used for this is provided in 'database.sql'.
+
+This requires version 5.5 or greater of PHP. 
