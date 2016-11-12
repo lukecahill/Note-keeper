@@ -25,4 +25,4 @@ if(!isset($_SESSION['user']) && !isset($_SESSION['userId']) || !isset($_SESSION[
 
 	<?php include 'links.php'; ?>
 
-	<div class="container-fluid">
+	<div class="container-fluid <?php if(strpos($url, 'account.php')) echo 'account-dark'?>">

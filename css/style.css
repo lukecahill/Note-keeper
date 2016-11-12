@@ -25,7 +25,8 @@ h1 span.glyphicon-comment {
   margin-top: 10px;
   width: 80%;
   background-color: #eee;
-  min-height: 105px; }
+  min-height: 105px;
+  border-radius: 6px; }
   .note .note-glyphicons {
     text-align: right;
     font-size: 1.2em;
@@ -58,7 +59,8 @@ h1 span.glyphicon-comment {
     vertical-align: baseline;
     margin: 2px;
     cursor: pointer;
-    margin-top: 5px; }
+    margin-top: 5px;
+    border-radius: 5px; }
   .note .note-tags-red {
     border: 1px solid #CE3131;
     background-color: #CE3131; }
@@ -94,7 +96,7 @@ h1 span.glyphicon-comment {
 .new-note-group {
   padding: 10px;
   border: 1px solid #eee;
-  /* border-radius: 6px; */
+  border-radius: 6px;
   margin-top: 10px; }
 
 #search-input {
@@ -145,7 +147,7 @@ span .login-link {
 .options-border {
   padding: 10px;
   border: 1px solid #eee;
-  /* border-radius: 6px; */
+  border-radius: 6px;
   margin-top: 10px; }
 
 label[for=tag-chooser] {
@@ -163,11 +165,7 @@ label[for=tag-chooser] {
     background-color: #eee; }
 
 .navbar-container {
-  margin-top: 0;
-  border-radius: 0; }
-
-nav.navigation-bar {
-  border-radius: 0; }
+  margin-top: 0; }
 
 p #first-note, p #no-results {
   text-align: center;
@@ -178,9 +176,6 @@ p #first-note, p #no-results {
 
 #password-header, #color-header, #order-header, #search-header, #recent-ips-header, #theme-header {
   cursor: pointer; }
-
-.btn {
-  border-radius: 0; }
 
 .password_reset {
   background: none !important;
@@ -201,6 +196,20 @@ html.dark-theme body {
 html.dark-theme .note {
   border-color: #888;
   background-color: #8a8a8a; }
+
+html.dark-theme .btn-default {
+  background-color: #888;
+  border-color: #888; }
+
+html.dark-theme .btn-success {
+  background-color: #098609;
+  border-color: #098609; }
+
+html.dark-theme .account-dark {
+  color: #888; }
+
+html.dark-theme footer p {
+  color: #888; }
 
 @media (max-width: 767px) {
   div.mobile-text-left {
