@@ -33,17 +33,17 @@
 			</span>
 		</p>
 
-		<?php include 'templates/color-select.html'; ?>
+		<?php include 'templates/account/color-select.html'; ?>
 
-		<?php include 'templates/note-order.html'; ?>
+		<?php include 'templates/account/note-order.html'; ?>
 
-		<?php include 'templates/search-options.html'; ?>
+		<?php include 'templates/account/search-options.html'; ?>
 
-		<?php include 'templates/password.php'; ?>
+		<?php include 'templates/account/password.php'; ?>
 
-		<?php include 'templates/recent-ips.html'; ?>
+		<?php include 'templates/account/recent-ips.html'; ?>
 
-		<?php include 'templates/theme.html'; ?>
+		<?php include 'templates/account/theme.html'; ?>
 	</div>
 </div>
 
