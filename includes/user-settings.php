@@ -100,6 +100,7 @@ class UserSettings {
 		$color = $_POST['theme'];
 		$stmt = $this->db->prepare('UPDATE user_preferences SET ColorTheme = :color WHERE UserId = :id');
 		$stmt->execute(array(':color' => $color, ':id' => $this->id));
+		$_SESSION['theme'] = $color;
 	}
 	
 	/**  
