@@ -1,6 +1,8 @@
 <?php
 
-require_once 'email-confirmation/send.php';
+spl_autoload_register(function ($class_name) {
+	include 'email-confirmation/' . $class_name . '.php';
+});
 
 /**
 * PasswordReset is used to reset the users password in the database.

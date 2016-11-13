@@ -1,6 +1,8 @@
 <?php
 
-require_once 'authentication.php';
+spl_autoload_register(function ($class_name) {
+	include $class_name . '.php';
+});
 
 /**
 * Login is used to log the user into the system. Generates a JSON token for authentication. 
