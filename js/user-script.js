@@ -24,6 +24,14 @@
 			});
 		};
 	}
+
+	if(localStorage.getItem('theme') === 'light') {
+		$('html').removeClass('dark-theme');
+		$('.container-fluid.account-dark').removeClass('account-dark');
+	} else if(localStorage.getItem('theme') === 'dark') {
+		$('html').addClass('dark-theme');
+		$('.container-fluid.account-dark').addClass('account-dark');
+	}
 	
 	getSettings();
 	/**
@@ -81,6 +89,8 @@
 			if(data[7] === 'dark') {
 				$('#theme_checkbox').prop('checked', true);
 			}
+
+			localStorage.setItem('theme', data[7]);
 		})
 		.fail(function(error) {
 			console.log('An error occurred', error);
@@ -235,7 +245,19 @@
 			}
 		})
 		.done(function(data, status) {
-			toastr.success('Updated theme settings! Please refresh your page.');
+			data = $.parseJSON(data);
+			if(data === 'success') {
+
+				localStorage.setItem('theme', color);
+				//if(color === 'light') {
+				//	$('html').removeClass('dark-theme');
+				//	$('.container-fluid.account-dark').removeClass('account-dark');
+				//} else if(color === 'dark') {
+				//	$('html').addClass('dark-theme');
+				//	$('.container-fluid.account-dark').addClass('account-dark');
+				//}
+				toastr.success('Updated theme settings! Please refresh your page.');
+			}
 		})
 		.fail(function(error) {
 			console.log(error);

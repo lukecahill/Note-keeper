@@ -38,6 +38,14 @@
 			});
 		};
 	}
+
+	if(localStorage.getItem('theme') === 'light') {
+		$('html').removeClass('dark-theme');
+		$('.container-fluid.account-dark').removeClass('account-dark');
+	} else if(localStorage.getItem('theme') === 'dark') {
+		$('html').addClass('dark-theme');
+		$('.container-fluid.account-dark').addClass('account-dark');
+	}
 	
 	/**
 	* @function loadNotes
