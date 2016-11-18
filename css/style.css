@@ -190,6 +190,9 @@ p #first-note, p #no-results {
 .password_reset_container {
   text-align: right; }
 
+.modal {
+  position: absolute; }
+
 html.dark-theme body {
   background-color: #222; }
 
