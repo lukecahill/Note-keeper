@@ -9,6 +9,8 @@ CREATE TABLE note_users (
     EmailConfirmation CHAR(32),
 	Active TINYINT DEFAULT 0,
 	RecentIps VARCHAR(255),
+	UserLatitude VARCHAR(64),
+	UserLongitude VARCHAR(64),
 	JsonAuthentication VARCHAR(128),
 	PasswordAttempts TINYINT DEFAULT 0
 );
