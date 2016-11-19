@@ -61,7 +61,7 @@
 		})
 		.done(function(data, result) {
 
-			data = $.parseJSON(data);
+			data = JSON.parse(data);
 			var color = data[0];
 			var order = data[1];
 			
@@ -256,7 +256,7 @@
 			}
 		})
 		.done(function(data, status) {
-			data = $.parseJSON(data);
+			data = JSON.parse(data);
 			if(data === 'success') {
 				if(localStorageTest) {
 					localStorage.setItem('theme', color);
@@ -436,7 +436,6 @@
 				}
 			})
 			.done(function(data) {
-				console.log(data)
 				data = JSON.parse(data);
 				if(data === 'success') {
 					console.log('Saved');

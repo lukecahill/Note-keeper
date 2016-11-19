@@ -84,7 +84,7 @@
 				$noteList.empty();
 			}
 
-			data = $.parseJSON(data);
+			data = JSON.parse(data);
 			if(data !== 'none' && data !== 'no_results') {
 				$('#no-results').remove();
 				if(toSend.complete === 0) {
@@ -281,7 +281,7 @@
 		})
 		.done(function(data, result) {
 
-			data = $.parseJSON(data);
+			data = JSON.parse(data);
 			if(data[0] == 1) {
 				var tags = '';
 				$.each(tagArray, function(index, value) {
