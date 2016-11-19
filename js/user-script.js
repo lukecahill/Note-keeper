@@ -9,6 +9,11 @@
 		$colorDropdown = $('.color_dropdown_span'), $recentIps = $('#recent-ips-div'), $ipsDropdown = $('.recent_ips_span'), 
 		$themeDropdown = $('.theme_dropdown_span'), $mapsDropdown = $('.maps_dropdown_span');
 	
+	/**
+	* @function localStorageTest
+	*
+	* Checks that the localStorage is enabled on the users browser.
+	**/
 	function localStorageTest() {
 		var test = 'test';
 		try {
@@ -412,6 +417,13 @@
 		}
 	});
 
+	/**
+	* @function Anonymous Geolocation function
+	*
+	* Checks that Geolocation API can be used, and then gets the users latitude and longitude from this.
+	* Uses Google Maps API to then get a map of the users coordinates, which is then displayed in an image.
+	* Posts the users coordinates into the database for future use.
+	**/
 	if("geolocation" in navigator) {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			console.log(position.coords.latitude, position.coords.longitude);
