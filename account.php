@@ -44,6 +44,8 @@
 		<?php include 'templates/account/recent-ips.html'; ?>
 
 		<?php include 'templates/account/theme.html'; ?>
+
+		<?php include 'templates/account/maps.html'; ?>
 	</div>
 </div>
 
