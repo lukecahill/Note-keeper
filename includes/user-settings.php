@@ -13,6 +13,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 
 		$user->setSearchParameters();
 	} else if($user->method === 'set-theme') {
 		$user->setTheme();
+	} else if($user->method === 'location') {
+		$user->location();
 	}
 
 } else {
@@ -146,6 +148,16 @@ class UserSettings {
 		$theme = $row[0]['ColorTheme'];
 		$return = array($color, $order, $title, $text, $complete, $count, $recentIps, $theme);
 		echo json_encode($return);
+	}
+
+	function location() {
+		$longitude = $_POST['latitude'];
+		$latitude = $_POST['longitude'];
+		
+		$stmt = $this->db->prepare('UPDATE note_users SET UserLatitude = :lat, UserLongitude = :long WHERE UserId = :id ');
+		$stmt->execute(array(':lat' => $longitude, ':long' => $longitude, ':id' => $this->id));
+
+		echo json_encode('success');
 	}
 }
 
