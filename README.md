@@ -11,7 +11,9 @@ User can change password and customize the color of the tags in the user options
 
 Includes email confirmation on user registration. Users IP address is now logged when they log-in, and will keep the most recent 5. Also allows for account lock-out, where the user will be locked out of their account after 5 wrong password attempts. A password reset form can then be used to email the user a link where they can then reset their password. 
 
-BootStrap is being used for styling, with Scss now being used to generate the custom CSS. Gulp.js is being used to minify the JS, and also for JSLint.
+Makes use of the browsers Geolocation API to find the users coordinates and displays a map with these coordinates, then saves these to the database for future use.
+
+BootStrap is being used for styling, with SCSS now being used to generate the custom CSS. Gulp.js is being used to minify the JS, and also for JSLint.
 
 The SQL used for this is provided in 'database.sql'.
 
