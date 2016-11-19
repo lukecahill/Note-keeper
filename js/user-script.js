@@ -1,13 +1,24 @@
 (function() {
 	
 	// want to hide these initially
-	$('#password-change, #search-div, #order-div, #color-div, #recent-ips-div, #theme-div').hide();
-	var passwordDown = false, colorDown = false, orderDown = false, searchDown = false, ipsDown = false, themeDown = false;
+	$('#password-change, #search-div, #order-div, #color-div, #recent-ips-div, #theme-div, #maps-div').hide();
+	var passwordDown = false, colorDown = false, orderDown = false, searchDown = false, ipsDown = false, themeDown = false, mapsDown = false;
 	
 	// cache the DOM
 	var $passwordDropdown = $('.password_span'), $orderDropdown = $('.order_dropdown_span'), $searchDropdown = $('.search_dropdown_span'), 
-		$colorDropdown = $('.color_dropdown_span'), $recentIps = $('#recent-ips-div'), $ipsDropdown = $('.recent_ips_span'), $themeDropdown = $('.theme_dropdown_span');
+		$colorDropdown = $('.color_dropdown_span'), $recentIps = $('#recent-ips-div'), $ipsDropdown = $('.recent_ips_span'), 
+		$themeDropdown = $('.theme_dropdown_span'), $mapsDropdown = $('.maps_dropdown_span');
 	
+	function localStorageTest() {
+		var test = 'test';
+		try {
+			localStorage.setItem(test, test);
+			localStorage.removeItem(test);
+			return true;
+		} catch(e) {
+			return false;
+		}
+	}
 	
 	/**
 	* @function String format
@@ -247,8 +258,13 @@
 		.done(function(data, status) {
 			data = $.parseJSON(data);
 			if(data === 'success') {
+				if(localStorageTest) {
+					localStorage.setItem('theme', color);
+					toastr.info('Updated theme settings! Please refresh your page.');
+				} else {
+					toastr.info('Please log out and back in for changes to take place');
+				}
 
-				localStorage.setItem('theme', color);
 				//if(color === 'light') {
 				//	$('html').removeClass('dark-theme');
 				//	$('.container-fluid.account-dark').removeClass('account-dark');
@@ -256,7 +272,6 @@
 				//	$('html').addClass('dark-theme');
 				//	$('.container-fluid.account-dark').addClass('account-dark');
 				//}
-				toastr.success('Updated theme settings! Please refresh your page.');
 			}
 		})
 		.fail(function(error) {
@@ -377,5 +392,62 @@
 			themeDown = true;
 		}
 	});
+		
+	/**
+	* @function
+	* Toggle to show the form for the user to choose what theme to use - currently dark or light theme.
+	* 
+	**/
+	$('#maps-header').on('click', function() {
+		$('#maps-div').toggle();
+		
+		if(mapsDown) {
+			$mapsDropdown.addClass('glyphicon-chevron-up');
+			$mapsDropdown.removeClass('glyphicon-chevron-down');
+			mapsDown = false;
+		} else {
+			$mapsDropdown.addClass('glyphicon-chevron-down');
+			$mapsDropdown.removeClass('glyphicon-chevron-up');
+			mapsDown = true;
+		}
+	});
+
+	if("geolocation" in navigator) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			console.log(position.coords.latitude, position.coords.longitude);
+			var longitude = position.coords.longitude;
+			var latitude = position.coords.latitude;
+
+			var img = new Image();
+			// need an access key for google
+			img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' + latitude + ',' + longitude + '&zoom=13&size=300x300&sensor=false'; 
+
+			// place the image on the page.
+			$('#map_location').append(img);
+
+			$.ajax({
+				url: 'includes/user-settings.php',
+				method: 'POST',
+				data: {
+					action: 'location',
+					latitude: latitude,
+					longitude: longitude,
+					id: userId
+				}
+			})
+			.done(function(data) {
+				console.log(data)
+				data = JSON.parse(data);
+				if(data === 'success') {
+					console.log('Saved');
+				}
+			})
+			.error(function(data) {
+				console.warn('Could not save location');
+			});
+		});
+	} else {
+		console.warn('Geolocation is not available');
+	}
 	
 })();
