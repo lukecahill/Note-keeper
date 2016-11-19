@@ -171,7 +171,7 @@ p #first-note, p #no-results {
   text-align: center;
   font-weight: bold; }
 
-.password_span, .order_dropdown_span, .search_dropdown_span, .color_dropdown_span, .recent_ips_span, .theme_dropdown_span {
+.password_span, .order_dropdown_span, .search_dropdown_span, .color_dropdown_span, .recent_ips_span, .theme_dropdown_span, .maps_dropdown_span {
   float: right; }
 
 #password-header, #color-header, #order-header, #search-header, #recent-ips-header, #theme-header {
