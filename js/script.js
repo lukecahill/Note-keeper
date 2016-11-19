@@ -89,14 +89,14 @@
 				$('#no-results').remove();
 				if(toSend.complete === 0) {
 					$noteTags.empty();
-					$.each(data[0], function(index, value) {
+					data[0].forEach(function(value, index) {
 						$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="{0}" value="{0}">{0}</label></div>'.format(value));
 					});
 				}
 				
 				$tagChooser.empty();
 				$tagChooser.append($('<option></option>').attr('value', 'showall').attr('selected', true).text('-- Show all --')); 
-				$.each(data[1], function(key, value) {   
+				data[1].forEach(function(value, key) {   
 					$tagChooser
 						.append($('<option></option>')
 						.attr('value', value)
@@ -201,12 +201,12 @@
 	function buildNote(data) {
 		var note = '';
 
-		$.each(data, function(index, value) {
+		data.forEach(function(value, index) {
 			note = '<div class="note" data-id="{0}">'.format(value.id);
 			note += '<h4 class="note-title">{0}</h4><p class="note-text">{1}</p>'.format(value.title, value.text);
 			if(data[index][0].length > 0) {
 				note += '<div class="tag-container">';
-				$.each(data[index][0], function(i, v) {
+				data[index][0].forEach(function(v, i) {
 					note += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(value.color, v);
 				});
 				note += '</div>';

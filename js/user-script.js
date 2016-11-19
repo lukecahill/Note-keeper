@@ -106,7 +106,7 @@
 		
 		data[6].reverse();
 		$recentIps.append('<b>Most Recent</b>');
-		$.each(data[6], function(i, v) {
+		data[6].forEach(function(v, i) {
 			$recentIps.append('<p>{0}</p>'.format(v));
 		});
 
@@ -436,10 +436,14 @@
 
 			var img = new Image();
 			// need an access key for google
-			img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' + latitude + ',' + longitude + '&zoom=13&size=300x300&sensor=false'; 
-
-			// place the image on the page.
-			$('#map_location').append(img);
+			if(typeof GOOGLE_KEY !== 'undefined') {
+				img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' + latitude + ',' + longitude + '&zoom=13&size=300x300&sensor=false';
+				// place the image on the page.
+				$('#map_location').append(img);
+			} else {
+				console.warn('An access key is needed for Google Maps use.')
+				$('#map_location').append('<p class="error">Google Maps requires an access key!</p>')
+			}		
 
 			$.ajax({
 				url: 'includes/user-settings.php',
