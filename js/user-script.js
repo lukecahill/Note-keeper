@@ -65,52 +65,56 @@
 			}
 		})
 		.done(function(data, result) {
-
 			data = JSON.parse(data);
-			var color = data[0];
-			var order = data[1];
-			
-			var $selectColor = $('#select-tag-color');
-			var $item = $selectColor.find('option[value={0}]'.format(color));
-			$item.remove();
-			$selectColor.find('option:eq(0)').before($item);
-			$('#select-tag-color > option:eq(0)').attr('selected', true);
-			
-			$noteOrder = $('#options-note-order');
-			$item = $noteOrder.find('option[value={0}]'.format(order));
-			$item.remove();
-			$noteOrder.find('option:eq(0)').before($item);
-			$('#options-note-order > option:eq(0)').attr('selected', true);
-			
-			if(data[2] === "true") {
-				$('#search_title').prop('checked', true);
-			}
-			
-			if(data[3] === "true") {
-				$('#search_text').prop('checked', true);
-			}
-			
-			if(data[4] === "true") {
-				$('#search_mark_done').prop('checked', true);
-			}
-			
-			$('#total_notes').append(data[5]);
-			
-			data[6].reverse();
-			$recentIps.append('<b>Most Recent</b>');
-			$.each(data[6], function(i, v) {
-				$recentIps.append('<p>{0}</p>'.format(v));
-			});
+			populateOptions(data);
 
-			if(data[7] === 'dark') {
-				$('#theme_checkbox').prop('checked', true);
-			}
-
-			localStorage.setItem('theme', data[7]);
 		})
 		.fail(function(error) {
 			console.log('An error occurred', error);
 		});
+	}
+
+	function populateOptions(data) {
+		var color = data[0];
+		var order = data[1];
+		
+		var $selectColor = $('#select-tag-color');
+		var $item = $selectColor.find('option[value={0}]'.format(color));
+		$item.remove();
+		$selectColor.find('option:eq(0)').before($item);
+		$('#select-tag-color > option:eq(0)').attr('selected', true);
+		
+		$noteOrder = $('#options-note-order');
+		$item = $noteOrder.find('option[value={0}]'.format(order));
+		$item.remove();
+		$noteOrder.find('option:eq(0)').before($item);
+		$('#options-note-order > option:eq(0)').attr('selected', true);
+		
+		if(data[2] === "true") {
+			$('#search_title').prop('checked', true);
+		}
+		
+		if(data[3] === "true") {
+			$('#search_text').prop('checked', true);
+		}
+		
+		if(data[4] === "true") {
+			$('#search_mark_done').prop('checked', true);
+		}
+		
+		$('#total_notes').append(data[5]);
+		
+		data[6].reverse();
+		$recentIps.append('<b>Most Recent</b>');
+		$.each(data[6], function(i, v) {
+			$recentIps.append('<p>{0}</p>'.format(v));
+		});
+
+		if(data[7] === 'dark') {
+			$('#theme_checkbox').prop('checked', true);
+		}
+
+		localStorage.setItem('theme', data[7]);
 	}
 	
 	/**
