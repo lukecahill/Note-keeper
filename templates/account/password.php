@@ -35,7 +35,7 @@ if(isset($_POST['new-password']) && isset($_POST['confirm-password']) && isset($
 	<?php if($error !== '') echo $error; ?>
 	<h4 id="password-header">
 		Change your password here.
-		<span class="password_span glyphicon glyphicon-chevron-up">
+		<span class="password_span span_float_right glyphicon glyphicon-chevron-up">
 		</span>
 	</h4>
 	<div id="password-change">
