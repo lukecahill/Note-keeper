@@ -429,6 +429,12 @@
 	* Posts the users coordinates into the database for future use.
 	**/
 	if("geolocation" in navigator) {
+		var isChrome = /chrom(e|ium)/.test(navigator.userAgent.toLowerCase());
+		if((location.protocol !== 'https:') && isChrome) {
+			console.warn('Geolocation cannot be used on insecure domains using Chrome');
+			$('#map_location').append('<p class="error">Geolocation cannot be used on insecure HTTP using Chrome!</p>')
+			return;
+		}
 		navigator.geolocation.getCurrentPosition(function(position) {
 			console.log(position.coords.latitude, position.coords.longitude);
 			var longitude = position.coords.longitude;

@@ -267,6 +267,8 @@
 		$('input:checkbox[name=new-tag]:checked').each(function() {
 			tagArray.push($(this).val());
 		});
+
+		document.getElementById('add-note-button').disabled = true;
 		
 		$.ajax({
 			url: 'includes/NoteApi.php',
@@ -306,6 +308,7 @@
 				$('#first-note').remove();
 
 				tagsToAdd = [];
+				document.getElementById('add-note-button').disabled = false;
 				toastr.success('Note has been added successfully!');
 				$newNoteSection.hide();
 			} else {
