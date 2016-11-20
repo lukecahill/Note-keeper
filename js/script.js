@@ -185,7 +185,7 @@
 			}
 		});
 			
-		$.each(hide, function(index, value) {
+		hide.forEach(function(value, index) {
 			$(value).hide();
 		});
 		
@@ -402,7 +402,7 @@
 		$('#edit-note-tags').empty();
 		$('#edit-note-title').val(title);
 		$('#edit-note-text').val(text);		
-		$.each(tagArray, function(index, value) {
+		tagArray.forEach(function(value, index) {
 			$('#edit-note-tags').append('<div class="checkbox"><label><input type="checkbox" checked name="edit-tag" data-tag="{0}" value="{0}">{0}</label></div>'.format(value));
 		});
 		
@@ -544,7 +544,7 @@
 				$(note).find('.note-tags').remove();
 				var tags = '';
 				
-				$.each(tagArray, function(index, value) {
+				tagArray.forEach(function(value, index) {
 					tags += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(color, value);
 				});
 				
