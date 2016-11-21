@@ -422,17 +422,43 @@
 	});
 
 	/**
+	* @function geolocationDatabase
+	*
+	* Posts the users coordinates into the database for future use.
+	**/
+	function geolocationDatabase(latitude, longitude) {
+		$.ajax({
+			url: 'includes/user-settings.php',
+			method: 'POST',
+			data: {
+				action: 'location',
+				latitude: latitude,
+				longitude: longitude,
+				id: userId
+			}
+		})
+		.done(function(data) {
+			data = JSON.parse(data);
+			if(data === 'success') {
+				console.log('Saved');
+			}
+		})
+		.error(function(data) {
+			console.warn('Could not save location');
+		});
+	}
+
+	/**
 	* @function Anonymous Geolocation function
 	*
 	* Checks that Geolocation API can be used, and then gets the users latitude and longitude from this.
 	* Uses Google Maps API to then get a map of the users coordinates, which is then displayed in an image.
-	* Posts the users coordinates into the database for future use.
 	**/
 	if("geolocation" in navigator) {
 		var isChrome = /chrom(e|ium)/.test(navigator.userAgent.toLowerCase());
 		if((location.protocol !== 'https:') && isChrome) {
 			console.warn('Geolocation cannot be used on insecure domains using Chrome');
-			$('#map_location').append('<p class="error">Geolocation cannot be used on insecure HTTP using Chrome!</p>')
+			$('#map_location').append('<p class="error">Geolocation cannot be used on insecure HTTP using Chrome!</p>');
 			return;
 		}
 		navigator.geolocation.getCurrentPosition(function(position) {
@@ -447,30 +473,12 @@
 				// place the image on the page.
 				$('#map_location').append(img);
 			} else {
-				console.warn('An access key is needed for Google Maps use.')
-				$('#map_location').append('<p class="error">Google Maps requires an access key!</p>')
-			}		
-
-			$.ajax({
-				url: 'includes/user-settings.php',
-				method: 'POST',
-				data: {
-					action: 'location',
-					latitude: latitude,
-					longitude: longitude,
-					id: userId
-				}
-			})
-			.done(function(data) {
-				data = JSON.parse(data);
-				if(data === 'success') {
-					console.log('Saved');
-				}
-			})
-			.error(function(data) {
-				console.warn('Could not save location');
-			});
+				console.warn('An access key is needed for Google Maps use.');
+				$('#map_location').append('<p class="error">Google Maps requires an access key!</p>');
+			}
 		});
+
+		geolocationDatabase(latitude, longitude);
 	} else {
 		console.warn('Geolocation is not available');
 	}
