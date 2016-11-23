@@ -33,6 +33,8 @@
 			</span>
 		</p>
 
+		<?php include 'templates/account/share-notes.html'; ?>
+
 		<?php include 'templates/account/color-select.html'; ?>
 
 		<?php include 'templates/account/note-order.html'; ?>
