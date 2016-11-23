@@ -27,6 +27,8 @@ h1 span.glyphicon-comment {
   background-color: #eee;
   min-height: 105px;
   border-radius: 6px; }
+  .note .glyph-tag-lower {
+    top: 5px; }
   .note .note-glyphicons {
     text-align: right;
     font-size: 1.2em;
@@ -174,7 +176,7 @@ p #first-note, p #no-results {
 .span_float_right {
   float: right; }
 
-#password-header, #color-header, #order-header, #search-header, #recent-ips-header, #theme-header {
+#password-header, #color-header, #order-header, #search-header, #recent-ips-header, #theme-header, #share-header, #map-header {
   cursor: pointer; }
 
 .password_reset {
