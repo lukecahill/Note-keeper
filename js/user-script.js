@@ -1,13 +1,13 @@
 (function() {
 	
 	// want to hide these initially
-	$('#password-change, #search-div, #order-div, #color-div, #recent-ips-div, #theme-div, #maps-div').hide();
-	var passwordDown = false, colorDown = false, orderDown = false, searchDown = false, ipsDown = false, themeDown = false, mapsDown = false;
+	$('#password-change, #search-div, #order-div, #color-div, #recent-ips-div, #theme-div, #maps-div, #share-div').hide();
+	var passwordDown = false, colorDown = false, orderDown = false, searchDown = false, ipsDown = false, themeDown = false, mapsDown = false, shareDown = false;
 	
 	// cache the DOM
 	var $passwordDropdown = $('.password_span'), $orderDropdown = $('.order_dropdown_span'), $searchDropdown = $('.search_dropdown_span'), 
 		$colorDropdown = $('.color_dropdown_span'), $recentIps = $('#recent-ips-div'), $ipsDropdown = $('.recent_ips_span'), 
-		$themeDropdown = $('.theme_dropdown_span'), $mapsDropdown = $('.maps_dropdown_span');
+		$themeDropdown = $('.theme_dropdown_span'), $mapsDropdown = $('.maps_dropdown_span'), $shareDropdown = $('.share_dropdown_span');
 	
 	/**
 	* @function localStorageTest
@@ -418,6 +418,25 @@
 			$mapsDropdown.addClass('glyphicon-chevron-down');
 			$mapsDropdown.removeClass('glyphicon-chevron-up');
 			mapsDown = true;
+		}
+	});
+		
+	/**
+	* @function
+	* TODO 
+	* 
+	**/
+	$('#share-header').on('click', function() {
+		$('#share-div').toggle();
+		
+		if(shareDown) {
+			$shareDropdown.addClass('glyphicon-chevron-up');
+			$shareDropdown.removeClass('glyphicon-chevron-down');
+			shareDown = false;
+		} else {
+			$shareDropdown.addClass('glyphicon-chevron-down');
+			$shareDropdown.removeClass('glyphicon-chevron-up');
+			shareDown = true;
 		}
 	});
 
