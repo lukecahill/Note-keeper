@@ -205,7 +205,7 @@
 			note = '<div class="note" data-id="{0}">'.format(value.id);
 			note += '<h4 class="note-title">{0}</h4><p class="note-text">{1}</p>'.format(value.title, value.text);
 			if(data[index][0].length > 0) {
-				note += '<div class="tag-container">';
+				note += '<div class="tag-container"><span class="glyphicon glyphicon-tag glyph-tag-lower"></span>';
 				data[index][0].forEach(function(v, i) {
 					note += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(value.color, v);
 				});
