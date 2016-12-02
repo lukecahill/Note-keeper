@@ -9,6 +9,7 @@
 	
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="js/common.js"></script>
     <script src="js/password-reset-confirm.js"></script>
 
 <?php include 'templates/footer.html'; ?>
