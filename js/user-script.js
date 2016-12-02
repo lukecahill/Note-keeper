@@ -8,7 +8,39 @@
 	var $passwordDropdown = $('.password_span'), $orderDropdown = $('.order_dropdown_span'), $searchDropdown = $('.search_dropdown_span'), 
 		$colorDropdown = $('.color_dropdown_span'), $recentIps = $('#recent-ips-div'), $ipsDropdown = $('.recent_ips_span'), 
 		$themeDropdown = $('.theme_dropdown_span'), $mapsDropdown = $('.maps_dropdown_span'), $shareDropdown = $('.share_dropdown_span');
-
+	
+	/**
+	* @function String format
+	*
+	* Add functionality to String object, for C# style string formatting.
+	* Usage: "{0} is dead, but {1} is alive! {0} {2}".format("ASP", "ASP.NET")
+	* From; http://stackoverflow.com/a/4673436
+	**/
+	if (!String.prototype.format) {
+		String.prototype.format = function() {
+			var args = arguments;
+			return this.replace(/{(\d+)}/g, function(match, number) { 
+				return typeof args[number] != 'undefined' ? args[number] : match;
+			});
+		};
+	}
+	
+	/**
+	* @function localStorageTest
+	*
+	* Checks that the localStorage is enabled on the users browser.
+	**/
+	function localStorageTest() {
+		var test = 'test';
+		try {
+			localStorage.setItem(test, test);
+			localStorage.removeItem(test);
+			return true;
+		} catch(e) {
+			return false;
+		}
+	}
+	
 	/**
 	* Check the local storage theme item. 
 	* If the item is light then remove the dark-them class.
