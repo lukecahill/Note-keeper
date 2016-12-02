@@ -193,6 +193,9 @@ p #first-note, p #no-results {
   height: 350px;
   width: 350px;
   margin: 0 auto; }
+  #map_location * {
+    overflow: visible !important;
+    max-width: none !important; }
 
 .password_reset_container {
   text-align: right; }
