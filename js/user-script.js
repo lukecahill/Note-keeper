@@ -452,7 +452,7 @@
 		var isChrome = /chrom(e|ium)/.test(navigator.userAgent.toLowerCase());
 		if((location.protocol !== 'https:') && isChrome) {
 			console.warn('Geolocation cannot be used on insecure domains using Chrome');
-			$('#map_location').append('<p class="error">Geolocation cannot be used on insecure HTTP using Chrome!</p>');
+			$('#map_location').html('<p class="error">Geolocation cannot be used on insecure HTTP using Chrome!</p>');
 			return;
 		}
 		navigator.geolocation.getCurrentPosition(function(position) {
@@ -460,19 +460,9 @@
 			var longitude = position.coords.longitude;
 			var latitude = position.coords.latitude;
 
-			var img = new Image();
-			// need an access key for google
-			if(typeof GOOGLE_KEY !== 'undefined') {
-				img.src = 'https://maps.googleapis.com/maps/api/staticmap?center=' + latitude + ',' + longitude + '&zoom=13&size=300x300&sensor=false';
-				// place the image on the page.
-				$('#map_location').append(img);
-			} else {
-				console.warn('An access key is needed for Google Maps use.');
-				$('#map_location').append('<p class="error">Google Maps requires an access key!</p>');
-			}
+			geolocationDatabase(latitude, longitude);
 		});
 
-		geolocationDatabase(latitude, longitude);
 	} else {
 		console.warn('Geolocation is not available');
 	}
