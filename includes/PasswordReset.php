@@ -63,7 +63,7 @@ class PasswordReset {
 	*/
 	function sendResetConfirmation() {
 		$hashEmail = md5($this->email); 
-		$confirm = new Email($this->email, $hashEmail, $this->db, true); 
+		$confirm = new SendEmail($this->email, $hashEmail, $this->db, true); 
 		$confirm->constructConfirmLink();
 	}
 }

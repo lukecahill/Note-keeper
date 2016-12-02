@@ -4,7 +4,7 @@ spl_autoload_register(function ($class_name) {
 	include $class_name . '.php';
 });
 
-require_once 'email-confirmation/send.php';
+require_once 'email-confirmation/SendEmail.php';
 
 /**
 * Register is used to register the user in the database. 
@@ -131,7 +131,7 @@ class Register extends Authentication {
 	* @return void
 	*/
 	function sendConfirmation() {
-		$confirm = new Email($this->email, $this->emailHash, $this->db);
+		$confirm = new SendEmail($this->email, $this->emailHash, $this->db);
 		$confirm->constructConfirmLink();
 	}
 }

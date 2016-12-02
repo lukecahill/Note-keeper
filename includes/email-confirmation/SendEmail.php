@@ -1,5 +1,5 @@
 <?php
-class Email {
+class SendEmail {
 	public $db = null;
 	public $email = '';
 	public $from = 'luke@lcahill.co.uk';
