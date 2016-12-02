@@ -262,7 +262,7 @@ p {
 	float: right;
 }
 
-#password-header, #color-header, #order-header, #search-header, #recent-ips-header, #theme-header, #share-header, #map-header {
+#password-header, #color-header, #order-header, #search-header, #recent-ips-header, #theme-header, #share-header, #maps-header {
 	cursor: pointer;
 }
 
@@ -277,6 +277,12 @@ p {
 	 &:hover {
 		 text-decoration: underline;
 	 }
+}
+
+#map_location {
+	height: 350px;
+	width: 350px;
+	margin: 0 auto;
 }
 
 .password_reset_container {
