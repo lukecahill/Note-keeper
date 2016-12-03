@@ -1,5 +1,7 @@
-<?php include 'templates/header.php'; ?>
-	
+<?php 
+include 'templates/header.php';
+include 'templates/notification.php'; 
+?>
 <div class="col-md-12 row">
 	<div class="row col-md-12">
 		<div class="col-sm-6">
