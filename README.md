@@ -15,6 +15,6 @@ Makes use of the browsers Geolocation API to find the users coordinates and disp
 
 BootStrap is being used for styling, with SCSS now being used to generate the custom CSS. Gulp.js is being used to minify the JS, and also for JSLint.
 
-The SQL used for this is provided in 'database.sql'.
+The SQL used for this is provided in 'database.sql' (this is for MySQL, but may work with other database systems - though this is not yet tested).
 
 This requires version 5.5 or greater of PHP. 
