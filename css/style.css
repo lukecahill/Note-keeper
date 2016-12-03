@@ -134,13 +134,13 @@ span .login-link {
   padding-bottom: 30px;
   margin-bottom: 10px; }
 
-#close-new-note {
+#close-new-note, #notification-close {
   float: right;
   font-weight: bold;
   color: #FF0000;
   padding: 4px; }
 
-#close-new-note:hover {
+#close-new-note:hover, #notification-close:hover {
   background-color: #FF0000;
   color: #FFF;
   border-radius: 6px;
@@ -193,9 +193,25 @@ p #first-note, p #no-results {
   height: 350px;
   width: 350px;
   margin: 0 auto; }
-  #map_location * {
-    overflow: visible !important;
-    max-width: none !important; }
+
+.note {
+  border: 1px solid #ddd;
+  padding: 8px;
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 80%;
+  background-color: #eee;
+  min-height: 105px;
+  border-radius: 6px; }
+
+#system-notification {
+  border: 1px solid #ddd;
+  padding: 8px;
+  margin: 2% auto;
+  width: 90%;
+  background-color: #eee;
+  min-height: 105px;
+  border-radius: 6px; }
 
 .password_reset_container {
   text-align: right; }
