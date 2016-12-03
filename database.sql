@@ -2,6 +2,12 @@ CREATE DATABASE notes;
 
 USE notes;
 
+CREATE TABLE note_announcements (
+	NotificationId INT(4) PRIMARY KEY,
+	AnnouncementText VARCHAR(1024),
+	ShowUntil DATE NOT NULL
+);
+
 CREATE TABLE note_users (
     UserId CHAR(32) PRIMARY KEY,
     UserEmail VARCHAR(255),
