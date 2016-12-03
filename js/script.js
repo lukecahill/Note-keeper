@@ -637,6 +637,15 @@
 	$('#close-new-note').on('click', function() {
 		$newNoteSection.hide();
 	});
+
+	/**
+	* @function
+	* 
+	* Hides the sytem notification when the close button is clicked.
+	**/
+	$('#notification-close').on('click', function() {
+		$('#system-notification-group').hide();
+	});
 	
 	/**
 	* @function
