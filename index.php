@@ -1,6 +1,6 @@
 <?php 
 include 'templates/header.php';
-include 'templates/notification.php'; 
+include 'templates/notification.html'; 
 ?>
 <div class="col-md-12 row">
 	<div class="row col-md-12">
