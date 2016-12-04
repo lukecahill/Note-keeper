@@ -86,7 +86,7 @@
 				}
 				
 				$tagChooser.empty();
-				$tagChooser.append($('<option></option>').attr('value', 'showall').attr('selected', true).text('-- Show all --')); 
+				$tagChooser.append($('<option></option>').attr('value', 'note_keeper_showall').attr('selected', true).text('-- Show all --')); 
 				data[1].forEach(function(value, key) {   
 					$tagChooser
 						.append($('<option></option>')
@@ -203,7 +203,7 @@
 				note += '</div>';
 			}
 
-			if(value.complete == '0') {
+			if(value.complete === '0') {
 
 				if(data[index][0].length > 0) {
 					note += '<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span>';
@@ -275,7 +275,7 @@
 		.done(function(data, result) {
 
 			data = JSON.parse(data);
-			if(data[0] == 1) {
+			if(data[0] === true) {
 				var tags = '';
 				$.each(tagArray, function(index, value) {
 					tags += '<span class="note-tags note-tags-{0}" title="Click to show all notes with this tag." data-tag="{1}">{1}</span>'.format(color, value);
@@ -484,7 +484,7 @@
 			}
 		})
 		.done(function(data, result) {
-			if(data == 1) {
+			if(data === '1') {
 				$this.closest('.note').fadeOut(500, function() {
 					$this.closest('.note').remove();
 				});
@@ -529,7 +529,7 @@
 		})
 		.done(function(data, result) {
 			// update the DOM here.
-			if(data == 1) {
+			if(data === '1') {
 				//text = text.replace(/\n/g, '<br>');
 				var note = $('[data-id="' + noteId + '"]');
 				$(note).children('.note-title')[0].textContent = title;
@@ -566,7 +566,7 @@
 	**/
 	$('#tag-chooser').on('change', function() {
 		var value = this.value;
-		if(value !== 'showall') {
+		if(value !== 'note_keeper_showall') {
 			showTags(this.value);
 		} else {
 			$('.note').show();
@@ -592,7 +592,7 @@
 	* @param {event} event
 	**/
 	$('#search-note-text').on('keyup', function(event) {
-		if(event.keyCode == 13) {
+		if(event.keyCode === 13) {
 			var text = $('#search-note-text').val();
 			searchNotes(text);
 		}
@@ -672,7 +672,7 @@
 	* @param {event} event
 	**/
 	$('#add-new-tag-text').on('keyup', function(event) {
-		if(event.keyCode == 13) {
+		if(event.keyCode === 13) {
 			addTag('#add-note-tags', '#add-new-tag-text', 2);
 		}
 	});
@@ -684,7 +684,7 @@
 	* @param {event} event
 	**/
 	$('#edit-new-tag-text').on('keyup', function(event) {
-		if(event.keyCode == 13) {
+		if(event.keyCode === 13) {
 			addTag('#edit-note-tags', '#edit-new-tag-text', 1);
 		}
 	});
