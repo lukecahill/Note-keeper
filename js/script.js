@@ -5,7 +5,7 @@
 	var $noteList = $('#note-list'), $completedNoteButton = $('#complete-notes-button');
 	var $newNoteSection = $('#new-note-section'), $tagChooser = $('#tag-chooser'), $noteTags = $('#add-note-tags');
 	var color = 'red', dropdownTags = [];
-	
+
 	// configuration for toastr notificiations.
 	if(typeof(toastr) != 'undefined') {
 		toastr.options = {
@@ -23,6 +23,8 @@
 	};
 	loadNotes(initialLoad);
 
+	checkNotifications();
+
 	/**
 	* Check the local storage theme item. 
 	* If the item is light then remove the dark-them class.
@@ -36,6 +38,59 @@
 			$('html').addClass('dark-theme');
 			$('.container-fluid.account-dark').addClass('account-dark');
 		}
+	}
+
+	function checkNotifications() {
+		if(!localStorageTest()) {
+			console.log('localStorage is not supported.');
+			return;
+		}
+		var last = localStorage.getItem('notification');
+
+		$.ajax({
+			method: 'POST',
+			url: 'includes/Notifications.php',
+			data: {
+				last: last,
+				id: userId,
+				action: 'check'
+			}
+		})
+		.done(function(data, result) {
+			console.log(data, result);
+			data = JSON.parse(data);
+			if(data === 'none_found') {
+				$('#system-notification-group').hide();
+				return;
+			}
+			if(data > last) {
+				getNotification(last);
+			} else {
+				$('#system-notification-group').hide();
+			}
+		})
+		.fail(function(error) {
+			console.log(error);
+		});
+	}
+
+	// could this be changed by getting the latest as the same time as checking?
+	function getNotification(last) {
+		$.ajax({
+			method: 'POST',
+			url: 'includes/Notifications.php',
+			data: {
+				last: last,
+				id: userId,
+				action: 'get'
+			}
+		})
+		.done(function(data, result) {
+			console.log(data, result);
+		})
+		.fail(function(error) {
+			console.log(error);
+		});
 	}
 	
 	/**
