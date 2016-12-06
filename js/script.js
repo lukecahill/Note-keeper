@@ -5,6 +5,7 @@
 	var $noteList = $('#note-list'), $completedNoteButton = $('#complete-notes-button');
 	var $newNoteSection = $('#new-note-section'), $tagChooser = $('#tag-chooser'), $noteTags = $('#add-note-tags');
 	var color = 'red', dropdownTags = [];
+	var $systemNotification = $('#system-notification-group');
 
 	// configuration for toastr notificiations.
 	if(typeof(toastr) != 'undefined') {
@@ -57,16 +58,15 @@
 			}
 		})
 		.done(function(data, result) {
-			console.log(data, result);
 			data = JSON.parse(data);
 			if(data === 'none_found') {
-				$('#system-notification-group').hide();
+				$systemNotification.hide();
 				return;
 			}
 			if(data > last) {
 				getNotification(last);
 			} else {
-				$('#system-notification-group').hide();
+				$systemNotification.hide();
 			}
 		})
 		.fail(function(error) {
@@ -301,8 +301,9 @@
 	**/
 	$('#add-note-button').on('click', function() {
 		
-		var noteText = $('#add-note-text').val();
-		var noteTitle = $('#add-note-title').val();
+		var noteText = document.getElementById('add-note-text').value;
+		var noteTitle = document.getElementById('add-note-title').value;
+		var i = "true";
 		var tagArray = [];
 		
 		if(noteText.trim() === '' && noteTitle.trim() === '') {
@@ -347,8 +348,8 @@
 				$noteList.append('<div class="note" data-id="{0}"><h4 class="note-title">{1}</h4><p class="note-text">{2}</p>{3}<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>'.format(data[1], noteTitle, noteText, tags));
 					
 				// Reset and confirmation.
-				$('#add-note-title').val('');
-				$('#add-note-text').val('');
+				document.getElementById('add-note-title').value = '';
+				document.getElementById('add-note-text').value = '';
 				$('input:checkbox[name=new-tag]').removeAttr('checked');
 				$('.new-note-checkbox').remove();
 				$('#first-note').remove();
@@ -384,7 +385,7 @@
 	**/
 	$noteList.on('click', '.note-tags', function() {
 		
-		var tag = $(this).data('tag');
+		var tag = this.dataset.tag;
 		showTags(tag);
 	});
 	
@@ -449,8 +450,9 @@
 		
 		$('#note-edit-modal').modal('show');		
 		$('#edit-note-tags').empty();
-		$('#edit-note-title').val(title);
-		$('#edit-note-text').val(text);		
+		
+		document.getElementById('edit-note-title').value = title;
+		document.getElementById('edit-note-title').value = text;
 		tagArray.forEach(function(value, index) {
 			$('#edit-note-tags').append('<div class="checkbox"><label><input type="checkbox" checked name="edit-tag" data-tag="{0}" value="{0}">{0}</label></div>'.format(value));
 		});
@@ -562,8 +564,8 @@
 	**/
 	$('#save-note-button').on('click', function() {
 		
- 		var title = $('#edit-note-title').val();
-		var text = $('#edit-note-text').val();
+		var title = document.getElementById('edit-note-title');
+		var text = document.getElementById('edit-note-text');
 		var tagArray = [];
 		var noteId = $('#save-note-button').data('id');
 		
@@ -636,7 +638,7 @@
 	* Passes the value to the searchNotes function.
 	**/
 	$('#search-note-button').on('click', function() {
-		var text = $('#search-note-text').val();
+		var text = document.getElementById('search-note-text').value;
 		searchNotes(text);
 	});
 	
@@ -648,7 +650,7 @@
 	**/
 	$('#search-note-text').on('keyup', function(event) {
 		if(event.keyCode === 13) {
-			var text = $('#search-note-text').val();
+			var text = document.getElementById('search-note-text').value;
 			searchNotes(text);
 		}
 	});
@@ -660,8 +662,9 @@
 	* @param {event} event
 	**/
 	$('#show-search-button').on('click', function() {
+		document.getElementById('tag-chooser-input').style.display = 'none';
 		$('#search-input').toggle();
-		$('#tag-chooser-input').hide();
+		//$('#tag-chooser-input').hide();
 	});
 	
 	/**
@@ -671,7 +674,8 @@
 	* @param {event} event
 	**/
 	$('#show-tag-chooser-button').on('click', function() {
-		$('#search-input').hide();
+		document.getElementById('search-input').style.display = 'none';
+		//$('#search-input').hide();
 		$('#tag-chooser-input').toggle();
 	});
 	
@@ -699,6 +703,7 @@
 	* Hides the sytem notification when the close button is clicked.
 	**/
 	$('#notification-close').on('click', function() {
+		//document.getElementById('system-notification-group').style.display = 'none';
 		$('#system-notification-group').hide();
 	});
 	
@@ -708,6 +713,7 @@
 	* Hides the validate notice displayed on the note text input when a character is entered
 	**/
 	$('#add-note-text').on('keyup', function() {
+		//document.getElementsByClassName('note-text-validation').style.display = 'none';
 		$('.note-text-validation').hide();
 	});
 	
@@ -717,6 +723,7 @@
 	* Hides the validate notice displayed on the edit note text input when a character is entered
 	**/
 	$('#edit-note-text').on('keyup', function() {
+		//document.getElementsByClassName('edit-note-text-validation').style.display = 'none';
 		$('.edit-note-text-validation').hide();
 	});
 	

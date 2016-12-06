@@ -66,15 +66,15 @@
 		$('#options-note-order > option:eq(0)').attr('selected', true);
 		
 		if(data[2] === "true") {
-			$('#search_title').prop('checked', true);
+			document.getElementById('search_title').checked = true;
 		}
 		
 		if(data[3] === "true") {
-			$('#search_text').prop('checked', true);
+			document.getElementById('search_text').checked = true;
 		}
 		
 		if(data[4] === "true") {
-			$('#search_mark_done').prop('checked', true);
+			document.getElementById('search_mark_done').checked = true;
 		}
 		
 		$('#total_notes').append(data[5]);
@@ -86,7 +86,7 @@
 		});
 
 		if(data[7] === 'dark') {
-			$('#theme_checkbox').prop('checked', true);
+			document.getElementById('theme_checkbox').checked = true;
 		}
 
 		localStorage.setItem('theme', data[7]);
@@ -150,9 +150,9 @@
 	* when the search function is used.
 	**/
 	$('#options-search-button').on('click', function() {
-		var title = $('#search_title').is(':checked');
-		var text = $('#search_text').is(':checked');
-		var searchComplete = $('#search_mark_done').is(':checked');
+		var title = document.getElementById('search_title').checked;
+		var text = document.getElementById('search_text').checked;
+		var searchComplete = document.getElementById('search_mark_done').checked;
 		
 		if(title === false && text === false) {
 			alert('You must chose to search by either one or both of title and text!');
@@ -189,9 +189,9 @@
 	**/
 	$('#change-password-form').on('submit', function(e) {
 		$('.validation-error').remove();
-		var newPassword = $('#new-password').val();
-		var confirmPassword = $('#confirm-password').val();
-		var old = $('#old-password').val();
+		var newPassword = document.getElementById('new-password').value;
+		var confirmPassword = document.getElementById('confirm-password').value;
+		var old = document.getElementById('old-password').value;
 		
 		if(!confirm('Please confirm you wish to change your password.')) {
 			e.preventDefault();
@@ -223,7 +223,7 @@
 	* Changes the front-end theme. 
 	**/
 	$('#theme-button').on('click', function() {
-		var theme = $('#theme_checkbox').is(':checked');
+		var theme = document.getElementById('theme_checkbox').checked;
 		var color = 'light';
 
 		if(theme) {
