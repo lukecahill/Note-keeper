@@ -25,6 +25,7 @@
 	}
 	
 	getSettings();
+
 	/**
 	* @function
 	*
@@ -49,6 +50,12 @@
 		});
 	}
 
+	/**
+	* @function populateOptions
+	*
+	* Populate the users options with what has been stored in the database.
+	* @param {object} data - the data which has been loaded from the DB.
+	**/
 	function populateOptions(data) {
 		var color = data[0];
 		var order = data[1];
@@ -466,5 +473,10 @@
 	} else {
 		console.warn('Geolocation is not available');
 	}
+
+	$('#share-button').on('click', function() {
+		var email = document.getElementById('user_email').value;
+		
+	});
 	
 })();
