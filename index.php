@@ -1,6 +1,15 @@
 <?php 
 include 'templates/header.php';
-include 'templates/notification.html'; 
+
+$whitelist = array(
+    '127.0.0.1',
+    '::1',
+	'localhost'
+);
+
+if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
+   include 'templates/notification.html'; 
+}
 ?>
 <div class="col-md-12 row">
 	<div class="row col-md-12">
