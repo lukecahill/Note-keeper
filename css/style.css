@@ -189,6 +189,9 @@ p #first-note, p #no-results {
   .password_reset:hover {
     text-decoration: underline; }
 
+#system-notification-group {
+  display: none; }
+
 #map_location {
   height: 350px;
   width: 350px;
