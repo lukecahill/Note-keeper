@@ -60,13 +60,11 @@
 		.done(function(data, result) {
 			data = JSON.parse(data);
 			if(data === 'none_found') {
-				$systemNotification.hide();
 				return;
 			}
 			if(data > last) {
 				getNotification(last);
-			} else {
-				$systemNotification.hide();
+				$systemNotification.show();
 			}
 		})
 		.fail(function(error) {
