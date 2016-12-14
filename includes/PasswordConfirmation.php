@@ -35,7 +35,7 @@ class PasswordConfirmation {
 	* @return bool - true if account and confirmation exists, false if not.
 	*/
 	function check() {
-		$stmt = $this->db->prepare('SELECT UserId FROM note_users WHERE UserId = :id AND EmailConfirmation = :hash AND Active = 2');
+		$stmt = $this->db->prepare('SELECT UserId FROM note_users WHERE UserId = :id AND EmailConfirmation = :hash');
 		$stmt->execute(array(':id' => $this->id, ':hash' => $this->hash));
 		
 		if($stmt->rowCount() != 0) {

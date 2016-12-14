@@ -28,7 +28,7 @@ class SendEmail {
 		$url = $_SERVER['SERVER_NAME'];
 		if($this->reset) {
 			$link = 'http://' . $url . '/notes/reset.php?hash=' . $confirm . '&user=' . $this->userId;
-			$this->message = 'Please follow this link to reset your password ' . $link . '\n\nIf you did not request this then you can ignore this email.';
+			$this->message = 'Please follow this link to reset your password ' . $link . ' . If you did not request this then you can ignore this email.';
 			$this->subject = 'Note Keeper - reset your password.';
 		} else {
 			$link = 'http://' . $url . '/notes/confirm.php?hash=' . $confirm . '&user=' . $this->userId;

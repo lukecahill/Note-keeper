@@ -1,10 +1,10 @@
 <?php
 
+include 'email-confirmation/SendEmail.php';
+
 spl_autoload_register(function ($class_name) {
 	include $class_name . '.php';
 });
-
-require_once 'email-confirmation/SendEmail.php';
 
 /**
 * Register is used to register the user in the database. 

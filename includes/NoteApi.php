@@ -106,6 +106,10 @@ class NoteApi extends Note {
 		$status = $stmt->execute(array(':id' => $id));
 		echo $status;
 	}
+
+	function shareNotes() {
+		
+	}
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
