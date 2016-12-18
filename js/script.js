@@ -450,7 +450,7 @@
 		$('#edit-note-tags').empty();
 		
 		document.getElementById('edit-note-title').value = title;
-		document.getElementById('edit-note-title').value = text;
+		document.getElementById('edit-note-text').value = text;
 		tagArray.forEach(function(value, index) {
 			$('#edit-note-tags').append('<div class="checkbox"><label><input type="checkbox" checked name="edit-tag" data-tag="{0}" value="{0}">{0}</label></div>'.format(value));
 		});
