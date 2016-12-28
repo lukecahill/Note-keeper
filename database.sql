@@ -21,7 +21,7 @@ CREATE TABLE note_users (
 	PasswordAttempts TINYINT DEFAULT 0
 );
 
-CREATE TABLE user_preferences (
+CREATE TABLE note_user_preferences (
 	PreferenceId INT(4) PRIMARY KEY AUTO_INCREMENT,
 	UserId VARCHAR(60),
     TagColor VARCHAR(6) DEFAULT 'red',

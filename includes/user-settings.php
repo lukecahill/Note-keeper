@@ -62,7 +62,7 @@ class UserSettings {
 	function setTagColor() {
 		$this->color = $_POST['color'];
 		
-		$stmt = $this->db->prepare('UPDATE user_preferences SET TagColor = :color WHERE UserId = :id ');
+		$stmt = $this->db->prepare('UPDATE note_user_preferences SET TagColor = :color WHERE UserId = :id ');
 		$stmt->execute(array( ':color' => $this->color, ':id' => $this->id));
 	}
 	
@@ -74,7 +74,7 @@ class UserSettings {
 	function setNoteOrder() {
 		$this->order = $_POST['order'];
 		
-		$stmt = $this->db->prepare('UPDATE user_preferences SET NoteOrder = :order WHERE UserId = :id ');
+		$stmt = $this->db->prepare('UPDATE note_user_preferences SET NoteOrder = :order WHERE UserId = :id ');
 		$stmt->execute(array(':order' => $this->order, ':id' => $this->id));
 	}
 	
@@ -89,7 +89,7 @@ class UserSettings {
 		$complete = $_POST['complete'];
 		$arr = array($title, $text, $complete);
 		$arr = serialize($arr);
-		$stmt = $this->db->prepare('UPDATE user_preferences SET SearchOptions = :options WHERE UserId = :id');
+		$stmt = $this->db->prepare('UPDATE note_user_preferences SET SearchOptions = :options WHERE UserId = :id');
 		$stmt->execute(array(':options' => $arr, ':id' => $this->id));
 	}
 
@@ -100,7 +100,7 @@ class UserSettings {
 	**/
 	function setTheme() {
 		$color = $_POST['theme'];
-		$stmt = $this->db->prepare('UPDATE user_preferences SET ColorTheme = :color WHERE UserId = :id');
+		$stmt = $this->db->prepare('UPDATE note_user_preferences SET ColorTheme = :color WHERE UserId = :id');
 		$stmt->execute(array(':color' => $color, ':id' => $this->id));
 		echo json_encode('success');
 	}
@@ -112,7 +112,7 @@ class UserSettings {
 	*/	
 	function getSettings() {
 		$stmt = $this->db->prepare('SELECT p.TagColor, p.NoteOrder, p.SearchOptions, u.RecentIps, p.ColorTheme
-									FROM user_preferences p
+									FROM note_user_preferences p
 									INNER JOIN note_users u ON p.UserId = u.UserId
 									WHERE p.UserId = :id 
 								');

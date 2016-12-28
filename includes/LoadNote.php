@@ -48,7 +48,7 @@ class LoadNote extends Note {
 		$auth = $_POST['auth'];
 
 		$stmt = $this->db->prepare("SELECT p.NoteOrder
-									FROM user_preferences p
+									FROM note_user_preferences p
 									INNER JOIN note_users u ON u.UserId = p.UserId 
 									WHERE u.UserId = :id
 									AND u.JsonAuthentication = :auth"
@@ -83,7 +83,7 @@ class LoadNote extends Note {
 		$this->search = '%' . $this->search . '%';
 		
 		$stmt = $this->db->prepare("SELECT p.NoteOrder, p.SearchOptions 
-									FROM user_preferences p
+									FROM note_user_preferences p
 									INNER JOIN note_users u ON u.UserId = p.UserId 
 									WHERE p.UserId = :id 
 									AND u.JsonAuthentication = :auth
@@ -204,7 +204,7 @@ class LoadNote extends Note {
 				p.TagColor, p.NoteOrder
 				FROM note n 
 				INNER JOIN note_users u ON u.UserId = n.UserId
-				INNER JOIN user_preferences p ON p.UserId = u.UserId
+				INNER JOIN note_user_preferences p ON p.UserId = u.UserId
 				WHERE NoteComplete = :complete
 				AND n.UserId = :userId';
 
@@ -236,7 +236,7 @@ class LoadNote extends Note {
 			n.NoteTags, n.NoteComplete, p.TagColor, p.NoteOrder
 			FROM note n 
 			INNER JOIN note_users u ON u.UserId = n.UserId
-			INNER JOIN user_preferences p ON p.UserId = u.UserId
+			INNER JOIN note_user_preferences p ON p.UserId = u.UserId
 			WHERE n.UserId = :userId";
 
 		if($title === 'true' && $text === 'true') {
@@ -244,7 +244,7 @@ class LoadNote extends Note {
 			n.NoteTags, n.NoteComplete, p.TagColor, p.NoteOrder
 			FROM note n 
 			INNER JOIN note_users u ON u.UserId = n.UserId
-			INNER JOIN user_preferences p ON p.UserId = u.UserId
+			INNER JOIN note_user_preferences p ON p.UserId = u.UserId
 			WHERE n.UserId = :userId
 			AND n.NoteTitle LIKE :searchtitle";
 			

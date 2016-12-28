@@ -115,12 +115,12 @@ class Register extends Authentication {
 	}
 	
 	/**  
-	* Creates a record for the users default preferences in the user_preferences table
+	* Creates a record for the users default preferences in the note_user_preferences table
 	*
 	* @return void
 	*/
 	function createUserPreferences() {
-		$stmt = $this->db->prepare('INSERT INTO user_preferences (UserId) VALUES (:id)');
+		$stmt = $this->db->prepare('INSERT INTO note_user_preferences (UserId) VALUES (:id)');
 		$stmt->execute(array(':id' => $this->emailHash));
 	}
 	

@@ -148,7 +148,7 @@ class Login extends Authentication {
 	function verify() {
 		$stmt = $this->db->prepare('SELECT u.UserEmail, u.UserPassword, u.UserId, u.Active, u.RecentIps, p.ColorTheme
 								FROM note_users u
-								INNER JOIN user_preferences p ON p.UserId = u.UserId
+								INNER JOIN note_user_preferences p ON p.UserId = u.UserId
 								WHERE u.UserEmail = :email 
 								LIMIT 1'
 							);
