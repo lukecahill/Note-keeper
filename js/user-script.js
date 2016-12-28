@@ -9,6 +9,8 @@
 		$colorDropdown = $('.color_dropdown_span'), $recentIps = $('#recent-ips-div'), $ipsDropdown = $('.recent_ips_span'), 
 		$themeDropdown = $('.theme_dropdown_span'), $mapsDropdown = $('.maps_dropdown_span'), $shareDropdown = $('.share_dropdown_span');
 	
+	var colors = ['blue', 'red', 'green', 'yellow', 'black'];
+
 	/**
 	* Check the local storage theme item. 
 	* If the item is light then remove the dark-them class.
@@ -106,6 +108,12 @@
 	**/
 	$('#tag-color-button').on('click', function() {
 		var color = $('#select-tag-color').val();
+
+		if(colors.indexOf(color) === -1) {
+			alert('Could not save color choice');
+			console.log('Color is not found');
+			return;
+		}
 		
 		$.ajax({
 			method: 'POST',
