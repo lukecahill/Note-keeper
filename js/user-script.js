@@ -481,10 +481,5 @@
 	} else {
 		console.warn('Geolocation is not available');
 	}
-
-	$('#share-button').on('click', function() {
-		var email = document.getElementById('user_email').value;
-		
-	});
 	
 })();

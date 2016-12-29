@@ -33,18 +33,6 @@
 			</span>
 		</p>
 
-		<?php
-			$whitelist = array(
-				'127.0.0.1',
-				'::1',
-				'localhost'
-			);
-
-			if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
-				include 'templates/account/share-notes.html';
-			} 
-		?>
-
 		<?php include 'templates/account/color-select.html'; ?>
 
 		<?php include 'templates/account/note-order.html'; ?>
