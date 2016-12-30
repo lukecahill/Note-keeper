@@ -238,12 +238,11 @@ label[for=tag-chooser] {
 	
 	a {
 		padding: 5px;
-	}
 
-	a:hover, a:focus, a:active {
-		padding: 5px;
-		border-radius: 6px;
-		background-color: #eee;
+		&:hover, &:active, &:focus {
+			border-radius: 6px;
+			background-color: #eee;
+		}
 	}
 }
 

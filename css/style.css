@@ -161,10 +161,9 @@ label[for=tag-chooser] {
   border-radius: 6px; }
   .site-menu a {
     padding: 5px; }
-  .site-menu a:hover, .site-menu a:focus, .site-menu a:active {
-    padding: 5px;
-    border-radius: 6px;
-    background-color: #eee; }
+    .site-menu a:hover, .site-menu a:active, .site-menu a:focus {
+      border-radius: 6px;
+      background-color: #eee; }
 
 .navbar-container {
   margin-top: 0; }
