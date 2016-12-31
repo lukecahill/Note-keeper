@@ -202,7 +202,7 @@ class LoadNote extends Note {
 	function noteOrder($order) {
 		$stmt = 'SELECT n.NoteTitle, n.NoteText, n.NoteId, n.NoteTags, n.NoteComplete,
 				p.TagColor, p.NoteOrder
-				FROM note n 
+				FROM notes n 
 				INNER JOIN note_users u ON u.UserId = n.UserId
 				INNER JOIN note_user_preferences p ON p.UserId = u.UserId
 				WHERE NoteComplete = :complete
@@ -234,7 +234,7 @@ class LoadNote extends Note {
 	function searchNoteBuild($order, $title, $text, $showComplete) {
 		$stmt = "SELECT n.NoteTitle, n.NoteText, n.NoteId, 
 			n.NoteTags, n.NoteComplete, p.TagColor, p.NoteOrder
-			FROM note n 
+			FROM notes n 
 			INNER JOIN note_users u ON u.UserId = n.UserId
 			INNER JOIN note_user_preferences p ON p.UserId = u.UserId
 			WHERE n.UserId = :userId";
@@ -242,7 +242,7 @@ class LoadNote extends Note {
 		if($title === 'true' && $text === 'true') {
 			$stmt = "SELECT n.NoteTitle, n.NoteText, n.NoteId, 
 			n.NoteTags, n.NoteComplete, p.TagColor, p.NoteOrder
-			FROM note n 
+			FROM notes n 
 			INNER JOIN note_users u ON u.UserId = n.UserId
 			INNER JOIN note_user_preferences p ON p.UserId = u.UserId
 			WHERE n.UserId = :userId

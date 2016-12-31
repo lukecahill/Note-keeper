@@ -1,4 +1,4 @@
-CREATE DATABASE notes;
+CREATE DATABASE note_keeper;
 
 USE notes;
 
@@ -32,7 +32,7 @@ CREATE TABLE note_user_preferences (
 	FOREIGN KEY (UserId) REFERENCES note_users(UserId) ON DELETE CASCADE
 );
 
-CREATE TABLE note (
+CREATE TABLE notes (
     NoteId INT(11) AUTO_INCREMENT PRIMARY KEY,
     NoteText VARCHAR(1024),
     NoteTags VARCHAR(1024),

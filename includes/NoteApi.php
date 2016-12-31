@@ -35,7 +35,7 @@ class NoteApi extends Note {
 	function addNote($id, $text, $tags, $title) {
 		$tags = serialize($tags);
 		$text = nl2br($text);
-		$stmt = $this->db->prepare('INSERT INTO note(NoteTitle, NoteText, NoteTags, UserId) VALUES (:title, :text, :tags, :userId)');
+		$stmt = $this->db->prepare('INSERT INTO notes(NoteTitle, NoteText, NoteTags, UserId) VALUES (:title, :text, :tags, :userId)');
 		$status = $stmt->execute(array(':title' => $title, ':text' => $text, ':tags' => $tags, ':userId' => $id));
 		
 		$return = array();
@@ -54,7 +54,7 @@ class NoteApi extends Note {
 	* @return void
 	*/
 	function deleteNote($noteId) {
-		$stmt = $this->db->prepare('DELETE FROM note WHERE NoteId = :noteId');
+		$stmt = $this->db->prepare('DELETE FROM notes WHERE NoteId = :noteId');
 		$status = $stmt->execute(array(':noteId' => $noteId));
 		
 		echo $status;
@@ -74,7 +74,7 @@ class NoteApi extends Note {
 		
 		$tags = serialize($tags);
 		$text = nl2br($text);
-		$stmt = $this->db->prepare('UPDATE note SET NoteText = :text, NoteTitle = :title, NoteTags = :tags, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id ');
+		$stmt = $this->db->prepare('UPDATE notes SET NoteText = :text, NoteTitle = :title, NoteTags = :tags, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id ');
 		$status = $stmt->execute(array(':text' => $text, ':title' => $title, ':tags' => $tags, ':id' => $id));
 		
 		echo $status;
@@ -88,7 +88,7 @@ class NoteApi extends Note {
 	* @return void
 	*/
 	function MarkDone($id) {
-		$stmt = $this->db->prepare('UPDATE note SET NoteComplete = 1, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id');
+		$stmt = $this->db->prepare('UPDATE notes SET NoteComplete = 1, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id');
 		$status = $stmt->execute(array(':id' => $id));
 		echo $status;
 	}
@@ -101,7 +101,7 @@ class NoteApi extends Note {
 	* @return void
 	*/
 	function MarkActive($id) {
-		$stmt = $this->db->prepare('UPDATE note SET NoteComplete = 0, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id');
+		$stmt = $this->db->prepare('UPDATE notes SET NoteComplete = 0, NoteLastEdited = CURRENT_TIMESTAMP() WHERE NoteId = :id');
 		$stmt->execute(array(':id' => $id));
 		$status = $stmt->execute(array(':id' => $id));
 		echo $status;
