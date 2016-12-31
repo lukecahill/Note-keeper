@@ -4,7 +4,7 @@
 	var showingComplete = false;
 	var $noteList = $('#note-list'), $completedNoteButton = $('#complete-notes-button');
 	var $newNoteSection = $('#new-note-section'), $tagChooser = $('#tag-chooser'), $noteTags = $('#add-note-tags');
-	var color = 'red', dropdownTags = [];
+	var color = '', dropdownTags = [];
 	var $systemNotification = $('#system-notification-group');
 
 	// configuration for toastr notificiations.
@@ -38,6 +38,16 @@
 		} else if(localStorage.getItem('theme') === 'dark') {
 			$('html').addClass('dark-theme');
 			$('.container-fluid.account-dark').addClass('account-dark');
+		}
+	}
+
+	function setTagColor() {
+		if(localStorageTest()) {
+			var item = localStorage.getItem('color');
+
+			if(typeof(item) !== 'undefined') {
+				color = item;
+			}
 		}
 	}
 
@@ -562,8 +572,8 @@
 	**/
 	$('#save-note-button').on('click', function() {
 		
-		var title = document.getElementById('edit-note-title');
-		var text = document.getElementById('edit-note-text');
+		var title = document.getElementById('edit-note-title').value;
+		var text = document.getElementById('edit-note-text').value;
 		var tagArray = [];
 		var noteId = $('#save-note-button').data('id');
 		
