@@ -353,7 +353,7 @@
 					}
 				});
 				noteText = noteText.replace(/\n/g, '<br>');
-				$noteList.append('<div class="note" data-id="{0}"><h4 class="note-title">{1}</h4><p class="note-text">{2}</p>{3}<div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>'.format(data[1], noteTitle, noteText, tags));
+				$noteList.append('<div class="note" data-id="{0}"><h4 class="note-title">{1}</h4><p class="note-text">{2}</p><div class="tag-container"><span class="glyphicon glyphicon-tag glyph-tag-lower"></span>{3}</div><div class="note-glyphicons"><span class="glyphicon glyphicon-remove remove-note" title="Delete this note"></span><span class="glyphicon glyphicon-edit edit-note" title="Edit this note"></span><span class="glyphicon glyphicon-ok note-done" title="Mark as done"></span></div></div>'.format(data[1], noteTitle, noteText, tags));
 					
 				// Reset and confirmation.
 				document.getElementById('add-note-title').value = '';
