@@ -311,7 +311,6 @@
 		
 		var noteText = document.getElementById('add-note-text').value;
 		var noteTitle = document.getElementById('add-note-title').value;
-		var i = "true";
 		var tagArray = [];
 		
 		if(noteText.trim() === '' && noteTitle.trim() === '') {
