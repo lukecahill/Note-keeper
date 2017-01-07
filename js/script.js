@@ -193,7 +193,7 @@
 	* Add a new checkbox for tags to the DOM
 	* @param {string} where
 	* @param {string} input
-	* @param {bool} edit
+	* @param {boolean} edit
 	**/
 	function addTag(where, input, edit) {
 		var newTag = $(input).val();
@@ -359,7 +359,13 @@
 				document.getElementById('add-note-text').value = '';
 				$('input:checkbox[name=new-tag]').removeAttr('checked');
 				$('.new-note-checkbox').remove();
-				$('#first-note').remove();
+
+				if(document.getElementById('first-note')) {
+					var el = document.getElementById('first-note');
+					el.parentNode.removeChild(el);
+				}
+
+				//$('#first-note').remove();
 
 				tagsToAdd = [];
 				document.getElementById('add-note-button').disabled = false;
@@ -765,8 +771,16 @@
 	* Then fires the loadNotes() function to re-populate the DOM
 	**/
 	$('#refresh-button').on('click', function() {
-		$noteList.empty();
-		$('.checkbox').remove();
+		document.getElementById('note-list').innerHTML = '';;
+
+		var c = document.getElementsByClassName('checkbox');
+		var l = c.length;
+		for(var i = 0; i < l; i++) {
+			console.log(c[0])
+			var parent = c[0].parentNode;
+			parent.removeChild(c[0]);
+		}
+
 		loadNotes(initialLoad);
 	});
 
