@@ -5,7 +5,7 @@ var jshint = require('gulp-jshint');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var livereload = require('gulp-livereload');
-var ts = require('gulp-typescript');
+//var ts = require('gulp-typescript');
 
 gulp.task('minify', function() {
 	gulp.src('./js/*.js')
@@ -30,13 +30,13 @@ gulp.task('sass', function() {
     .pipe(livereload());
 });
 
-gulp.task('typescript', function() {
-	gulp.src('./typescript/*.ts')
-	.pipe(ts({
-		out: 'ts-script.js'
-	}))
-	.pipe(gulp.dest('./js/build'));
-});
+//gulp.task('typescript', function() {
+//	gulp.src('./typescript/*.ts')
+//	.pipe(ts({
+//		out: 'ts-script.js'
+//	}))
+//	.pipe(gulp.dest('./js/build'));
+//});
 
 gulp.task('watch-js', function() {
 	livereload.listen();
