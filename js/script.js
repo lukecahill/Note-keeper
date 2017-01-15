@@ -769,7 +769,7 @@
 	* Then fires the loadNotes() function to re-populate the DOM
 	**/
 	$('#refresh-button').on('click', function() {
-		document.getElementById('note-list').innerHTML = '';;
+		document.getElementById('note-list').innerHTML = '';
 
 		var checkboxes = document.getElementsByClassName('checkbox');
 		var l = checkboxes.length;
