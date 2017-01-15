@@ -365,8 +365,6 @@
 					el.parentNode.removeChild(el);
 				}
 
-				//$('#first-note').remove();
-
 				tagsToAdd = [];
 				document.getElementById('add-note-button').disabled = false;
 				toastr.success('Note has been added successfully!');
@@ -773,12 +771,11 @@
 	$('#refresh-button').on('click', function() {
 		document.getElementById('note-list').innerHTML = '';;
 
-		var c = document.getElementsByClassName('checkbox');
-		var l = c.length;
+		var checkboxes = document.getElementsByClassName('checkbox');
+		var l = checkboxes.length;
 		for(var i = 0; i < l; i++) {
-			console.log(c[0])
-			var parent = c[0].parentNode;
-			parent.removeChild(c[0]);
+			var parent = checkboxes[0].parentNode;
+			parent.removeChild(checkboxes[0]);
 		}
 
 		loadNotes(initialLoad);
