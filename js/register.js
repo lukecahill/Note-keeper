@@ -6,14 +6,12 @@
 		var $password = document.getElementById('user-password');
 		var $email = document.getElementById('user-email');
 
-		if(document.getElementsByClassName('validation-error')) {
-			var items = document.getElementsByClassName('validation-error');
-			var l = items.length;
+		var items = document.getElementsByClassName('validation-error');
+		var l = items.length;
 
-			for(var i = 0; i < l; i++) {
-				var parent = items[0].parentNode;
-				parent.removeChild(items[0]);
-			}
+		for(var i = 0; i < l; i++) {
+			var parent = items[0].parentNode;
+			parent.removeChild(items[0]);
 		}
 
 		var confirmPassword = $confirmPassword.value;
