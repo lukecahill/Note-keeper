@@ -135,20 +135,20 @@
 		if(result === 'success') {
 
 			if(toSend.action === 'searchnote') {
-				$noteList.empty();
+				$noteList.innerHTML = '';
 			}
 
 			data = JSON.parse(data);
 			if(data !== 'none' && data !== 'no_results') {
 				$('#no-results').remove();
 				if(toSend.complete === 0) {
-					$noteTags.empty();
+					$noteTags.innerHTML = '';
 					data[0].forEach(function(value, index) {
 						$noteTags.append('<div class="checkbox"><label><input type="checkbox" name="new-tag" data-tag="{0}" value="{0}">{0}</label></div>'.format(value));
 					});
 				}
 				
-				$tagChooser.empty();
+				$tagChooser.innerHTML = '';
 				$tagChooser.append($('<option></option>').attr('value', 'note_keeper_showall').attr('selected', true).text('-- Show all --')); 
 				data[1].forEach(function(value, key) {   
 					$tagChooser
@@ -296,7 +296,7 @@
 	*
 	* Show the section to add a new note
 	**/
-	$('#new-note-button').on('click', function(){
+	document.getElementById('new-note-button').addEventListener('click', function(){
 		$newNoteSection.toggle();
 	});
 
@@ -307,7 +307,7 @@
 	* Also then appends the note to the DOM - this could be changed to refresh the whole DOM via AJAX instead. 
 	* Hides the new note section after success.
 	**/
-	$('#add-note-button').on('click', function() {
+	document.getElementById('add-note-button').addEventListener('click', function() {
 		
 		var noteText = document.getElementById('add-note-text').value;
 		var noteTitle = document.getElementById('add-note-title').value;
@@ -380,11 +380,11 @@
 		
 	});
 	
-	$('#show-new-tag-button').on('click', function() {
+	document.getElementById('show-new-tag-button').addEventListener('click', function() {
 		addTag('#add-note-tags', '#add-new-tag-text', 2);
 	});
 	
-	$('#edit-new-tag-button').on('click', function() {
+	document.getElementById('edit-new-tag-button').addEventListener('click', function() {
 		addTag('#edit-note-tags', '#edit-new-tag-text', 1);
 	});
 	
@@ -406,33 +406,33 @@
 	* Function to run when the user clicks to delete the note.
 	* This will both remove the note from the database and the DOM.
 	**/
-	$noteList.on('click', '.remove-note', function() {
-		
-		if(!confirm('Are you sure you wish to remove this note?')) {
-			return;
-		}
-		
-		$this = $(this);
-		var deleteId = $this.closest('.note').data('id');
-		
- 		$.ajax({
-			method: 'POST',
-			url: 'includes/NoteApi.php',
-			data: {
-				noteId: deleteId,
-				action: 'deletenote'
+	document.getElementById('note-list').addEventListener('click', function(e) {
+		if(e.target && e.target.matches('.remove-note')) {
+			if(!confirm('Are you sure you wish to remove this note?')) {
+				return;
 			}
-		})
-		.done(function(data, result) {
-			$this.closest('.note').fadeOut(500, function() {
-				$this.closest('.note').remove();
-			});
-			toastr.success('Note has been deleted!');
-		})
-		.fail(function(error) {
-			console.log('An error has occurred: ', error);
-		}); 
-		
+			
+			$this = $(this);
+			var deleteId = $this.closest('.note').data('id');
+			
+			$.ajax({
+				method: 'POST',
+				url: 'includes/NoteApi.php',
+				data: {
+					noteId: deleteId,
+					action: 'deletenote'
+				}
+			})
+			.done(function(data, result) {
+				$this.closest('.note').fadeOut(500, function() {
+					$this.closest('.note').remove();
+				});
+				toastr.success('Note has been deleted!');
+			})
+			.fail(function(error) {
+				console.log('An error has occurred: ', error);
+			}); 
+		}
 	});
 	
 	/**
@@ -441,6 +441,7 @@
 	* Function to run when the user clicks to edit the note.
 	* This will show a modal which contains the note information for editing.
 	* This will both edit the note in the database and the DOM.
+	* TODO : Changing to use addEventListener causes sending ID to break
 	**/
 	$noteList.on('click', '.edit-note', function() {
 		$this = $(this);
@@ -459,8 +460,8 @@
 			tagArray.push(value.textContent);
 		});
 		
-		$('#note-edit-modal').modal('show');		
-		$('#edit-note-tags').empty();
+		$('#note-edit-modal').modal('show');
+		$('#edit-note-tags').innerHTML = '';
 		
 		document.getElementById('edit-note-title').value = title;
 		document.getElementById('edit-note-text').value = text;
@@ -475,6 +476,7 @@
 	*
 	* Mark the note as complete in the database.
 	* This note will then not appear on the active notes screen.
+	* TODO : Changing to use addEventListener causes sending ID to break
 	**/
 	$noteList.on('click', '.note-done', function() {
 		
@@ -521,12 +523,12 @@
 		};
 		
 		if(showingComplete) {
-			$noteList.empty();
+			$noteList.innerHTML = '';
 			showingComplete = false;
 			data.complete = 0;
 			loadNotes(data);
 		} else {
-			$noteList.empty();
+			$noteList.innerHTML = '';
 			showingComplete = true;
 			data.complete = 1;
 			loadNotes(data);
@@ -573,7 +575,7 @@
 	* 
 	* Save the note after editing via the modal.
 	**/
-	$('#save-note-button').on('click', function() {
+	document.getElementById('save-note-button').addEventListener('click', function() {
 		
 		var title = document.getElementById('edit-note-title').value;
 		var text = document.getElementById('edit-note-text').value;
@@ -632,7 +634,7 @@
 	* Fired when an option in the dropdown is chosen.
 	* Will show all notes with the chosen tag, or all if they have chosen to show all.
 	**/
-	$('#tag-chooser').on('change', function() {
+	document.getElementById('tag-chooser').addEventListener('change', function() {
 		var value = this.value;
 		if(value !== 'note_keeper_showall') {
 			showTags(this.value);
