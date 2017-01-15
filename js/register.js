@@ -1,5 +1,11 @@
 (function() {
-	$('#register-btn').on('click', function(e) {
+	var registerBtn = document.getElementById('register-btn');
+
+	registerBtn.addEventListener('click', function(e) {
+		var $confirmPassword = document.getElementById('confirm-user-password');
+		var $password = document.getElementById('user-password');
+		var $email = document.getElementById('user-email');
+
 		if(document.getElementsByClassName('validation-error')) {
 			var items = document.getElementsByClassName('validation-error');
 			var l = items.length;
@@ -10,32 +16,31 @@
 			}
 		}
 
-		$('.validation-error').remove();
-		var confirmPassword = $('#confirm-user-password').val();
-		var password = $('#user-password').val();
-		var $email = $('#user-email');
+		var confirmPassword = $confirmPassword.value;
+		var password = $password.value;
 		
-		if($email.val().trim() === '') {
+		if($email.value.trim() === '') {
 			e.preventDefault();
-			$email.after('<span class="validation-error">Please enter an email address!</span>');
+			$email.insertAdjacentHTML('afterend', '<span class="validation-error">Please enter an email address!</span>');
 			return;
 		}
 		
 		if(password.trim() === '') {
 			e.preventDefault();
-			$('#user-password').after('<span class="validation-error">Please enter a password!</span>');
+			$password.insertAdjacentHTML('afterend', '<span class="validation-error">Please enter a password!</span>');
+
 			return;
 		}
 		
-		if(confirmPassword === '') {
+		if(confirmPassword.trim() === '') {
 			e.preventDefault();
-			$('#confirm-user-password').after('<span class="validation-error">Please confirm your password!</span>');
+			$confirmPassword.insertAdjacentHTML('afterend', '<span class="validation-error">Please confirm your password!</span>');
 			return;
 		}
 		
-		if(confirmPassword !== password) {
-			e.preventDefault();
-			$('#confirm-user-password').after('<span class="validation-error">The confirmation password is different! </span>');
+		if(confirmPassword.trim() !== password) {
+			e.preventDefault();			
+			$confirmPassword.insertAdjacentHTML('afterend', '<span class="validation-error">The confirmation password is different! </span>');
 			return;
 		}
 	});
