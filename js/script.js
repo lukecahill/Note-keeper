@@ -446,7 +446,7 @@
 	$noteList.on('click', '.edit-note', function() {
 		$this = $(this);
 		var noteId = $this.closest('.note').data('id');
-		$('#save-note-button').data('id', noteId);
+		document.getElementById('save-note-button').setAttribute('data-id', noteId);
 		var parent = $this.closest('.note');
 		
 		var $parent = $(parent);
@@ -580,7 +580,7 @@
 		var title = document.getElementById('edit-note-title').value;
 		var text = document.getElementById('edit-note-text').value;
 		var tagArray = [];
-		var noteId = $('#save-note-button').data('id');
+		var noteId = document.getElementById('save-note-button').getAttribute('data-id');
 		
 		$('input:checkbox[name=edit-tag]:checked').each(function() {
 			tagArray.push($(this).val());
