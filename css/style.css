@@ -151,6 +151,8 @@ span .login-link {
   border: 1px solid #eee;
   border-radius: 6px;
   margin-top: 10px; }
+  .options-border .form-control {
+    width: 50%; }
 
 label[for=tag-chooser] {
   margin-top: 10px; }
