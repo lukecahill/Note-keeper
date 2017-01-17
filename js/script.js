@@ -95,12 +95,24 @@
 		})
 		.done(function(data, result) {
 			console.log(data, result);
+			Notification.requestPermission().then(function(result) {
+				showNotification(data, 'Note Keeper', '');
+			});
 		})
 		.fail(function(error) {
 			console.log(error);
 		});
 	}
 	
+	function showNotification(body, title, icon) {
+		var options = {
+			body: body,
+			icon: icon
+		};
+
+		var notification = new Notification(title, options);
+	}
+
 	/**
 	* @function loadNotes
 	*
