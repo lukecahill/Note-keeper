@@ -114,6 +114,28 @@
 	}
 
 	/**
+	* @function handleError
+	*
+	* Handle anything which has gone wrong with a request.
+	* @param {string} data
+	**/
+	function handleError(data) {
+		console.log(data);
+
+		switch (data) {
+			case 'no_results':
+				console.log('No results could be found');
+				break;
+			case '0': 
+				console.log(data);
+				break;
+			default:
+				alert('Something went wrong! Check the console for more');
+				break;
+		}
+	}
+
+	/**
 	* @function loadNotes
 	*
 	* Load the notes from the database
@@ -131,7 +153,7 @@
 			loadNotesSuccess(data, result, toSend);
 		})
 		.fail(function(error) {
-			console.log('It failed: ', error);
+			handleError(error);
 		});
 	}
 	
@@ -382,12 +404,11 @@
 				toastr.success('Note has been added successfully!');
 				$newNoteSection.hide();
 			} else {
-				alert('Something went wrong! Check the console for more');
-				console.log(data);
+				handleError(data);				
 			}
 		})
 		.fail(function(error) {
-			console.log('There was a failure: ', error);
+			handleError(error);
 		});
 		
 	});
@@ -442,7 +463,7 @@
 				toastr.success('Note has been deleted!');
 			})
 			.fail(function(error) {
-				console.log('An error has occurred: ', error);
+				handleError(error);
 			}); 
 		}
 	});
@@ -511,12 +532,11 @@
 				});
 				toastr.success('Note marked as complete!');	
 			} else {
-				alert('Something went wrong! Check the console for more');
-				console.log(data);
+				handleError(data);
 			}
 		})
 		.fail(function(error) {
-			console.log('An error has occurred: ', error);
+			handleError(error);
 		});
 		
 	});
@@ -572,12 +592,12 @@
 				});
 				toastr.success('Note marked as active!');	
 			} else {
-				alert('Something went wrong! Check the console for more');
+				handleError(data);
 				console.log(data);
 			}
 		})
 		.fail(function(error) {
-			console.log('An error has occurred: ', error);
+			handleError(error);
 		}); 
 		
 	});
@@ -630,13 +650,12 @@
 				
 				toastr.success('Note successfully updated!');				
 			} else {
-				alert('Something went wrong! Check the console for more');
-				console.log(data);
+				handleError(data);
 			}
 
 		})
 		.fail(function(error) {
-			console.log('An error has occurred: ', error);
+			handleError(error);
 		});
 	});
 	
