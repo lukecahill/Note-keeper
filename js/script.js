@@ -166,11 +166,15 @@
 	* @param {object} toSend
 	**/
 	function loadNotesSuccess(data, result, toSend) {
-		if(result === 'success') {
+		if(toSend.action === 'searchnote') {
+			var noteList = document.getElementById('note-list');
 
-			if(toSend.action === 'searchnote') {
-				$noteList.innerHTML = '';
+			while(noteList.hasChildNodes()) {
+				noteList.removeChild(noteList.lastChild)
 			}
+		}
+
+		if(result === 'success') {
 
 			data = JSON.parse(data);
 			if(data !== 'none' && data !== 'no_results') {
@@ -257,7 +261,7 @@
 		tag = tag.toLowerCase();
 		
 		$.each(notes, function(index, value) {
-			$value = $(value);
+			//$value = $(value);
 			
 			var tags = $value.find('.note-tags');
 			var tagData = [];
@@ -681,7 +685,7 @@
 	* Fired when the search button is clicked. 
 	* Passes the value to the searchNotes function.
 	**/
-	$('#search-note-button').on('click', function() {
+	document.getElementById('search-note-button').addEventListener('click', function() {
 		var text = document.getElementById('search-note-text').value;
 		searchNotes(text);
 	});
@@ -692,7 +696,7 @@
 	* Fire the searchNotes function when the return key is pressed in the search note input
 	* @param {event} event
 	**/
-	$('#search-note-text').on('keyup', function(event) {
+	document.getElementById('search-note-text').addEventListener('keyup', function(event) {
 		if(event.keyCode === 13) {
 			var text = document.getElementById('search-note-text').value;
 			searchNotes(text);
@@ -705,7 +709,7 @@
 	* Fire the searchNotes function when the return key is pressed in the search note input box
 	* @param {event} event
 	**/
-	$('#show-search-button').on('click', function() {
+	document.getElementById('show-search-button').addEventListener('click', function() {
 		document.getElementById('tag-chooser-input').style.display = 'none';
 		$('#search-input').toggle();
 		//$('#tag-chooser-input').hide();
@@ -717,7 +721,7 @@
 	* Fire the searchNotes function when the return key is pressed in the search note input box
 	* @param {event} event
 	**/
-	$('#show-tag-chooser-button').on('click', function() {
+	document.getElementById('show-tag-chooser-button').addEventListener('click', function() {
 		document.getElementById('search-input').style.display = 'none';
 		//$('#search-input').hide();
 		$('#tag-chooser-input').toggle();
@@ -737,7 +741,7 @@
 	* 
 	* Hides the section to add a new note when the close button is clicked.
 	**/
-	$('#close-new-note').on('click', function() {
+	document.getElementById('close-new-note').addEventListener('click', function() {
 		$newNoteSection.hide();
 	});
 
@@ -746,7 +750,7 @@
 	* 
 	* Hides the sytem notification when the close button is clicked.
 	**/
-	$('#notification-close').on('click', function() {
+	document.getElementById('notification-close').addEventListener('click', function() {
 		//document.getElementById('system-notification-group').style.display = 'none';
 		$('#system-notification-group').hide();
 	});
@@ -756,7 +760,7 @@
 	* 
 	* Hides the validate notice displayed on the note text input when a character is entered
 	**/
-	$('#add-note-text').on('keyup', function() {
+	document.getElementById('add-note-text').addEventListener('keyup', function() {
 		//document.getElementsByClassName('note-text-validation').style.display = 'none';
 		$('.note-text-validation').hide();
 	});
@@ -766,18 +770,20 @@
 	* 
 	* Hides the validate notice displayed on the edit note text input when a character is entered
 	**/
-	$('#edit-note-text').on('keyup', function() {
+	document.getElementById('edit-note-text').addEventListener('keyup', function() {
 		//document.getElementsByClassName('edit-note-text-validation').style.display = 'none';
+		// TODO 
+		// not yet working can have an edited note with no text inside.
 		$('.edit-note-text-validation').hide();
 	});
 	
 	/**
 	* @function
 	* 
-	* Fire the searchNotes function when the return key is pressed in the add new tag input box
+	* Fire the addTag function when the return key is pressed in the add new tag input box
 	* @param {event} event
 	**/
-	$('#add-new-tag-text').on('keyup', function(event) {
+	document.getElementById('add-new-tag-text').addEventListener('keyup', function(event) {
 		if(event.keyCode === 13) {
 			addTag('#add-note-tags', '#add-new-tag-text', 2);
 		}
@@ -786,10 +792,10 @@
 	/**
 	* @function
 	* 
-	* Fire the searchNotes function when the return key is pressed in the edit note tag input box
+	* Fire the addTag function when the return key is pressed in the edit note tag input box
 	* @param {event} event
 	**/
-	$('#edit-new-tag-text').on('keyup', function(event) {
+	document.getElementById('edit-new-tag-text').addEventListener('keyup', function(event) {
 		if(event.keyCode === 13) {
 			addTag('#edit-note-tags', '#edit-new-tag-text', 1);
 		}
@@ -801,7 +807,7 @@
 	* Refresh the note list - empties the DOM notelist
 	* Then fires the loadNotes() function to re-populate the DOM
 	**/
-	$('#refresh-button').on('click', function() {
+	document.getElementById('refresh-button').addEventListener('click', function() {
 		document.getElementById('note-list').innerHTML = '';
 
 		var checkboxes = document.getElementsByClassName('checkbox');
